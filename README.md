@@ -13,17 +13,17 @@
 
 ---
 
-## 📌 Enlaces Rápidos de la Entrega (Hito 2)
+##  Enlaces Rápidos de la Entrega (Hito 2)
 
-* 🎬 **Video de Sustentación (5 Minutos):** `[Enlace al Video de Sustentación - YouTube/Drive]` *(Ver guion técnico en `docs/Guion_Video_Hito2_Dos_Personas.docx`)*
-* 🎨 **Prototipo Conceptual en Figma:** `[Enlace a Prototipo Figma Original]`
-* 📄 **Documento Técnico de Avance (Hito 2):** [`docs/Proyecto_PTIA_Grupo2_Hito2.docx`](docs/Proyecto_PTIA_Grupo2_Hito2.docx)
-* 📱 **Prototipo Móvil Interactivo:** [`prototipos/prototipo_hito2.html`](prototipos/prototipo_hito2.html)
-* 🖥️ **Prototipo de Escritorio (Dashboard Panorámico):** [`prototipos/prototipo_desktop.html`](prototipos/prototipo_desktop.html)
+*  **Video de Sustentación (5 Minutos):** `[Enlace al Video de Sustentación - YouTube/Drive]` *(Ver guion técnico en `docs/Guion_Video_Hito2_Dos_Personas.docx`)*
+*  **Prototipo Conceptual en Figma:** `[Enlace a Prototipo Figma Original]`
+*  **Documento Técnico de Avance (Hito 2):** [`docs/Proyecto_PTIA_Grupo2_Hito2.docx`](docs/Proyecto_PTIA_Grupo2_Hito2.docx)
+*  **Prototipo Móvil Interactivo:** [`prototipos/prototipo_hito2.html`](prototipos/prototipo_hito2.html)
+*  **Prototipo de Escritorio (Dashboard Panorámico):** [`prototipos/prototipo_desktop.html`](prototipos/prototipo_desktop.html)
 
 ---
 
-## 🎯 Descripción General del Proyecto
+##  Descripción General del Proyecto
 
 **RacePulse AI** es un sistema inteligente diseñado para modelar la dinámica estocástica de las carreras hípicas y predecir probabilidades calibradas de victoria a partir de datos abiertos (*Hong Kong Jockey Club* / corpus hwaitt). 
 
@@ -31,7 +31,7 @@ El factor diferencial y núcleo de investigación del proyecto radica en la **Tr
 
 ---
 
-## 🧠 Marco PEAS del Agente Racional (Hito 2)
+##  Marco PEAS del Agente Racional (Hito 2)
 
 El agente predictivo está formalizado bajo el marco **PEAS** (Russell & Norvig):
 
@@ -44,7 +44,7 @@ El agente predictivo está formalizado bajo el marco **PEAS** (Russell & Norvig)
 
 ---
 
-## 🗂️ Estructura del Repositorio
+##  Estructura del Repositorio
 
 ```text
 PTIA-hipodromo/
@@ -70,7 +70,7 @@ PTIA-hipodromo/
 
 ---
 
-## 🚀 Instrucciones de Ejecución
+##  Instrucciones de Ejecución
 
 ### 1. Visualización de los Prototipos Web (Sin dependencias)
 Los prototipos son aplicaciones web interactivas completamente autocontenidas:
@@ -98,7 +98,7 @@ python src/pipeline_preprocesamiento_hito2.py
 
 ---
 
-## 🔬 Estado del Arte y Literatura Científica Indexada
+##  Estado del Arte y Literatura Científica Indexada
 
 El diseño metodológico se fundamenta en 6 investigaciones indexadas (IEEE, Springer, Elsevier):
 1. **Pudaruth, Medardo & Kishnah (2013):** Modelos probabilísticos con Naive Bayes y KNN (58% accuracy en Top-3).
@@ -110,6 +110,3 @@ El diseño metodológico se fundamenta en 6 investigaciones indexadas (IEEE, Spr
 
 ---
 
-## 👥 Equipo de Trabajo
-* **Kevin Andrey Angel** — Escuela Colombiana de Ingeniería Julio Garavito
-* **Nicolas Santiago Sanchez** — Escuela Colombiana de Ingeniería Julio Garavito
