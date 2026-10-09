@@ -15,8 +15,6 @@
 
 ##  Enlaces Rápidos de la Entrega (Hito 2)
 
-*  **Video de Sustentación (5 Minutos):** `[Enlace al Video de Sustentación - YouTube/Drive]` *(Ver guion técnico en `docs/Guion_Video_Hito2_Dos_Personas.docx`)*
-*  **Prototipo Conceptual en Figma:** `[Enlace a Prototipo Figma Original]`
 *  **Documento Técnico de Avance (Hito 2):** [`docs/Proyecto_PTIA_Grupo2_Hito2.docx`](docs/Proyecto_PTIA_Grupo2_Hito2.docx)
 *  **Prototipo Móvil Interactivo:** [`prototipos/prototipo_hito2.html`](prototipos/prototipo_hito2.html)
 *  **Prototipo de Escritorio (Dashboard Panorámico):** [`prototipos/prototipo_desktop.html`](prototipos/prototipo_desktop.html)
