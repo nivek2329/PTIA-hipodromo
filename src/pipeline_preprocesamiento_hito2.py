@@ -1,7 +1,7 @@
 """
 Proyecto PTIA - Grupo 2: Predicción del caballo ganador en carreras hípicas
 Pipeline de Preprocesamiento, Auditoría y Modelo Baseline (Hito 2)
-Implementación del Agente Inteligente bajo el Marco PEAS
+
 """
 
 import os
