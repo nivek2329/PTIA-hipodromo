@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RacePulse · Predicción Hípica Inteligente (PTIA Grupo 2)</title>
+  <style>
+    :root {
+      --bg: #edf2f7;
+      --card-bg: #ffffff;
+      --navy: #0d2238;
+      --blue: #0062ff;
+      --blue-light: #e8f1ff;
+      --text-main: #142032;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --green: #10b981;
+      --amber: #f59e0b;
+      --shadow: 0 4px 18px rgba(13, 34, 56, 0.08);
+      --radius: 16px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background: #dce4ec; display: flex; justify-content: center; padding: 24px 12px; color: var(--text-main); }
+    
+    /* Device frame wrapper mimicking mobile app like Figma image6 */
+    .phone-container {
+      width: 100%;
+      max-width: 440px;
+      min-height: 880px;
+      background: #f8fafc;
+      border-radius: 36px;
+      box-shadow: 0 16px 45px rgba(10, 25, 45, 0.22);
+      border: 8px solid #1a2938;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Top mobile status bar */
+    .status-bar {
+      background: var(--navy);
+      color: #ffffff;
+      padding: 10px 22px 6px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    /* Header matching RacePulse */
+    .app-header {
+      background: var(--navy);
+      color: white;
+      padding: 12px 20px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .brand-icon {
+      background: var(--blue);
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    .header-sub { font-size: 0.82rem; color: #94a3b8; font-weight: 500; }
+
+    /* Nav tabs / steps */
+    .nav-tabs {
+      background: var(--navy);
+      display: flex;
+      padding: 0 16px 14px;
+      gap: 6px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .nav-tab {
+      flex: 1;
+      text-align: center;
+      padding: 8px 4px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #94a3b8;
+      cursor: pointer;
+      border-radius: 999px;
+      transition: all 0.2s;
+    }
+    .nav-tab.active {
+      background: var(--blue);
+      color: white;
+    }
+
+    /* Scrollable main view */
+    .app-content {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* Screen panels */
+    .screen { display: none; flex-direction: column; gap: 14px; }
+    .screen.active { display: flex; }
+
+    /* Race Card Component (Screen 1) */
+    .race-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 16px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .race-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .race-title { font-size: 1.05rem; font-weight: 750; color: var(--navy); }
+    .race-subtitle { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+    .badge-urgent {
+      background: #dcfce7;
+      color: #15803d;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 8px;
+      border-radius: 999px;
+    }
+    .race-details-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+      background: #f8fafc;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 0.78rem;
+    }
+    .race-details-grid span { color: var(--text-muted); }
+    .race-details-grid strong { color: var(--text-main); }
+
+    /* Buttons */
+    .btn-primary {
+      background: var(--blue);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.15s;
+      width: 100%;
+    }
+    .btn-primary:hover { background: #0050d4; }
+    .btn-secondary {
+      background: #e2e8f0;
+      color: var(--text-main);
+      border: none;
+      border-radius: 12px;
+      padding: 11px 16px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* Screen 2: Context Banner */
+    .context-bar {
+      background: var(--navy);
+      color: white;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .context-tag { display: flex; align-items: center; gap: 5px; font-weight: 600; }
+
+    /* Horse item cards */
+    .horse-item {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .horse-item.selected {
+      border: 2px solid var(--blue);
+      background: #f6faff;
+    }
+    .horse-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .horse-left { display: flex; align-items: center; gap: 10px; }
+    .saddle-box {
+      width: 28px;
+      height: 28px;
+      background: #e2e8f0;
+      color: var(--navy);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.88rem;
+    }
+    .saddle-box.fav { background: #ffedd5; color: #c2410c; }
+    .horse-name { font-weight: 750; font-size: 0.96rem; color: var(--navy); }
+    .horse-jockey { font-size: 0.77rem; color: var(--text-muted); }
+    .odds-badge { font-weight: 800; font-size: 1.05rem; color: var(--blue); }
+
+    .horse-extra-info {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 8px;
+      font-size: 0.76rem;
+    }
+    .pill-health {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+    .health-good { background: #dcfce7; color: #166534; }
+    .health-warn { background: #fef3c7; color: #92400e; }
+
+    /* Screen 3: Winner Prediction Card */
+    .winner-card {
+      background: linear-gradient(135deg, #0d2238 0%, #153860 100%);
+      color: white;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 10px 25px rgba(13, 34, 56, 0.25);
+      position: relative;
+      overflow: hidden;
+    }
+    .winner-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(245, 158, 11, 0.2);
+      color: #fbbf24;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+    }
+    .winner-name { font-size: 1.7rem; font-weight: 850; margin: 10px 0 2px; }
+    .winner-sub { font-size: 0.8rem; color: #cbd5e1; }
+    .prob-metric {
+      margin-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .prob-percent { font-size: 2.2rem; font-weight: 850; color: #38bdf8; }
+    .prob-bar {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 999px;
+      overflow: hidden;
+      margin: 8px 0 12px;
+    }
+    .prob-fill { height: 100%; background: #38bdf8; border-radius: 999px; }
+
+    .podium-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 0.82rem;
+      color: #cbd5e1;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 10px;
+    }
+
+    /* Factors Card */
+    .factors-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+    .factors-title { font-size: 0.95rem; font-weight: 750; color: var(--navy); margin-bottom: 4px; }
+    .factors-sub { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 12px; }
+    
+    .factor-row { margin-bottom: 10px; }
+    .factor-header { display: flex; justify-content: space-between; font-size: 0.78rem; font-weight: 600; margin-bottom: 3px; }
+    .factor-bar { height: 6px; background: #e2e8f0; border-radius: 999px; overflow: hidden; }
+    .factor-fill { height: 100%; background: var(--blue); border-radius: 999px; }
+
+    .peas-box {
+      background: #eff6ff;
+      border-left: 4px solid var(--blue);
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 0.77rem;
+      color: #1e3a8a;
+      line-height: 1.4;
+    }
+
+    /* Bottom tab bar */
+    .bottom-bar {
+      background: white;
+      border-top: 1px solid var(--border);
+      display: flex;
+      padding: 8px 12px 14px;
+      justify-content: space-around;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .bottom-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+    }
+    .bottom-item.active { color: var(--blue); }
+    .bottom-icon { font-size: 1.15rem; }
+  </style>
+</head>
+<body>
+
+  <div class="phone-container">
+    <!-- Top Status Bar -->
+    <div class="status-bar">
+      <span>9:41</span>
+      <span>●●● 5G 100%</span>
+    </div>
+
+    <!-- App Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-icon">🏇</div>
+        <span>RacePulse</span>
+      </div>
+      <div class="header-sub">Sáb, Oct 26 · Grupo 2 PTIA</div>
+    </header>
+
+    <!-- Navigation Tabs / Steps -->
+    <nav class="nav-tabs" aria-label="Pantallas">
+      <div class="nav-tab active" data-step="0">1 · Carreras</div>
+      <div class="nav-tab" data-step="1">2 · Datos & Contexto</div>
+      <div class="nav-tab" data-step="2">3 · Predicción PEAS</div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="app-content">
+
+      <!-- ================= PANTALLA 1: ELEGIR CARRERA ================= -->
+      <section class="screen active" id="screen-0">
+        <div class="race-card">
+          <div class="race-header">
+            <div>
+              <div class="race-title">C1 | Royal Ascot (UK)</div>
+              <div class="race-subtitle">Handicap · 6 furlongs (1.200 m)</div>
+            </div>
+            <span class="badge-urgent">Finalizada</span>
+          </div>
+          <div class="race-details-grid">
+            <div><span>Superficie:</span> <strong>Césped (Turf)</strong></div>
+            <div><span>Terreno:</span> <strong>Good</strong></div>
+            <div><span>Participantes:</span> <strong>12 caballos</strong></div>
+            <div><span>Premio:</span> <strong>£35.000</strong></div>
+          </div>
+          <button class="btn-secondary" onclick="goToStep(1)">Ver Registro Histórico</button>
+        </div>
+
+        <div class="race-card" style="border: 2px solid var(--blue);">
+          <div class="race-header">
+            <div>
+              <div class="race-title">C2 | Belmont Stakes</div>
+              <div class="race-subtitle">1:30 PM · 1 1/16 milla (1.700 m)</div>
+            </div>
+            <span class="badge-urgent" style="background:#fef3c7; color:#b45309;">● En análisis</span>
+          </div>
+          <div class="race-details-grid">
+            <div><span>Pista / Tipo:</span> <strong>Césped (Turf)</strong></div>
+            <div><span>Condición:</span> <strong>Good To Soft</strong></div>
+            <div><span>Humedad:</span> <strong>16%</strong></div>
+            <div><span>Caballos:</span> <strong>8 inscritos</strong></div>
+          </div>
+          <button class="btn-primary" onclick="goToStep(1)">
+            <span>Revisar Datos de Carrera</span> →
+          </button>
+        </div>
+
+        <div class="race-card">
+          <div class="race-header">
+            <div>
+              <div class="race-title">C3 | Saratoga (USA)</div>
+              <div class="race-subtitle">2:05 PM · Stakes 1 1/16m</div>
+            </div>
+            <span class="badge-urgent" style="background:#e0f2fe; color:#0369a1;">Próxima</span>
+          </div>
+          <div class="race-details-grid">
+            <div><span>Superficie:</span> <strong>Arena / Sintética</strong></div>
+            <div><span>Terreno:</span> <strong>Standard</strong></div>
+            <div><span>Participantes:</span> <strong>10 caballos</strong></div>
+            <div><span>Premio:</span> <strong>$75.000</strong></div>
+          </div>
+          <button class="btn-secondary" onclick="goToStep(1)">Ver Detalles</button>
+        </div>
+      </section>
+
+      <!-- ================= PANTALLA 2: REVISAR DATOS Y CONTEXTO ================= -->
+      <section class="screen" id="screen-1">
+        <div class="context-bar">
+          <div class="context-tag">📍 C2: Belmont Stakes · 1:30 PM</div>
+          <div style="font-size:0.75rem; opacity:0.9;">1.700 m · Césped</div>
+        </div>
+
+        <div style="background:#ffffff; border-radius:12px; padding:10px 14px; border:1px solid var(--border); font-size:0.78rem; display:flex; justify-content:space-between;">
+          <div>⛅ <strong>Clima:</strong> 18°C · Viento 12 km/h</div>
+          <div>🌱 <strong>Pista:</strong> Good To Soft (Humedad 16%)</div>
+        </div>
+
+        <div style="font-size:0.85rem; font-weight:750; color:var(--navy); margin-top:2px;">
+          Participantes & Variables del Caballo:
+        </div>
+
+        <!-- Caballo 1 (Waterproof - Favorito) -->
+        <div class="horse-item selected">
+          <div class="horse-top">
+            <div class="horse-left">
+              <div class="saddle-box fav">3</div>
+              <div>
+                <div class="horse-name">Waterproof <span style="font-size:0.72rem; color:var(--blue); font-weight:700;">(Cajón 3)</span></div>
+                <div class="horse-jockey">Jinete: Brendan Powell · Peso: 66 kg</div>
+              </div>
+            </div>
+            <div class="odds-badge">5/2</div>
+          </div>
+          <div class="horse-extra-info">
+            <div><strong>Edad:</strong> 4 años</div>
+            <div><strong>Historial:</strong> 14 cor. / 4 vic. (28.6%)</div>
+            <div><strong>Dieta:</strong> Forraje + Concentrado Alta Energía (33.2k kcal)</div>
+            <div><strong>Salud:</strong> <span class="pill-health health-good">Óptimo / Excelente</span></div>
+          </div>
+        </div>
+
+        <!-- Caballo 2 (Thunder Bolt) -->
+        <div class="horse-item">
+          <div class="horse-top">
+            <div class="horse-left">
+              <div class="saddle-box">1</div>
+              <div>
+                <div class="horse-name">Thunder Bolt <span style="font-size:0.72rem; color:var(--text-muted); font-weight:700;">(Cajón 1)</span></div>
+                <div class="horse-jockey">Jinete: J. Miller · Peso: 64 kg</div>
+              </div>
+            </div>
+            <div class="odds-badge" style="color:var(--text-muted)">3/1</div>
+          </div>
+          <div class="horse-extra-info">
+            <div><strong>Edad:</strong> 3 años</div>
+            <div><strong>Historial:</strong> 8 cor. / 2 vic. (25.0%)</div>
+            <div><strong>Dieta:</strong> Heno Timothy con avena (32.0k kcal)</div>
+            <div><strong>Salud:</strong> <span class="pill-health health-good">Apto</span></div>
+          </div>
+        </div>
+
+        <!-- Caballo 3 (Colfer Kay) -->
+        <div class="horse-item">
+          <div class="horse-top">
+            <div class="horse-left">
+              <div class="saddle-box">7</div>
+              <div>
+                <div class="horse-name">Colfer Kay <span style="font-size:0.72rem; color:var(--text-muted); font-weight:700;">(Cajón 7)</span></div>
+                <div class="horse-jockey">Jinete: K. Smith · Peso: 65 kg</div>
+              </div>
+            </div>
+            <div class="odds-badge" style="color:var(--text-muted)">6/1</div>
+          </div>
+          <div class="horse-extra-info">
+            <div><strong>Edad:</strong> 5 años</div>
+            <div><strong>Historial:</strong> 22 cor. / 5 vic. (22.7%)</div>
+            <div><strong>Dieta:</strong> Alfalfa balanceada (31.8k kcal)</div>
+            <div><strong>Salud:</strong> <span class="pill-health health-warn">Fatiga leve</span></div>
+          </div>
+        </div>
+
+        <button class="btn-primary" onclick="goToStep(2)">
+          <span>Generar Inferencia PEAS</span> →
+        </button>
+        <button class="btn-secondary" onclick="goToStep(0)">← Volver a Carreras</button>
+      </section>
+
+      <!-- ================= PANTALLA 3: VER PREDICCIÓN PEAS ================= -->
+      <section class="screen" id="screen-2">
+        <div class="winner-card">
+          <div class="winner-badge">🏆 PREDICCIÓN GANADORA · AGENTE PEAS</div>
+          <div class="winner-name">Waterproof</div>
+          <div class="winner-sub">Caballo No. 3 · Cajón 3 · Jinete: Brendan Powell</div>
+
+          <div class="prob-metric">
+            <span style="font-size:0.82rem; font-weight:600; text-transform:uppercase; letter-spacing:0.04em;">Probabilidad de Victoria</span>
+            <span class="prob-percent">38.4%</span>
+          </div>
+          <div class="prob-bar">
+            <div class="prob-fill" style="width: 76.8%;"></div>
+          </div>
+
+          <div class="podium-list">
+            <div><strong>2do:</strong> Thunder Bolt (Cajón 1) — 18.2% prob.</div>
+            <div><strong>3ro:</strong> Colfer Kay (Cajón 7) — 12.5% prob.</div>
+          </div>
+        </div>
+
+        <div class="factors-card">
+          <div class="factors-title">Ponderación Explicable del Modelo</div>
+          <div class="factors-sub">Variables de estado del caballo y pista que sustentan la decisión:</div>
+
+          <div class="factor-row">
+            <div class="factor-header"><span>Historial deportivo y victorias previas</span> <span>78%</span></div>
+            <div class="factor-bar"><div class="factor-fill" style="width: 78%;"></div></div>
+          </div>
+
+          <div class="factor-row">
+            <div class="factor-header"><span>Ajuste al terreno (Good To Soft - Turf)</span> <span>68%</span></div>
+            <div class="factor-bar"><div class="factor-fill" style="width: 68%;"></div></div>
+          </div>
+
+          <div class="factor-row">
+            <div class="factor-header"><span>Edad y madurez física (4 años)</span> <span>60%</span></div>
+            <div class="factor-bar"><div class="factor-fill" style="width: 60%;"></div></div>
+          </div>
+
+          <div class="factor-row">
+            <div class="factor-header"><span>Dieta y balance calórico (33.200 kcal/día)</span> <span>52%</span></div>
+            <div class="factor-bar"><div class="factor-fill" style="width: 52%;"></div></div>
+          </div>
+
+          <div class="factor-row">
+            <div class="factor-header"><span>Puesto de salida favorable (Cajón 3)</span> <span>44%</span></div>
+            <div class="factor-bar"><div class="factor-fill" style="width: 44%;"></div></div>
+          </div>
+
+          <div class="factor-row">
+            <div class="factor-header"><span>Estado físico y días de descanso (21 días)</span> <span>38%</span></div>
+            <div class="factor-bar"><div class="factor-fill" style="width: 38%;"></div></div>
+          </div>
+        </div>
+
+        <div class="peas-box">
+          <strong>Validación PEAS:</strong> Inferencia generada mediante modelo tabular supervisado. Calibración evaluada con Brier Score (0.0979) y Top-1 Hit Rate contra la cuota del favorito.
+        </div>
+
+        <button class="btn-primary" onclick="alert('Pronóstico registrado en bitácora del agente.');">
+          <span>Registrar Pronóstico de Carrera</span>
+        </button>
+        <button class="btn-secondary" onclick="goToStep(1)">← Revisar Datos Nuevamente</button>
+      </section>
+
+    </main>
+
+    <!-- Bottom Navigation Bar (Figma RacePulse Style) -->
+    <footer class="bottom-bar">
+      <div class="bottom-item active" onclick="goToStep(0)"><span class="bottom-icon">📈</span> Carreras</div>
+      <div class="bottom-item" onclick="goToStep(1)"><span class="bottom-icon">🐴</span> Establo</div>
+      <div class="bottom-item" onclick="goToStep(2)"><span class="bottom-icon">📊</span> Análisis</div>
+      <div class="bottom-item"><span class="bottom-icon">👤</span> Cuenta</div>
+    </footer>
+  </div>
+
+  <script>
+    function goToStep(stepIndex) {
+      const screens = document.querySelectorAll('.screen');
+      const tabs = document.querySelectorAll('.nav-tab');
+      screens.forEach((s, i) => s.classList.toggle('active', i === stepIndex));
+      tabs.forEach((t, i) => t.classList.toggle('active', i === stepIndex));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.querySelectorAll('.nav-tab').forEach((tab, index) => {
+      tab.addEventListener('click', () => goToStep(index));
+    });
+  </script>
+</body>
+</html>

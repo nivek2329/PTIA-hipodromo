@@ -1,0 +1,933 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RacePulse Desktop · Sistema Inteligente de Predicción Hípica (PTIA Grupo 2)</title>
+  <style>
+    :root {
+      --bg: #f1f5f9;
+      --card-bg: #ffffff;
+      --navy: #0d2238;
+      --navy-light: #162e4a;
+      --blue: #0062ff;
+      --blue-hover: #0050d4;
+      --blue-subtle: #eff6ff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --green: #10b981;
+      --green-bg: #dcfce7;
+      --amber: #f59e0b;
+      --amber-bg: #fef3c7;
+      --sky: #0284c7;
+      --sky-bg: #e0f2fe;
+      --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+      --shadow-md: 0 4px 16px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 10px 30px rgba(13, 34, 56, 0.12);
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    body { background: var(--bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* Top Navigation Header for Desktop */
+    header.desktop-header {
+      background: var(--navy);
+      color: white;
+      padding: 0 36px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-left { display: flex; align-items: center; gap: 32px; }
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.45rem;
+      font-weight: 850;
+      letter-spacing: -0.02em;
+      cursor: pointer;
+    }
+    .brand-icon-box {
+      width: 40px;
+      height: 40px;
+      background: var(--blue);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      box-shadow: 0 4px 12px rgba(0,98,255,0.35);
+    }
+    .project-tag {
+      font-size: 0.82rem;
+      color: #94a3b8;
+      background: rgba(255,255,255,0.08);
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-weight: 500;
+    }
+
+    /* Desktop Workflow Steps Tabs */
+    .workflow-nav {
+      display: flex;
+      gap: 8px;
+      background: rgba(255,255,255,0.06);
+      padding: 5px;
+      border-radius: 999px;
+    }
+    .nav-step-btn {
+      border: none;
+      background: transparent;
+      color: #94a3b8;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .nav-step-btn.active {
+      background: var(--blue);
+      color: white;
+      box-shadow: 0 2px 8px rgba(0,98,255,0.4);
+    }
+    .nav-step-btn:hover:not(.active) { color: white; background: rgba(255,255,255,0.1); }
+    .step-num {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+    }
+
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.82rem;
+      color: #38bdf8;
+      font-weight: 600;
+      background: rgba(56, 189, 248, 0.12);
+      padding: 6px 14px;
+      border-radius: 999px;
+    }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #38bdf8; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    /* Main Container */
+    main.desktop-content {
+      flex: 1;
+      max-width: 1360px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 28px 36px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    /* Screen Panes */
+    .screen-pane { display: none; flex-direction: column; gap: 24px; }
+    .screen-pane.active { display: flex; }
+
+    /* Section Headers */
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 14px;
+    }
+    .section-title { font-size: 1.55rem; font-weight: 850; color: var(--navy); }
+    .section-desc { font-size: 0.92rem; color: var(--text-muted); margin-top: 4px; }
+
+    /* ================= SCREEN 1: GRID OF RACES ================= */
+    .races-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+    .desktop-race-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+    .desktop-race-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-3px);
+      border-color: #cbd5e1;
+    }
+    .desktop-race-card.featured {
+      border: 2px solid var(--blue);
+      box-shadow: 0 8px 24px rgba(0,98,255,0.12);
+    }
+    .card-top { display: flex; justify-content: space-between; align-items: flex-start; }
+    .card-title { font-size: 1.25rem; font-weight: 800; color: var(--navy); }
+    .card-sub { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; font-weight: 500; }
+    
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 750;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .badge-green { background: var(--green-bg); color: #166534; }
+    .badge-amber { background: var(--amber-bg); color: #92400e; }
+    .badge-sky { background: var(--sky-bg); color: #075985; }
+
+    .race-meta-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #f8fafc;
+      border-radius: 10px;
+      overflow: hidden;
+      font-size: 0.84rem;
+    }
+    .race-meta-table td {
+      padding: 9px 12px;
+      border-bottom: 1px solid #edf2f7;
+    }
+    .race-meta-table td:first-child { color: var(--text-muted); font-weight: 500; width: 45%; }
+    .race-meta-table td:last-child { color: var(--text-main); font-weight: 700; text-align: right; }
+
+    /* Action Buttons */
+    .btn-action-primary {
+      background: var(--blue);
+      color: white;
+      border: none;
+      border-radius: 11px;
+      padding: 13px 20px;
+      font-size: 0.95rem;
+      font-weight: 750;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.15s;
+      width: 100%;
+    }
+    .btn-action-primary:hover { background: var(--blue-hover); }
+    .btn-action-secondary {
+      background: #e2e8f0;
+      color: var(--text-main);
+      border: none;
+      border-radius: 11px;
+      padding: 12px 20px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+    }
+    .btn-action-secondary:hover { background: #cbd5e1; }
+
+    /* ================= SCREEN 2: CONTEXT & TABLE ================= */
+    .context-dashboard-bar {
+      background: var(--navy);
+      color: white;
+      border-radius: var(--radius);
+      padding: 22px 28px;
+      display: grid;
+      grid-template-columns: 1.5fr repeat(4, 1fr);
+      gap: 20px;
+      align-items: center;
+      box-shadow: var(--shadow-md);
+    }
+    .context-metric-box { display: flex; flex-direction: column; gap: 3px; }
+    .context-metric-label { font-size: 0.78rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+    .context-metric-val { font-size: 1.15rem; font-weight: 800; color: white; }
+    .context-metric-sub { font-size: 0.78rem; color: #cbd5e1; }
+
+    /* Table of Horses Desktop */
+    .horses-table-card {
+      background: white;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+    .table-top-bar {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #fafcff;
+    }
+    .table-title { font-size: 1.05rem; font-weight: 800; color: var(--navy); }
+    .desktop-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+    .desktop-table th {
+      background: #f8fafc;
+      color: var(--text-muted);
+      font-weight: 700;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .desktop-table td {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .desktop-table tr:hover { background: #f8fafc; }
+    .desktop-table tr.selected-row { background: #f0f7ff; }
+
+    .saddle-pill {
+      width: 32px;
+      height: 32px;
+      border-radius: 9px;
+      background: #e2e8f0;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 850;
+      font-size: 0.92rem;
+    }
+    .saddle-pill.fav { background: #ffedd5; color: #c2410c; }
+    .horse-main-cell { display: flex; align-items: center; gap: 12px; }
+    .horse-name-txt { font-weight: 800; font-size: 0.98rem; color: var(--navy); }
+    .horse-sub-txt { font-size: 0.78rem; color: var(--text-muted); }
+
+    .pill-diet {
+      background: #f1f5f9;
+      color: #334155;
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: inline-block;
+      max-width: 260px;
+    }
+    .pill-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 750;
+    }
+
+    /* Screen 2 Buttons Bar */
+    .screen-actions-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+      gap: 16px;
+    }
+
+    /* ================= SCREEN 3: PEAS INFERENCE & EXPLAINABILITY ================= */
+    .prediction-desktop-layout {
+      display: grid;
+      grid-template-columns: 1.15fr 1.45fr;
+      gap: 26px;
+      align-items: stretch;
+    }
+    
+    /* Left: Winner Spotlight Card */
+    .winner-desktop-card {
+      background: linear-gradient(145deg, #0d2238 0%, #153860 100%);
+      color: white;
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .winner-badge-gold {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(245, 158, 11, 0.22);
+      color: #fbbf24;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 850;
+      letter-spacing: 0.05em;
+    }
+    .winner-horse-title { font-size: 2.3rem; font-weight: 900; margin: 12px 0 4px; letter-spacing: -0.02em; }
+    .winner-horse-meta { font-size: 0.95rem; color: #cbd5e1; }
+
+    .prob-big-stat {
+      background: rgba(255,255,255,0.06);
+      border-radius: 14px;
+      padding: 18px 22px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .prob-stat-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 8px; }
+    .prob-stat-num { font-size: 2.8rem; font-weight: 900; color: #38bdf8; line-height: 1; }
+    .prob-bar-rail {
+      height: 10px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .prob-bar-fill { height: 100%; background: #38bdf8; border-radius: 999px; }
+
+    .podium-desktop-box {
+      background: rgba(0,0,0,0.2);
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.88rem;
+    }
+    .podium-item { display: flex; justify-content: space-between; color: #cbd5e1; }
+
+    /* Right: Explainability & Factors Card */
+    .factors-desktop-card {
+      background: white;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      padding: 30px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .factors-card-title { font-size: 1.25rem; font-weight: 800; color: var(--navy); }
+    .factors-card-desc { font-size: 0.88rem; color: var(--text-muted); margin-top: 3px; }
+
+    .factor-bar-group {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .desktop-factor-item { display: flex; flex-direction: column; gap: 5px; }
+    .factor-item-info { display: flex; justify-content: space-between; font-size: 0.86rem; font-weight: 700; color: var(--navy); }
+    .factor-item-rail { height: 8px; background: #e2e8f0; border-radius: 999px; overflow: hidden; }
+    .factor-item-fill { height: 100%; background: var(--blue); border-radius: 999px; }
+
+    /* PEAS Benchmark Validation Card */
+    .peas-benchmark-bar {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-left: 5px solid var(--blue);
+      border-radius: 12px;
+      padding: 16px 22px;
+      font-size: 0.86rem;
+      color: #1e3a8a;
+      line-height: 1.5;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* Footer */
+    footer.desktop-footer {
+      background: white;
+      border-top: 1px solid var(--border);
+      padding: 20px 36px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Desktop Navigation Header -->
+  <header class="desktop-header">
+    <div class="header-left">
+      <div class="brand-logo" onclick="goToDesktopStep(0)">
+        <div class="brand-icon-box">🏇</div>
+        <span>RacePulse</span>
+      </div>
+      <span class="project-tag">Proyecto PTIA · Grupo 2 (ECI)</span>
+      
+      <!-- Central Workflow Steps Navigation -->
+      <nav class="workflow-nav" aria-label="Flujo de Predicción">
+        <button class="nav-step-btn active" id="tab-0" onclick="goToDesktopStep(0)">
+          <span class="step-num">1</span>
+          <span>Carreras & Hipódromos</span>
+        </button>
+        <button class="nav-step-btn" id="tab-1" onclick="goToDesktopStep(1)">
+          <span class="step-num">2</span>
+          <span>Contexto & Participantes</span>
+        </button>
+        <button class="nav-step-btn" id="tab-2" onclick="goToDesktopStep(2)">
+          <span class="step-num">3</span>
+          <span>Inferencia PEAS & Factores</span>
+        </button>
+      </nav>
+    </div>
+
+    <div class="header-right">
+      <div class="status-badge">
+        <span class="status-dot"></span>
+        <span>Agente PEAS Operativo</span>
+      </div>
+      <div style="font-size: 0.82rem; color: #cbd5e1; font-weight: 500;">
+        📅 Sábado, 26 de Octubre
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Desktop Content -->
+  <main class="desktop-content">
+
+    <!-- ========================================================================= -->
+    <!-- PANTALLA 1: EXPLORACIÓN Y SELECCIÓN DE CARRERAS                          -->
+    <!-- ========================================================================= -->
+    <section class="screen-pane active" id="pane-0">
+      <div class="section-head">
+        <div>
+          <h1 class="section-title">Panel de Carreras Disponibles</h1>
+          <p class="section-desc">Selecciona la prueba hípica que deseas analizar con el Agente Inteligente. Datos precompetencia oficiales verificados.</p>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <span class="badge badge-green">3 Hipódromos activos</span>
+          <span class="badge badge-sky">Temporada UK / USA</span>
+        </div>
+      </div>
+
+      <div class="races-grid">
+        <!-- Tarjeta 1: Royal Ascot -->
+        <div class="desktop-race-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <h2 class="card-title">C1 | Royal Ascot (UK)</h2>
+                <p class="card-sub">Handicap de Velocidad · 6 furlongs (1.200 m)</p>
+              </div>
+              <span class="badge badge-green">Finalizada</span>
+            </div>
+
+            <table class="race-meta-table" style="margin-top:16px;">
+              <tr><td>Superficie:</td><td>Césped (Turf)</td></tr>
+              <tr><td>Condición oficial:</td><td>Good (Terreno firme)</td></tr>
+              <tr><td>Humedad estimada:</td><td>11%</td></tr>
+              <tr><td>Participantes:</td><td>12 ejemplares</td></tr>
+              <tr><td>Bolsa de premios:</td><td>£35.000</td></tr>
+            </table>
+          </div>
+          <button class="btn-action-secondary" onclick="goToDesktopStep(1)">
+            <span>Consultar Registro Histórico</span>
+          </button>
+        </div>
+
+        <!-- Tarjeta 2: Belmont Stakes (Seleccionada) -->
+        <div class="desktop-race-card featured">
+          <div>
+            <div class="card-top">
+              <div>
+                <h2 class="card-title">C2 | Belmont Stakes</h2>
+                <p class="card-sub">1:30 PM · 1 1/16 milla clásica (1.700 m)</p>
+              </div>
+              <span class="badge badge-amber">● En Análisis Activo</span>
+            </div>
+
+            <table class="race-meta-table" style="margin-top:16px;">
+              <tr><td>Superficie de pista:</td><td>Césped (Turf Clásico)</td></tr>
+              <tr><td>Condición del terreno:</td><td>Good To Soft</td></tr>
+              <tr><td>Humedad del suelo:</td><td>16% (Húmedo blando)</td></tr>
+              <tr><td>Caballos inscritos:</td><td>8 competidores</td></tr>
+              <tr><td>Premio al 1er lugar:</td><td>£20.000 / $25.000</td></tr>
+            </table>
+          </div>
+          <button class="btn-action-primary" onclick="goToDesktopStep(1)">
+            <span>Revisar Datos y Participantes</span> →
+          </button>
+        </div>
+
+        <!-- Tarjeta 3: Saratoga -->
+        <div class="desktop-race-card">
+          <div>
+            <div class="card-top">
+              <div>
+                <h2 class="card-title">C3 | Saratoga (USA)</h2>
+                <p class="card-sub">2:05 PM · Stakes Intermedio (1.700 m)</p>
+              </div>
+              <span class="badge badge-sky">Próxima</span>
+            </div>
+
+            <table class="race-meta-table" style="margin-top:16px;">
+              <tr><td>Superficie de pista:</td><td>Sintética / All-Weather</td></tr>
+              <tr><td>Condición del terreno:</td><td>Standard Compacto</td></tr>
+              <tr><td>Humedad del suelo:</td><td>12%</td></tr>
+              <tr><td>Caballos inscritos:</td><td>10 competidores</td></tr>
+              <tr><td>Bolsa de premios:</td><td>$75.000</td></tr>
+            </table>
+          </div>
+          <button class="btn-action-secondary" onclick="goToDesktopStep(1)">
+            <span>Ver Detalles Técnicos</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- PANTALLA 2: REVISIÓN DE DATOS, CONTEXTO Y PARTICIPANTES                  -->
+    <!-- ========================================================================= -->
+    <section class="screen-pane" id="pane-1">
+      <div class="section-head">
+        <div>
+          <h1 class="section-title">Contexto de Pista y Fichas de Participantes</h1>
+          <p class="section-desc">Inspección de variables biológicas, nutricionales, hándicap y cajón de salida para la carrera seleccionada.</p>
+        </div>
+        <div>
+          <button class="btn-action-secondary" style="width:auto; padding:8px 18px;" onclick="goToDesktopStep(0)">← Volver a Carreras</button>
+        </div>
+      </div>
+
+      <!-- Context Dashboard Metric Bar -->
+      <div class="context-dashboard-bar">
+        <div class="context-metric-box">
+          <span class="context-metric-label">Prueba Hípica Seleccionada</span>
+          <span class="context-metric-val">C2 | Belmont Stakes</span>
+          <span class="context-metric-sub">Distancia: 1.700 metros (1 1/16m) · 1:30 PM</span>
+        </div>
+        <div class="context-metric-box">
+          <span class="context-metric-label">Superficie Física</span>
+          <span class="context-metric-val">Césped (Turf)</span>
+          <span class="context-metric-sub">Circuito principal</span>
+        </div>
+        <div class="context-metric-box">
+          <span class="context-metric-label">Condición Terreno</span>
+          <span class="context-metric-val">Good To Soft</span>
+          <span class="context-metric-sub">Humedad estimada: 16%</span>
+        </div>
+        <div class="context-metric-box">
+          <span class="context-metric-label">Clima & Viento</span>
+          <span class="context-metric-val">18°C · Parcial</span>
+          <span class="context-metric-sub">Viento: NW 12 km/h</span>
+        </div>
+        <div class="context-metric-box">
+          <span class="context-metric-label">Muestra Auditada</span>
+          <span class="context-metric-val">8 Ejemplares</span>
+          <span class="context-metric-sub">forward.csv enriquecido</span>
+        </div>
+      </div>
+
+      <!-- Table of Participating Horses with Enriched Features -->
+      <div class="horses-table-card">
+        <div class="table-top-bar">
+          <div class="table-title">Nómina Oficial de Caballos Participantes (Variables Precompetencia)</div>
+          <span style="font-size:0.82rem; color:var(--text-muted);">Haz clic en cualquier participante o genera la inferencia</span>
+        </div>
+
+        <table class="desktop-table">
+          <thead>
+            <tr>
+              <th>Dorsal / Cajón</th>
+              <th>Caballo & Jinete</th>
+              <th>Edad</th>
+              <th>Historial Deportivo</th>
+              <th>Plan Nutricional / Dieta (kcal/día)</th>
+              <th>Estado Veterinario</th>
+              <th>Cuota / Mercado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Fila 1: Waterproof (Favorito) -->
+            <tr class="selected-row">
+              <td><div class="saddle-pill fav">3</div></td>
+              <td>
+                <div class="horse-main-cell">
+                  <div>
+                    <div class="horse-name-txt">Waterproof <span style="color:var(--blue); font-size:0.75rem;">(Cajón 3 - Carril Interior)</span></div>
+                    <div class="horse-sub-txt">Jinete: Brendan Powell · Peso asignado: 66 kg (10st 7lb)</div>
+                  </div>
+                </div>
+              </td>
+              <td><strong>4 años</strong></td>
+              <td>
+                <strong>14 corridas</strong> · 4 victorias (28.6% éxito)<br>
+                <span class="horse-sub-txt">Última carrera: hace 21 días (descanso óptimo)</span>
+              </td>
+              <td>
+                <span class="pill-diet">Forraje balanceado + concentrado alta energía</span><br>
+                <span style="font-size:0.75rem; color:var(--text-muted);">Aporte: <strong>33.200 kcal/día</strong> · Electrolitos isotónicos</span>
+              </td>
+              <td><span class="pill-status" style="background:#dcfce7; color:#166534;">● Excelente / Óptimo</span></td>
+              <td><strong style="color:var(--blue); font-size:1.1rem;">5/2 (38.4%)</strong></td>
+            </tr>
+
+            <!-- Fila 2: Thunder Bolt -->
+            <tr>
+              <td><div class="saddle-pill">1</div></td>
+              <td>
+                <div class="horse-main-cell">
+                  <div>
+                    <div class="horse-name-txt">Thunder Bolt <span style="color:var(--text-muted); font-size:0.75rem;">(Cajón 1)</span></div>
+                    <div class="horse-sub-txt">Jinete: J. Miller · Peso asignado: 64 kg</div>
+                  </div>
+                </div>
+              </td>
+              <td><strong>3 años</strong></td>
+              <td>
+                <strong>8 corridas</strong> · 2 victorias (25.0% éxito)<br>
+                <span class="horse-sub-txt">Última carrera: hace 14 días</span>
+              </td>
+              <td>
+                <span class="pill-diet">Heno Timothy con mezcla de avena y grano</span><br>
+                <span style="font-size:0.75rem; color:var(--text-muted);">Aporte: <strong>32.000 kcal/día</strong> · Vitaminas complejo B</span>
+              </td>
+              <td><span class="pill-status" style="background:#dcfce7; color:#166534;">● Apto sin restricciones</span></td>
+              <td><strong style="color:var(--navy); font-size:1.05rem;">3/1 (25.0%)</strong></td>
+            </tr>
+
+            <!-- Fila 3: Colfer Kay -->
+            <tr>
+              <td><div class="saddle-pill">7</div></td>
+              <td>
+                <div class="horse-main-cell">
+                  <div>
+                    <div class="horse-name-txt">Colfer Kay <span style="color:var(--text-muted); font-size:0.75rem;">(Cajón 7 - Carril Exterior)</span></div>
+                    <div class="horse-sub-txt">Jinete: K. Smith · Peso asignado: 65 kg</div>
+                  </div>
+                </div>
+              </td>
+              <td><strong>5 años</strong></td>
+              <td>
+                <strong>22 corridas</strong> · 5 victorias (22.7% éxito)<br>
+                <span class="horse-sub-txt">Última carrera: hace 7 días (poco descanso)</span>
+              </td>
+              <td>
+                <span class="pill-diet">Alfalfa de alta digestibilidad con suplemento</span><br>
+                <span style="font-size:0.75rem; color:var(--text-muted);">Aporte: <strong>31.800 kcal/día</strong> · Minerales quelados</span>
+              </td>
+              <td><span class="pill-status" style="background:#fef3c7; color:#92400e;">▲ Fatiga leve en monitoreo</span></td>
+              <td><strong style="color:var(--navy); font-size:1.05rem;">6/1 (14.2%)</strong></td>
+            </tr>
+
+            <!-- Fila 4: Golden Streak -->
+            <tr>
+              <td><div class="saddle-pill">5</div></td>
+              <td>
+                <div class="horse-main-cell">
+                  <div>
+                    <div class="horse-name-txt">Golden Streak <span style="color:var(--text-muted); font-size:0.75rem;">(Cajón 5)</span></div>
+                    <div class="horse-sub-txt">Jinete: L. Davis · Peso asignado: 63 kg</div>
+                  </div>
+                </div>
+              </td>
+              <td><strong>4 años</strong></td>
+              <td>
+                <strong>18 corridas</strong> · 3 victorias (16.7% éxito)<br>
+                <span class="horse-sub-txt">Última carrera: hace 35 días</span>
+              </td>
+              <td>
+                <span class="pill-diet">Pasto fresco con cereal enriquecido y fibra</span><br>
+                <span style="font-size:0.75rem; color:var(--text-muted);">Aporte: <strong>30.500 kcal/día</strong> · Dieta base</span>
+              </td>
+              <td><span class="pill-status" style="background:#dcfce7; color:#166534;">● Apto sin restricciones</span></td>
+              <td><strong style="color:var(--navy); font-size:1.05rem;">9/2 (18.1%)</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Action Buttons Bar -->
+      <div class="screen-actions-bar">
+        <button class="btn-action-secondary" style="width:240px;" onclick="goToDesktopStep(0)">
+          ← Elegir Otra Carrera
+        </button>
+        <button class="btn-action-primary" style="width:360px;" onclick="goToDesktopStep(2)">
+          <span>Ejecutar Inferencia del Agente PEAS</span> →
+        </button>
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- PANTALLA 3: PREDICCIÓN PEAS Y EXPLICABILIDAD DE FACTORES                  -->
+    <!-- ========================================================================= -->
+    <section class="screen-pane" id="pane-2">
+      <div class="section-head">
+        <div>
+          <h1 class="section-title">Dictamen del Agente Inteligente (Marco PEAS)</h1>
+          <p class="section-desc">Recomendación probabilística Top-1 y ponderación explicable de factores fisiológicos y de pista.</p>
+        </div>
+        <div>
+          <button class="btn-action-secondary" style="width:auto; padding:8px 18px;" onclick="goToDesktopStep(1)">← Revisar Datos</button>
+        </div>
+      </div>
+
+      <!-- 2-Column Desktop Layout for Results -->
+      <div class="prediction-desktop-layout">
+        
+        <!-- Left Column: Spotlight Winner Card -->
+        <div class="winner-desktop-card">
+          <div>
+            <div class="winner-badge-gold">🏆 PREDICCIÓN GANADORA · RECOMENDACIÓN TOP-1</div>
+            <h2 class="winner-horse-title">Waterproof</h2>
+            <p class="winner-horse-meta">Dorsal 3 · Cajón 3 (Carril Interior) · Jinete: Brendan Powell · Entrenador: S. Keightley</p>
+          </div>
+
+          <div class="prob-big-stat">
+            <div class="prob-stat-head">
+              <span style="font-size:0.85rem; color:#cbd5e1; font-weight:700; text-transform:uppercase; letter-spacing:0.04em;">Probabilidad de Victoria Estimada</span>
+              <span class="prob-stat-num">38.4%</span>
+            </div>
+            <div class="prob-bar-rail">
+              <div class="prob-bar-fill" style="width: 76.8%;"></div>
+            </div>
+            <p style="font-size:0.78rem; color:#94a3b8; margin-top:8px;">Probabilidad normalizada multiclase sobre el total de competidores de la prueba.</p>
+          </div>
+
+          <div class="podium-desktop-box">
+            <div style="font-weight:800; color:white; margin-bottom:4px; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.04em;">Podio Estimado (Top 3 de la Carrera):</div>
+            <div class="podium-item">
+              <span><strong>1° Lugar:</strong> Waterproof (Cajón 3)</span>
+              <strong style="color:#38bdf8;">38.4%</strong>
+            </div>
+            <div class="podium-item">
+              <span><strong>2° Lugar:</strong> Thunder Bolt (Cajón 1)</span>
+              <span>18.2%</span>
+            </div>
+            <div class="podium-item">
+              <span><strong>3° Lugar:</strong> Colfer Kay (Cajón 7)</span>
+              <span>12.5%</span>
+            </div>
+          </div>
+
+          <button class="btn-action-primary" style="background:#38bdf8; color:var(--navy); font-weight:850;" onclick="alert('Pronóstico registrado en la base de pruebas del Agente PEAS.');">
+            <span>Registrar Pronóstico Oficial</span>
+          </button>
+        </div>
+
+        <!-- Right Column: Model Explainability Factors -->
+        <div class="factors-desktop-card">
+          <div>
+            <h3 class="factors-card-title">Ponderación Explicable del Modelo (Feature Importance)</h3>
+            <p class="factors-card-desc">Contribución relativa de las variables precompetencia a la decisión tomada por el agente:</p>
+          </div>
+
+          <div class="factor-bar-group">
+            <div class="desktop-factor-item">
+              <div class="factor-item-info">
+                <span>Historial deportivo y victorias acumuladas (4 vic. / 28.6% efectividad)</span>
+                <span style="color:var(--blue);">78%</span>
+              </div>
+              <div class="factor-item-rail"><div class="factor-item-fill" style="width:78%;"></div></div>
+            </div>
+
+            <div class="desktop-factor-item">
+              <div class="factor-item-info">
+                <span>Ajuste biométrico a pista y terreno húmedo (Good To Soft - Turf)</span>
+                <span style="color:var(--blue);">68%</span>
+              </div>
+              <div class="factor-item-rail"><div class="factor-item-fill" style="width:68%;"></div></div>
+            </div>
+
+            <div class="desktop-factor-item">
+              <div class="factor-item-info">
+                <span>Edad y madurez fisiológica competitiva (4 años - pico de rendimiento)</span>
+                <span style="color:var(--blue);">60%</span>
+              </div>
+              <div class="factor-item-rail"><div class="factor-item-fill" style="width:60%;"></div></div>
+            </div>
+
+            <div class="desktop-factor-item">
+              <div class="factor-item-info">
+                <span>Plan nutricional y aporte calórico diario (Forraje alto en energía - 33.200 kcal)</span>
+                <span style="color:var(--blue);">52%</span>
+              </div>
+              <div class="factor-item-rail"><div class="factor-item-fill" style="width:52%;"></div></div>
+            </div>
+
+            <div class="desktop-factor-item">
+              <div class="factor-item-info">
+                <span>Puesto de salida favorable (Cajón interior 3 - ventaja en primera curva)</span>
+                <span style="color:var(--blue);">44%</span>
+              </div>
+              <div class="factor-item-rail"><div class="factor-item-fill" style="width:44%;"></div></div>
+            </div>
+
+            <div class="desktop-factor-item">
+              <div class="factor-item-info">
+                <span>Dictamen veterinario y descanso biológico (21 días de recuperación)</span>
+                <span style="color:var(--blue);">38%</span>
+              </div>
+              <div class="factor-item-rail"><div class="factor-item-fill" style="width:38%;"></div></div>
+            </div>
+          </div>
+
+          <!-- Bottom Benchmark Box -->
+          <div class="peas-benchmark-bar">
+            <div>
+              <strong>Validación Experimental PEAS:</strong> Modelo tabular entrenado sobre partición temporal cronológica (cero lookahead bias). Calibración validada con <strong>Brier Score = 0.0979</strong> y superación de la cuota del favorito precompetencia.
+            </div>
+            <button class="btn-action-secondary" style="width:auto; padding:8px 16px; font-size:0.8rem; background:white;" onclick="goToDesktopStep(0)">
+              Nueva Carrera
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Desktop Footer -->
+  <footer class="desktop-footer">
+    <div>
+      <strong>RacePulse Desktop v2.0</strong> · Sistema de Recomendación y Predicción Hípica bajo el Marco PEAS.
+    </div>
+    <div>
+      Escuela Colombiana de Ingeniería Julio Garavito · Curso PTIA (Grupo 2)
+    </div>
+  </footer>
+
+  <!-- Script for Tab Navigation -->
+  <script>
+    function goToDesktopStep(stepIndex) {
+      const panes = document.querySelectorAll('.screen-pane');
+      const tabs = document.querySelectorAll('.nav-step-btn');
+      
+      panes.forEach((p, i) => p.classList.toggle('active', i === stepIndex));
+      tabs.forEach((t, i) => t.classList.toggle('active', i === stepIndex));
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
