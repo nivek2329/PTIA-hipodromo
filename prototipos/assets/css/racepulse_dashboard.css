@@ -1,0 +1,935 @@
+/* ==========================================================================
+   RacePulse AI — Executive Dark & Gold Design System
+   Paleta Oficial:
+   #080B10 (Negro Profundo), #101827 (Azul Marino Oscuro), #1B2638 (Azul Grisáceo),
+   #D6A63C (Dorado Principal), #F4D27A (Dorado Claro), #F5F5F5 (Blanco),
+   #A7AFBD (Gris Secundario), #303746 (Bordes).
+   ========================================================================== */
+
+:root {
+  --bg-deep: #080B10;
+  --bg-navy: #101827;
+  --bg-card: #1B2638;
+  --bg-card-hover: #223046;
+  --bg-glass: rgba(16, 24, 39, 0.85);
+  
+  --gold-main: #D6A63C;
+  --gold-light: #F4D27A;
+  --gold-dark: #A97E25;
+  --gold-gradient: linear-gradient(135deg, #D6A63C 0%, #F4D27A 100%);
+  --gold-subtle: rgba(214, 166, 60, 0.12);
+  --gold-border: rgba(214, 166, 60, 0.4);
+  
+  --text-white: #F5F5F5;
+  --text-gray: #A7AFBD;
+  --text-muted: #9CA3AF;
+  --border-color: #303746;
+  --border-subtle: rgba(255, 255, 255, 0.08);
+
+  --accent-green: #10B981;
+  --accent-blue: #38BDF8;
+  --accent-red: #EF4444;
+
+  --sidebar-w: 245px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Reset y Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: var(--text-white);
+  font-family: "Segoe UI Variable", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: #253349;
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-dark);
+}
+
+/* ==========================================================================
+   A. Barra Lateral Izquierda (Sidebar)
+   ========================================================================== */
+.sidebar {
+  width: var(--sidebar-w);
+  background-color: var(--bg-deep);
+  border-right: 1px solid var(--border-color);
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px 16px 16px;
+  transition: transform 0.3s ease;
+}
+
+.brand-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.brand-logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-horse-svg {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+}
+
+.brand-title {
+  font-size: 1.4rem;
+  font-weight: 850;
+  color: var(--text-white);
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: baseline;
+  gap: 2px;
+}
+
+.brand-title span.gold {
+  color: var(--gold-main);
+}
+
+.brand-tagline {
+  font-size: 0.8rem;
+  font-weight: 650;
+  color: var(--gold-light);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Menú de Navegación */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 20px;
+  flex: 1;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  border-radius: var(--radius-sm);
+  color: var(--text-gray);
+  text-decoration: none;
+  font-weight: 650;
+  font-size: 0.92rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: var(--transition);
+  background: transparent;
+  width: 100%;
+  text-align: left;
+}
+
+.nav-item svg {
+  width: 19px;
+  height: 19px;
+  flex-shrink: 0;
+  stroke: currentColor;
+  stroke-width: 2;
+  transition: var(--transition);
+}
+
+.nav-item:hover {
+  color: var(--text-white);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Estado activo dorado */
+.nav-item.active {
+  background: var(--gold-gradient);
+  color: #080B10;
+  font-weight: 850;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  border-color: transparent;
+}
+
+.nav-item.active svg {
+  stroke: #080B10;
+}
+
+/* Tarjeta IA en Sidebar */
+.sidebar-ai-card {
+  background: linear-gradient(145deg, #101827 0%, #152238 100%);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+  margin-top: auto;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  position: relative;
+  overflow: hidden;
+}
+
+.sidebar-ai-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gold-gradient);
+}
+
+.ai-chip-icon {
+  width: 32px;
+  height: 32px;
+  background: rgba(214, 166, 60, 0.12);
+  border: 1px solid var(--gold-border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold-light);
+}
+
+.ai-chip-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.ai-card-title {
+  font-size: 0.85rem;
+  font-weight: 750;
+  color: var(--text-white);
+}
+
+.ai-card-desc {
+  font-size: 0.8rem;
+  color: var(--text-gray);
+  line-height: 1.35;
+}
+
+/* Onda Dorada Inferior */
+.sidebar-footer-wave {
+  width: 100%;
+  height: 16px;
+  opacity: 0.85;
+}
+
+/* ==========================================================================
+   B. Encabezado Principal y Estructura Dashboard
+   ========================================================================== */
+.dashboard-wrapper {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-deep);
+  position: relative;
+}
+
+.dashboard-header {
+  padding: 22px 32px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-deep);
+  border-bottom: 1px solid rgba(48, 55, 70, 0.6);
+  position: sticky;
+  top: 0;
+  z-index: 90;
+}
+
+.header-text-group {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.header-title {
+  font-size: 1.75rem;
+  font-weight: 850;
+  color: var(--text-white);
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+.header-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-gray);
+  margin: 0;
+  font-weight: 500;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-icon-btn {
+  background: var(--bg-navy);
+  border: 1px solid var(--border-color);
+  color: var(--text-gray);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: var(--transition);
+}
+
+.header-icon-btn:hover {
+  color: var(--gold-light);
+  border-color: var(--gold-main);
+  background: var(--bg-card);
+}
+
+.header-icon-btn .badge-dot {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--gold-main);
+}
+
+.user-avatar-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gold-border);
+  background: linear-gradient(135deg, #1a273a 0%, #101827 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold-light);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.user-avatar-btn:hover {
+  border-color: var(--gold-light);
+}
+
+/* Botón Menú Móvil */
+.mobile-menu-toggle {
+  display: none;
+  background: var(--bg-navy);
+  border: 1px solid var(--border-color);
+  color: var(--text-white);
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+/* Contenido Principal */
+.dashboard-content {
+  padding: 24px 32px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Vistas */
+.dashboard-view {
+  display: none;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.dashboard-view.active {
+  display: flex;
+  animation: viewFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes viewFadeIn {
+  from { opacity: 0.65; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   C. Banner Panorámico de Carrera Seleccionada
+   ========================================================================== */
+.race-banner {
+  background-color: #0c1421;
+  background-image:
+    linear-gradient(90deg, rgba(8, 11, 16, 0.96) 0%, rgba(16, 24, 39, 0.88) 48%, rgba(16, 24, 39, 0.32) 100%),
+    url('../hero_action.jpg');
+  background-size: cover;
+  background-position: right center;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 22px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  position: relative;
+  overflow: hidden;
+}
+
+.banner-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  z-index: 2;
+}
+
+.coliseum-icon-box {
+  width: 48px;
+  height: 48px;
+  background: rgba(214, 166, 60, 0.12);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold-light);
+  flex-shrink: 0;
+}
+
+.banner-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.banner-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--text-white);
+  letter-spacing: -0.01em;
+}
+
+.banner-badges {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.84rem;
+  color: var(--text-gray);
+}
+
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-weight: 650;
+  font-size: 0.82rem;
+}
+
+.badge-turf {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.badge-runners {
+  background: rgba(214, 166, 60, 0.15);
+  color: var(--gold-light);
+  border: 1px solid var(--gold-border);
+}
+
+/* ==========================================================================
+   D, E, F. Grid Principal de Análisis de 3 Columnas
+   ========================================================================== */
+.analysis-grid {
+  display: grid;
+  grid-template-columns: 245px 1.25fr 1fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+/* Tarjetas Base */
+.card-panel {
+  background-color: var(--bg-navy);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  transition: var(--transition);
+}
+
+.card-header-clean {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.98rem;
+  font-weight: 750;
+  color: var(--text-white);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(48, 55, 70, 0.6);
+}
+
+.card-header-clean svg {
+  color: var(--gold-main);
+  width: 19px;
+  height: 19px;
+}
+
+/* D. Filtros de Carrera */
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.filter-label {
+  font-size: 0.82rem;
+  font-weight: 650;
+  color: var(--text-gray);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.form-select-dark {
+  background-color: var(--bg-deep);
+  border: 1px solid var(--border-color);
+  color: var(--text-white);
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.86rem;
+  outline: none;
+  cursor: pointer;
+  transition: var(--transition);
+  width: 100%;
+}
+
+.form-select-dark:focus {
+  border-color: var(--gold-main);
+}
+
+.btn-gold {
+  background: var(--gold-gradient);
+  color: #080B10;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 850;
+  font-size: 0.9rem;
+  padding: 12px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: var(--transition);
+  margin-top: 6px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  width: 100%;
+}
+
+.btn-gold:hover {
+  background: linear-gradient(135deg, #F4D27A 0%, #D6A63C 100%);
+  transform: translateY(-1px);
+}
+
+.btn-gold:active {
+  transform: translateY(0);
+}
+
+/* E. Tabla de Participantes y Predicciones */
+.table-wrapper {
+  overflow-x: auto;
+  flex: 1;
+}
+
+.table-racepulse {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  text-align: left;
+}
+
+.table-racepulse th {
+  color: var(--text-gray);
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 11px 10px;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--bg-navy);
+}
+
+.table-racepulse td {
+  padding: 10px 10px;
+  border-bottom: 1px solid rgba(48, 55, 70, 0.45);
+  color: var(--text-white);
+  vertical-align: middle;
+}
+
+.table-racepulse tr {
+  transition: background-color 0.15s ease;
+}
+
+.table-racepulse tr:hover td {
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+/* Fila #1 Ganador Resaltado en Dorado */
+.table-racepulse tr.winner-row td {
+  background: rgba(214, 166, 60, 0.1);
+  border-top: 1px solid var(--gold-main);
+  border-bottom: 1px solid var(--gold-main);
+}
+
+.table-racepulse tr.winner-row td:first-child {
+  border-left: 1px solid var(--gold-main);
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.table-racepulse tr.winner-row td:last-child {
+  border-right: 1px solid var(--gold-main);
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+
+.winner-badge-num {
+  font-weight: 850;
+  color: var(--gold-light);
+  display: inline-block;
+  width: 18px;
+}
+
+.prob-cell {
+  font-weight: 800;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.prob-gold {
+  color: var(--gold-light);
+  font-size: 0.92rem;
+  font-weight: 850;
+}
+
+/* F. Gráfica de Barras Horizontales de Probabilidad */
+.prob-chart-container {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  flex: 1;
+}
+
+.prob-chart-row {
+  display: grid;
+  grid-template-columns: 115px 1fr 52px;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.84rem;
+}
+
+.prob-horse-name {
+  color: var(--text-white);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.prob-bar-track {
+  background: #0c1421;
+  border: 1px solid rgba(48, 55, 70, 0.6);
+  border-radius: 4px;
+  height: 15px;
+  overflow: hidden;
+  position: relative;
+}
+
+.prob-bar-fill {
+  background: var(--gold-gradient);
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.prob-chart-row:first-child .prob-bar-fill {
+  background: linear-gradient(90deg, #D6A63C 0%, #FFE599 100%);
+}
+
+.prob-val-text {
+  text-align: right;
+  font-weight: 750;
+  color: var(--text-white);
+  font-size: 0.82rem;
+}
+
+.prob-chart-row:first-child .prob-val-text {
+  color: var(--gold-light);
+}
+
+/* Eje X de porcentajes */
+.prob-x-axis {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--border-color);
+  padding-top: 8px;
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: var(--text-gray);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   G, H. Fila Inferior: Factores de Predicción y Nota Importante
+   ========================================================================== */
+.bottom-panels-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+/* G. Factores de Predicción */
+.factors-chips-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.factor-chip {
+  background: rgba(16, 24, 39, 0.9);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.factor-chip-top {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  color: var(--text-gray);
+  font-weight: 650;
+  text-transform: uppercase;
+}
+
+.factor-chip-top svg {
+  color: var(--gold-main);
+  width: 15px;
+  height: 15px;
+}
+
+.factor-chip-val {
+  font-size: 1.1rem;
+  font-weight: 850;
+  color: var(--text-white);
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.factor-chip-val span.unit {
+  font-size: 0.82rem;
+  color: var(--gold-light);
+  font-weight: 700;
+}
+
+/* H. Nota Importante */
+.disclaimer-card {
+  position: relative;
+  overflow: hidden;
+  justify-content: center;
+}
+
+.disclaimer-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.92rem;
+  font-weight: 750;
+  color: var(--gold-light);
+  margin-bottom: 6px;
+}
+
+.disclaimer-text {
+  font-size: 0.84rem;
+  color: var(--text-gray);
+  line-height: 1.5;
+  max-width: 82%;
+}
+
+.disclaimer-horse-watermark {
+  position: absolute;
+  right: -8px;
+  bottom: -12px;
+  width: 100px;
+  height: 100px;
+  opacity: 0.16;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.dashboard-footer {
+  margin-top: 10px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(48, 55, 70, 0.5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.footer-brand {
+  color: var(--gold-main);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+/* ==========================================================================
+   Secciones Adicionales: Evaluación y Participantes
+   ========================================================================== */
+.eval-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.eval-metric-card {
+  background: var(--bg-navy);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.eval-metric-card.gold-border {
+  border-color: var(--gold-border);
+  background: linear-gradient(145deg, #101827 0%, rgba(214, 166, 60, 0.08) 100%);
+}
+
+.eval-metric-label {
+  font-size: 0.82rem;
+  color: var(--text-gray);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.eval-metric-val {
+  font-size: 1.7rem;
+  font-weight: 900;
+  color: var(--text-white);
+}
+
+.eval-metric-sub {
+  font-size: 0.82rem;
+  color: var(--gold-light);
+  font-weight: 600;
+}
+
+.eval-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+@media (max-width: 1200px) {
+  .analysis-grid {
+    grid-template-columns: 220px 1fr;
+  }
+  .analysis-grid > .card-panel:nth-child(3) {
+    grid-column: span 2;
+  }
+  .bottom-panels-grid {
+    grid-template-columns: 1fr;
+  }
+  .eval-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    transform: translateX(-100%);
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.7);
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  .dashboard-wrapper {
+    margin-left: 0;
+  }
+  .mobile-menu-toggle {
+    display: inline-flex;
+  }
+  .analysis-grid {
+    grid-template-columns: 1fr;
+  }
+  .analysis-grid > .card-panel:nth-child(3) {
+    grid-column: auto;
+  }
+  .factors-chips-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .eval-two-col {
+    grid-template-columns: 1fr;
+  }
+  .dashboard-content {
+    padding: 16px;
+  }
+  .dashboard-header {
+    padding: 16px;
+  }
+}
