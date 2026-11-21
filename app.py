@@ -15,17 +15,20 @@ import numpy as np
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import uvicorn
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ARTIFACTS_PATH = os.path.join(BASE_DIR, "src", "mvp_artifacts_hito3.json")
 MVP_HTML_PATH = os.path.join(BASE_DIR, "prototipos", "mvp_hito3.html")
+ASSETS_DIR = os.path.join(BASE_DIR, "prototipos", "assets")
 
 if not os.path.exists(ARTIFACTS_PATH):
     # Fallback si se ejecuta desde dentro de src/
     ARTIFACTS_PATH = os.path.join(BASE_DIR, "mvp_artifacts_hito3.json")
     MVP_HTML_PATH = os.path.join(BASE_DIR, "..", "prototipos", "mvp_hito3.html")
+    ASSETS_DIR = os.path.join(BASE_DIR, "..", "prototipos", "assets")
 
 with open(ARTIFACTS_PATH, "r", encoding="utf-8") as f:
     ARTIFACTS = json.load(f)
@@ -52,6 +55,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+if os.path.exists(ASSETS_DIR):
+    app.mount("/assets", StaticFiles(directory=ASSETS_DIR), name="assets")
 
 
 class PredictRequest(BaseModel):
