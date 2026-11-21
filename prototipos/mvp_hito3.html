@@ -5220,6 +5220,16 @@ function renderScreen4() {
 renderFilters();
 renderRacesGrid();
 renderScreen4();
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const sc = params.get("screen");
+  if (sc === "3") {
+    selectRace(411357);
+    runInferenceAndGo();
+  } else if (sc === "4") {
+    goScreen(4);
+  }
+})();
 </script>
 </body>
 </html>

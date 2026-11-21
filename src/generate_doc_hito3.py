@@ -199,6 +199,25 @@ def main():
     ]:
         insert_paragraph_before(toc_anchor, line, "Body Text")
 
+    # Insertar nuevas entradas en Índice de Tablas y Índice de Figuras
+    idx_fig_h1 = next(p for p in doc.paragraphs if p.text.strip() == "Índice de Figuras")
+    for t_line in [
+        "Tabla 4. Evaluación comparativa en el conjunto de prueba temporal (Test 2020, n = 14,700 carreras).",
+        "Tabla 5. Secuencia de entradas y salidas de los dos mejores casos de prueba (Test 2020).",
+        "Tabla 6. Desempeño desglosado por hipódromo en Test 2020.",
+        "Tabla 7. Síntesis de los dos aciertos y dos errores más relevantes con su aprendizaje.",
+    ]:
+        insert_paragraph_before(idx_fig_h1, t_line, "Body Text")
+
+    intro_h1 = next(p for p in doc.paragraphs if p.text.strip() == "Introducción")
+    for f_line in [
+        "Figura 6. Comparativa de Hit Rate@1 y Log-Loss multiclase en el conjunto de prueba (2020).",
+        "Figura 7. Curva de aprendizaje en transferencia de dominio Sha Tin → Happy Valley (Test 2020, n = 298).",
+        "Figura 8. MVP Funcional Hito 3 (Pantalla 3): Inferencia PEAS en vivo sobre Sha Tin (RID 411357).",
+        "Figura 9. MVP Funcional Hito 3 (Pantalla 4): Evaluación global (2020) y transferencia de dominio.",
+    ]:
+        insert_paragraph_before(intro_h1, f_line, "Body Text")
+
     # Renumerar encabezado de sección 7 existente -> 9
     proto_h1 = next(p for i, p in enumerate(doc.paragraphs) if i > 200 and "Prototipo de papel" in p.text)
     proto_h1.text = "9. Prototipo de papel, interfaz y MVP funcional"
@@ -387,6 +406,17 @@ def main():
         "y la curva de transferencia de dominio Sha Tin → Happy Valley.",
         "Body Text"
     )
+
+    mvp_inf = os.path.join(DOCS_DIR, "fig_hito3_mvp_inferencia.png")
+    mvp_eval = os.path.join(DOCS_DIR, "fig_hito3_mvp_evaluacion.png")
+    if os.path.exists(mvp_inf):
+        p_f8 = insert_paragraph_before(ref_p, "", "Normal")
+        p_f8.add_run().add_picture(mvp_inf, width=Inches(6.1))
+        insert_paragraph_before(ref_p, "Figura 8. MVP Funcional Hito 3 (Pantalla 3): Inferencia PEAS en vivo sobre Sha Tin (RID 411357).", "Normal")
+    if os.path.exists(mvp_eval):
+        p_f9 = insert_paragraph_before(ref_p, "", "Normal")
+        p_f9.add_run().add_picture(mvp_eval, width=Inches(6.1))
+        insert_paragraph_before(ref_p, "Figura 9. MVP Funcional Hito 3 (Pantalla 4): Evaluación global (2020) y transferencia de dominio.", "Normal")
 
     doc.save(HITO3_DOCX)
     print(f"Documento Hito 3 guardado exitosamente en: {HITO3_DOCX}")
