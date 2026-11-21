@@ -1,9 +1,10 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>RacePulse MVP · Hito 3 · Sistema Inteligente de Predicción Hípica (PTIA Grupo 2)</title>
+  <link rel="stylesheet" href="assets/daisyui.min.css">
   <style>
     :root {
       --bg: #eef3f9;
@@ -25,9 +26,9 @@
       --red-bg: #fee2e2;
       --sky: #0284c7;
       --sky-bg: #e0f2fe;
-      --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
-      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.06);
-      --shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.20), 0 4px 12px rgba(0, 0, 0, 0.08);
+      --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+      --shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.13), 0 4px 12px rgba(0, 0, 0, 0.06);
       --radius: 14px;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Segoe UI Variable", "Segoe UI", -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif; }
@@ -115,14 +116,14 @@
 
     .section-head {
       display: flex; justify-content: space-between; align-items: flex-end;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.15); padding-bottom: 16px; gap: 16px; flex-wrap: wrap;
+      border-bottom: 1px solid var(--border); padding-bottom: 16px; gap: 16px; flex-wrap: wrap;
     }
     .section-title { font-size: 1.55rem; font-weight: 850; color: #ffffff; letter-spacing: -0.02em; }
     .section-desc { font-size: 0.92rem; color: #cbd5e1; margin-top: 5px; max-width: 72ch; line-height: 1.45; }
 
     .filter-bar { display: flex; gap: 8px; flex-wrap: wrap; }
     .filter-chip {
-      border: 1px solid var(--border); background: rgba(255,255,255,0.9); color: var(--navy);
+      border: 1px solid var(--border); background: rgba(255,255,255,0.9); color: var(--text-main);
       padding: 7px 14px; border-radius: 999px; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: all 0.15s;
       box-shadow: var(--shadow-sm);
     }
@@ -138,7 +139,6 @@
       border-radius: var(--radius); border: 1px solid var(--border);
       padding: 22px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column;
       justify-content: space-between; gap: 16px; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-      color: var(--text-main);
     }
     .desktop-race-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); border-color: #b8c7dc; }
     .desktop-race-card.featured {
@@ -222,7 +222,7 @@
       width: 68px; padding: 5px 8px; border: 1px solid #cbd5e1; border-radius: 7px;
       font-size: 0.84rem; font-weight: 700; color: var(--navy); background: #fff; transition: border-color 0.15s, box-shadow 0.15s;
     }
-    .input-mini:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(0, 98, 255, 0.14); }
+    .input-mini:focus { outline: none; border-color: var(--blue);  }
 
     .inference-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 22px; }
     @media (max-width: 960px) { .inference-grid { grid-template-columns: 1fr; } }
@@ -467,31 +467,38 @@
         <p class="hero-desc">
           Modelado de agentes competitivos bajo el marco PEAS y formulación Softmax Plackett-Luce anti-fuga sobre 66,390 carreras del Hong Kong Jockey Club y circuitos internacionales. Incluye transferencia de dominio demostrada desde Sha Tin hacia Happy Valley.
         </p>
-        <div class="hero-chips-bar">
-          <div class="hero-chip-stat">
-            <span class="hero-chip-val">66,390</span>
-            <span class="hero-chip-lbl">Carreras Históricas</span>
+        <div class="hero-chips-bar stats stats-horizontal bg-transparent text-white divide-x divide-white/15">
+          <div class="stat py-2.5 px-4 bg-white/5 backdrop-blur-sm">
+            <div class="stat-title text-slate-300 text-xs">Carreras Históricas</div>
+            <div class="stat-value text-xl font-black text-white">66,390</div>
+            <div class="stat-desc text-slate-400 text-[10px]">2017 – 2020</div>
           </div>
-          <div class="hero-chip-stat">
-            <span class="hero-chip-val">14,700</span>
-            <span class="hero-chip-lbl">Prueba Temporal (2020)</span>
+          <div class="stat py-2.5 px-4 bg-white/5 backdrop-blur-sm">
+            <div class="stat-title text-slate-300 text-xs">Prueba Temporal</div>
+            <div class="stat-value text-xl font-black text-white">14,700</div>
+            <div class="stat-desc text-slate-400 text-[10px]">Año 2020 (Sin fuga)</div>
           </div>
-          <div class="hero-chip-stat">
-            <span class="hero-chip-val">&lt; 1.0 ms</span>
-            <span class="hero-chip-lbl">Latencia en Localhost</span>
+          <div class="stat py-2.5 px-4 bg-white/5 backdrop-blur-sm">
+            <div class="stat-title text-slate-300 text-xs">Hit Rate@1</div>
+            <div class="stat-value text-xl font-black text-emerald-400">22.98%</div>
+            <div class="stat-desc text-emerald-300 text-[10px]">+8.2 pp vs Azar</div>
           </div>
-          <div class="hero-chip-stat">
-            <span class="hero-chip-val" style="color:#38bdf8;">21.81%</span>
-            <span class="hero-chip-lbl">Zero-Shot Happy Valley</span>
+          <div class="stat py-2.5 px-4 bg-white/5 backdrop-blur-sm">
+            <div class="stat-title text-slate-300 text-xs">Zero-Shot HV</div>
+            <div class="stat-value text-xl font-black text-sky-400">21.81%</div>
+            <div class="stat-desc text-sky-300 text-[10px]">Sha Tin → Happy Valley</div>
           </div>
         </div>
-        <div style="margin-top:16px; display:flex; gap:12px; flex-wrap:wrap;">
+        <div style="margin-top:16px; display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
           <button class="btn-action-primary" style="width:auto; padding:11px 22px; font-size:0.88rem; box-shadow:0 6px 20px rgba(0,0,0,0.3);" onclick="selectRace(411357); runInferenceAndGo();">
             <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
             Probar Caso Destacado: Sha Tin #411357 →
           </button>
           <button class="btn-action-secondary" style="width:auto; padding:11px 20px; font-size:0.88rem; background:rgba(255,255,255,0.12); color:white; border-color:rgba(255,255,255,0.2);" onclick="goScreen(4)">
             Ver Métricas y Curva de Transferencia ↗
+          </button>
+          <button type="button" class="btn btn-sm bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold ml-auto" onclick="document.getElementById('photo_modal').showModal()">
+            🔍 Ver Foto HD (Sha Tin)
           </button>
         </div>
       </div>
@@ -525,8 +532,11 @@
 
     <div class="context-dashboard-bar" id="s2-context-bar"></div>
 
-    <div class="disclaimer-box">
-      <strong>Protocolo Anti-Fuga & Simulación UI:</strong> Las columnas <em>Nutrición</em> y <em>Estado Veterinario</em> son simuladas solo para visualización en interfaz (aisladas del entrenamiento). Puedes editar <strong>OR</strong>, <strong>Tasa Hist. (%)</strong> o <strong>Cajón</strong> para probar inferencia en vivo.
+    <div class="alert alert-info shadow-sm bg-sky-950/40 border border-sky-500/40 text-sky-200 text-xs flex items-center gap-3">
+      <svg class="stroke-current shrink-0 h-5 w-5" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+      <div>
+        <strong>Protocolo Anti-Fuga &amp; Simulación UI:</strong> Las columnas <em>Nutrición</em> y <em>Estado Veterinario</em> son simuladas solo para visualización en interfaz (aisladas del entrenamiento). Puedes editar <strong>OR</strong>, <strong>Tasa Hist. (%)</strong> o <strong>Cajón</strong> para probar inferencia en vivo.
+      </div>
     </div>
 
     <div class="horses-table-card">
@@ -537,11 +547,11 @@
       <table class="desktop-table">
         <thead>
           <tr>
-            <th>Dorsal / Cajón</th>
+            <th data-tooltip-target="tooltip-stall" class="cursor-help">Dorsal / Cajón ℹ️</th>
             <th>Ejemplar · Jinete · Entrenador</th>
             <th>Historial Previo</th>
-            <th>Días Descanso</th>
-            <th>OR (Editable)</th>
+            <th data-tooltip-target="tooltip-rest" class="cursor-help">Días Descanso ℹ️</th>
+            <th data-tooltip-target="tooltip-or" class="cursor-help">OR (Editable) ℹ️</th>
             <th>Tasa Hist % (Editable)</th>
             <th>Peso (kg)</th>
             <th>Nutrición / Salud (UI Simulada)</th>
@@ -570,50 +580,21 @@
 
     <div class="winner-banner" id="s3-winner-banner"></div>
 
-    <div class="inference-grid" style="grid-template-columns: 1.15fr 1fr; gap: 22px;">
+    <div class="inference-grid">
       <div class="panel-card">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <h2 style="color:var(--navy); font-weight:800; font-size:1.08rem;">Ranking Probabilístico por Carrera</h2>
           <span class="badge badge-sky" id="s3-latency-badge">Latencia: -- ms</span>
         </div>
-        <p style="font-size:0.82rem; color:var(--text-muted); margin-top:-6px;">Haz clic en cualquier participante para proyectar su silueta en el Radar PEAS:</p>
-        <div id="s3-ranking-list" style="display:flex; flex-direction:column; gap:10px;"></div>
+        <div id="s3-ranking-list" style="display:flex; flex-direction:column; gap:12px;"></div>
       </div>
 
-      <div style="display:flex; flex-direction:column; gap:22px;">
-        <!-- Card Radar PEAS (Style Radar) -->
-        <div class="panel-card" style="align-items:center;">
-          <div style="width:100%; display:flex; justify-content:space-between; align-items:center;">
-            <h2 style="color:var(--navy); font-weight:800; font-size:1.08rem;">Radar de Rendimiento PEAS (Style Radar)</h2>
-            <span class="badge badge-sky">6 Ejes</span>
-          </div>
-          <div style="width:100%; max-width:320px; display:flex; justify-content:center; padding:8px 0;">
-            <svg id="s3-peas-radar-svg" viewBox="0 0 340 310" style="width:100%; height:auto; overflow:visible;"></svg>
-          </div>
-          <div style="width:100%; display:flex; justify-content:center; gap:14px; font-size:0.75rem; border-top:1px solid var(--border); padding-top:10px; flex-wrap:wrap;">
-            <span style="display:inline-flex; align-items:center; gap:5px; font-weight:700; color:var(--navy);">
-              <span style="width:10px; height:10px; background:#0062ff; border-radius:2px;"></span>
-              <span id="s3-radar-legend-top">Top-1 Agente</span>
-            </span>
-            <span style="display:inline-flex; align-items:center; gap:5px; color:var(--text-muted);">
-              <span style="width:10px; height:10px; background:#f59e0b; border-radius:2px;"></span>
-              <span id="s3-radar-legend-mkt">Favorito Mercado</span>
-            </span>
-            <span style="display:inline-flex; align-items:center; gap:5px; color:var(--text-muted);">
-              <span style="width:12px; height:2px; background:#94a3b8; display:inline-block;"></span>
-              <span>Promedio Lote</span>
-            </span>
-          </div>
-        </div>
-
-        <!-- Card Explicabilidad -->
-        <div class="panel-card">
-          <h2 style="color:var(--navy); font-weight:800; font-size:1.08rem;">Explicabilidad Algorítmica (Factores Plackett-Luce)</h2>
-          <p style="font-size:0.84rem; color:var(--text-muted);">Contribución de cada variable precompetencia normalizada en la decisión del agente:</p>
-          <div id="s3-explain-list" style="display:flex; flex-direction:column; gap:8px;"></div>
-          <div class="disclaimer-box" style="margin-top:8px;">
-            <strong>Aviso de Incertidumbre:</strong> Las probabilidades reflejan incertidumbre estocástica precompetencia. Este sistema es una prueba de concepto académica (PTIA) y no emite recomendaciones de apuesta.
-          </div>
+      <div class="panel-card">
+        <h2 style="color:var(--navy); font-weight:800; font-size:1.08rem;">Explicabilidad Algorítmica (Factores Plackett-Luce)</h2>
+        <p style="font-size:0.84rem; color:var(--text-muted);">Contribución de cada variable precompetencia normalizada en la decisión del agente:</p>
+        <div id="s3-explain-list" style="display:flex; flex-direction:column; gap:10px;"></div>
+        <div class="disclaimer-box" style="margin-top:8px;">
+          <strong>Aviso de Incertidumbre:</strong> Las probabilidades reflejan incertidumbre estocástica precompetencia. Este sistema es una prueba de concepto académica (PTIA) y no emite recomendaciones de apuesta.
         </div>
       </div>
     </div>
@@ -5428,70 +5409,8 @@ function renderScreen3(res) {
   const combined = editableHorses.map((h, i) => ({ ...h, prob_live: res.probabilities[i] }))
     .sort((a, b) => b.prob_live - a.prob_live);
 
-  window.s3SelectedHorseForRadar = function(idx) {
-    drawS3Radar(combined[idx]);
-    document.querySelectorAll(".s3-ranking-row").forEach((el, i) => {
-      el.style.background = i === idx ? "#eff6ff" : "transparent";
-      el.style.borderColor = i === idx ? "#0062ff" : "transparent";
-    });
-  };
-
-  function drawS3Radar(currentHorse) {
-    const marketHorse = [...combined].sort((a, b) => (b.prob_market || 0) - (a.prob_market || 0))[0] || combined[0];
-    const topHorse = currentHorse || combined[0];
-
-    document.getElementById("s3-radar-legend-top").textContent = topHorse.horseName + (topHorse === combined[0] ? " (Top-1)" : " (Selección)");
-    document.getElementById("s3-radar-legend-mkt").textContent = marketHorse.horseName + " (Favorito Mkt)";
-
-    const axes = ["Rating OR", "Tasa Victoria", "Forma / Descanso", "Jinete", "Entrenador", "Cajón / Pista"];
-    const norm = h => [
-      Math.min(1.0, Math.max(0.2, (h.official_rating || 65) / 135)),
-      Math.min(1.0, Math.max(0.1, (h.hist_win_rate || 10) / 45)),
-      Math.min(1.0, Math.max(0.2, 1.0 - Math.abs((h.days_rest || 28) - 21) / 50)),
-      0.65,
-      0.60,
-      Math.min(1.0, Math.max(0.2, 1.0 - ((h.stall || 5) - 1) / 14))
-    ];
-    const topVals = norm(topHorse);
-    const mktVals = norm(marketHorse);
-    const avgVals = [0.55, 0.45, 0.52, 0.50, 0.50, 0.50];
-
-    const cx = 170, cy = 150, R = 100;
-    const getC = (i, val) => {
-      const a = i * (Math.PI / 3) - Math.PI / 2;
-      return { x: (cx + R * val * Math.cos(a)).toFixed(1), y: (cy + R * val * Math.sin(a)).toFixed(1) };
-    };
-
-    let rings = "";
-    [0.2, 0.4, 0.6, 0.8, 1.0].forEach(l => {
-      const pts = [0,1,2,3,4,5].map(i => `${getC(i, l).x},${getC(i, l).y}`).join(" ");
-      rings += `<polygon points="${pts}" fill="none" stroke="#cbd5e1" stroke-width="${l===1?'1.2':'0.8'}" stroke-dasharray="${l===1?'none':'2,2'}"/>`;
-    });
-
-    let axesSvg = "";
-    axes.forEach((ax, i) => {
-      const e = getC(i, 1.0);
-      const lbl = getC(i, 1.25);
-      axesSvg += `<line x1="${cx}" y1="${cy}" x2="${e.x}" y2="${e.y}" stroke="#cbd5e1" stroke-width="0.8"/>
-        <text x="${lbl.x}" y="${lbl.y}" font-size="9" font-weight="700" fill="#64748b" text-anchor="middle" dominant-baseline="middle">${ax}</text>`;
-    });
-
-    const topPts = topVals.map((v, i) => `${getC(i, v).x},${getC(i, v).y}`).join(" ");
-    const mktPts = mktVals.map((v, i) => `${getC(i, v).x},${getC(i, v).y}`).join(" ");
-    const avgPts = avgVals.map((v, i) => `${getC(i, v).x},${getC(i, v).y}`).join(" ");
-
-    document.getElementById("s3-peas-radar-svg").innerHTML = `
-      ${rings}
-      ${axesSvg}
-      <polygon points="${avgPts}" fill="rgba(148, 163, 184, 0.12)" stroke="#94a3b8" stroke-width="1.2" stroke-dasharray="3,3"/>
-      <polygon points="${mktPts}" fill="rgba(245, 158, 11, 0.18)" stroke="#f59e0b" stroke-width="2"/>
-      <polygon points="${topPts}" fill="rgba(0, 98, 255, 0.28)" stroke="#0062ff" stroke-width="2.4"/>
-      ${topVals.map((v, i) => `<circle cx="${getC(i, v).x}" cy="${getC(i, v).y}" r="3.5" fill="#0062ff" stroke="#fff" stroke-width="1.5"/>`).join("")}
-    `;
-  }
-
   document.getElementById("s3-ranking-list").innerHTML = combined.map((h, idx) => `
-    <div class="s3-ranking-row" onclick="window.s3SelectedHorseForRadar(${idx})" style="padding:6px 10px; border-radius:8px; cursor:pointer; border:1px solid ${idx===0 ? '#0062ff' : 'transparent'}; background:${idx===0 ? '#eff6ff' : 'transparent'}; transition:all 0.15s ease;">
+    <div>
       <div style="display:flex; justify-content:space-between; font-size:0.86rem; margin-bottom:4px;">
         <span>
           <strong>#${idx + 1} ${h.horseName}</strong>
@@ -5504,8 +5423,6 @@ function renderScreen3(res) {
       </div>
     </div>
   `).join("");
-
-  drawS3Radar(combined[0]);
 
   document.getElementById("s3-explain-list").innerHTML = res.top_factors.map(f => {
     const pos = f.contribution >= 0;
@@ -5635,5 +5552,48 @@ renderScreen4();
   }
 })();
 </script>
+
+<!-- Flowbite Tooltips -->
+<div id="tooltip-stall" role="tooltip" class="absolute z-50 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-slate-900 rounded-lg shadow-xl opacity-0 tooltip border border-slate-700">
+  Posición de cajón: 1 es cuerda interna. En curvas peraltadas (Happy Valley), cajones bajos tienen ventaja biomecánica.
+  <div class="tooltip-arrow" data-popper-arrow></div>
+</div>
+
+<div id="tooltip-rest" role="tooltip" class="absolute z-50 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-slate-900 rounded-lg shadow-xl opacity-0 tooltip border border-slate-700">
+  Días de descanso: Mide recuperación física. Inactividad prolongada (&gt; 90 días) o sobreexigencia (&lt; 7 días) penaliza la probabilidad.
+  <div class="tooltip-arrow" data-popper-arrow></div>
+</div>
+
+<div id="tooltip-or" role="tooltip" class="absolute z-50 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-slate-900 rounded-lg shadow-xl opacity-0 tooltip border border-slate-700">
+  Official Rating (OR): Calificación ponderada por comisarios internacionales. Es el predictor individual más correlacionado con la clase.
+  <div class="tooltip-arrow" data-popper-arrow></div>
+</div>
+
+<!-- Modal HD Fotográfico Nativo (DaisyUI + Flowbite) -->
+<dialog id="photo_modal" class="modal">
+  <div class="modal-box max-w-4xl bg-[#081726] border border-slate-700 text-white shadow-2xl">
+    <form method="dialog">
+      <button class="btn btn-sm btn-circle btn-ghost absolute right-3 top-3 text-white">✕</button>
+    </form>
+    <div class="flex items-center gap-2 mb-3">
+      <span class="badge badge-info badge-sm">Sha Tin Turf Course</span>
+      <h3 class="font-bold text-base text-white">Recta Final bajo Iluminación Nocturna · Hong Kong</h3>
+    </div>
+    <div class="overflow-hidden rounded-xl border border-white/10 bg-black/40">
+      <img src="assets/hero_action.jpg" alt="Foto HD Pura Sangre" class="w-full max-h-[68vh] object-contain">
+    </div>
+    <div class="modal-action flex justify-between items-center text-xs text-slate-400 mt-4">
+      <span>Fotografía oficial integrada en RacePulse AI · PTIA Hito 3 Grupo 2</span>
+      <form method="dialog">
+        <button class="btn btn-sm btn-primary">Cerrar</button>
+      </form>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop bg-black/80 backdrop-blur-sm">
+    <button>close</button>
+  </form>
+</dialog>
+
+<script src="assets/flowbite.min.js"></script>
 </body>
 </html>
