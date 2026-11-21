@@ -2,7 +2,7 @@
 
 [![Asignatura](https://img.shields.io/badge/Asignatura-PTIA-blue.svg)](https://www.escuelaing.edu.co/)
 [![Institución](https://img.shields.io/badge/Institución-Escuela%20Colombiana%20de%20Ingeniería-red.svg)](https://www.escuelaing.edu.co/)
-[![Hito](https://img.shields.io/badge/Entrega-Hito%202%20(Problema%20y%20Avance%20Solución)-green.svg)]()
+[![Hito](https://img.shields.io/badge/Entrega-Hito%203%20(Solución%20Final%20y%20Evaluación)-green.svg)]()
 [![Licencia](https://img.shields.io/badge/Licencia-CC%20BY--NC%204.0-orange.svg)]()
 
 > **Principios y Técnicas de Inteligencia Artificial (PTIA)**  
@@ -13,11 +13,13 @@
 
 ---
 
-##  Enlaces Rápidos de la Entrega (Hito 2)
+##  Enlaces Rápidos de la Entrega (Hito 3)
 
-*  **Documento Técnico de Avance (Hito 2):** [`docs/Proyecto_PTIA_Grupo2_Hito2.docx`](docs/Proyecto_PTIA_Grupo2_Hito2.docx)
-*  **Prototipo Móvil Interactivo:** [`prototipos/prototipo_hito2.html`](prototipos/prototipo_hito2.html)
-*  **Prototipo de Escritorio (Dashboard Panorámico):** [`prototipos/prototipo_desktop.html`](prototipos/prototipo_desktop.html)
+*  **Documento Técnico Final (Hito 3):** [`docs/Proyecto_PTIA_Grupo2_Hito3.docx`](docs/Proyecto_PTIA_Grupo2_Hito3.docx)
+*  **Prototipo Funcional MVP (Hito 3):** [`prototipos/mvp_hito3.html`](prototipos/mvp_hito3.html) (también servido vía `python src/server_mvp.py`)
+*  **Pipeline Final y Evaluación (Hito 3):** [`src/pipeline_hito3.py`](src/pipeline_hito3.py)
+*  **Prototipo Móvil Interactivo (Hito 2):** [`prototipos/prototipo_hito2.html`](prototipos/prototipo_hito2.html)
+*  **Prototipo de Escritorio (Hito 2):** [`prototipos/prototipo_desktop.html`](prototipos/prototipo_desktop.html)
 
 ---
 
@@ -76,23 +78,27 @@ Los prototipos son aplicaciones web interactivas completamente autocontenidas:
 * **Prototipo de Escritorio:** Abre el archivo [`prototipos/prototipo_desktop.html`](prototipos/prototipo_desktop.html) en pantalla completa.
   * Haz clic en el botón azul **"Simular Carrera y Ejecutar Inferencia PEAS"** para observar el cálculo probabilístico en tiempo real, latencia de inferencia (18 ms), selección del caballo ganador (*Waterproof* con 38.4%) y el panel de explicabilidad.
 
-### 2. Ejecución del Pipeline en Python
-Para auditar las variables fisiológicas del dataset y evaluar el modelo base:
+### 2. Ejecución del Pipeline Final y Servidor MVP (Hito 3)
+Para ejecutar el pipeline completo anti-fuga (658,407 participaciones, 2017–2020) o iniciar el servidor MVP interactivo:
 
 ```bash
-# Clonar el repositorio
-git clone -b develop https://github.com/nivek2329/PTIA-hipodromo.git
+# Clonar la rama hito-3
+git clone -b hito-3 https://github.com/nivek2329/PTIA-hipodromo.git
 cd PTIA-hipodromo
 
-# Ejecutar el script de preprocesamiento y auditoría PEAS
-python src/pipeline_preprocesamiento_hito2.py
+# 1) Ejecutar pipeline final (genera métricas, transferencia de dominio y mvp_artifacts_hito3.json)
+python src/pipeline_hito3.py
+
+# 2) Iniciar servidor web del MVP Funcional (http://127.0.0.1:8050)
+python src/server_mvp.py
 ```
 
-**Métricas arrojadas por la línea base en consola:**
-* Brier Score de calibración: `0.0979`
-* Log-Loss multiclase: `0.3470`
-* Acierto Top-1 estimado: `38.1%`
-* Ingesta verificada: 33.708 registros precompetencia con edad, dieta, calorías, descanso, cajón y salud.
+**Métricas reales verificadas en Test 2020 (14,700 carreras):**
+* **Azar / Uniforme:** Hit Rate@1 `14.80%` | Log-Loss `2.2596` | Brier `0.0971`
+* **Baseline LogReg (Hito 2):** Hit Rate@1 `23.09%` | Log-Loss `2.1437` | Brier `0.0938`
+* **RacePulse Plackett-Luce (L2):** Hit Rate@1 `22.80%` | Log-Loss `2.1106` | Brier `0.0930` | NDCG@3 `0.4558`
+* **RacePulse GBDT + Softmax:** Hit Rate@1 `22.98%` | Log-Loss `2.0966` | Brier `0.0928` | NDCG@3 `0.4576`
+* **Transferencia Zero-Shot (Sha Tin → Happy Valley, n=298):** Hit Rate@1 `21.81%` (vs. `13.76%` modelo global multiregión)
 
 ---
 
