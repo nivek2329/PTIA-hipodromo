@@ -1,10 +1,9 @@
 <!doctype html>
-<html lang="es" data-theme="dark">
+<html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>RacePulse MVP · Hito 3 · Sistema Inteligente de Predicción Hípica (PTIA Grupo 2)</title>
-  <link rel="stylesheet" href="assets/daisyui.min.css">
   <style>
     :root {
       --bg: #eef3f9;
@@ -261,12 +260,15 @@
 
     /* Hero Showcase Banner in Screen 1 */
     .hero-banner {
-      background: radial-gradient(circle at 85% 20%, rgba(56, 189, 248, 0.22), transparent 45%),
-                  radial-gradient(circle at 15% 90%, rgba(0, 98, 255, 0.25), transparent 50%),
-                  linear-gradient(135deg, #061320 0%, #0d2238 50%, #0c2e56 100%);
+      background-color: #081726;
+      background-image:
+        linear-gradient(90deg, rgba(8, 23, 38, 0.96) 0%, rgba(8, 23, 38, 0.88) 54%, rgba(8, 23, 38, 0.38) 100%),
+        url('assets/hero_action.jpg');
+      background-size: cover;
+      background-position: right center;
       color: white;
-      border-radius: 18px;
-      padding: 32px 36px;
+      border-radius: 20px;
+      padding: 38px 42px;
       position: relative;
       overflow: hidden;
       box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
@@ -286,22 +288,66 @@
       background: radial-gradient(ellipse at center, rgba(0, 98, 255, 0.35) 0%, transparent 70%);
       pointer-events: none;
     }
-    .hero-content { position: relative; z-index: 2; max-width: 860px; }
-    .hero-tagline {
-      display: inline-flex; align-items: center; gap: 8px; font-size: 0.76rem; font-weight: 750;
-      color: #38bdf8; background: rgba(56, 189, 248, 0.14); border: 1px solid rgba(56, 189, 248, 0.28);
-      padding: 5px 14px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.06em;
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 880px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
-    .hero-title { font-size: 2.15rem; font-weight: 900; line-height: 1.18; margin-top: 10px; letter-spacing: -0.03em; color: white; }
-    .hero-desc { font-size: 0.94rem; color: #cbd5e1; margin-top: 8px; line-height: 1.55; }
-    .hero-chips-bar { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 8px; }
+    .hero-tagline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.76rem;
+      font-weight: 750;
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.14);
+      border: 1px solid rgba(56, 189, 248, 0.28);
+      padding: 6px 14px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      width: fit-content;
+    }
+    .hero-title {
+      font-size: 2.15rem;
+      font-weight: 900;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      color: #ffffff;
+      margin: 0;
+    }
+    .hero-desc {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      line-height: 1.55;
+      max-width: 78ch;
+      margin: 0;
+    }
+    .hero-chips-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 6px;
+    }
+    @media (max-width: 900px) {
+      .hero-chips-bar { grid-template-columns: repeat(2, 1fr); }
+    }
     .hero-chip-stat {
-      background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 12px; padding: 10px 16px; display: flex; flex-direction: column; gap: 2px;
+      background: rgba(13, 34, 56, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 12px;
+      padding: 12px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
       backdrop-filter: blur(8px);
     }
-    .hero-chip-val { font-size: 1.25rem; font-weight: 850; color: white; }
-    .hero-chip-lbl { font-size: 0.72rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+    .hero-chip-val { font-size: 1.45rem; font-weight: 850; color: #ffffff; }
+    .hero-chip-lbl { font-size: 0.72rem; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+    .hero-chip-sub { font-size: 0.72rem; color: #38bdf8; font-weight: 600; margin-top: 2px; }
 
     /* Animated Inference Radar Modal */
     .radar-modal-overlay {
@@ -461,43 +507,43 @@
       <div class="hero-content">
         <div class="hero-tagline">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-          <span>Inteligencia Artificial Hípica · Hito 3 MVP</span>
+          <span>Inteligencia Artificial Hípica · Hito 3 MVP · Marco PEAS</span>
         </div>
-        <h2 class="hero-title">Predicción Probabilística en Tiempo Real & Adaptación entre Hipódromos</h2>
+        <h2 class="hero-title">Predicción Probabilística en Tiempo Real &amp; Adaptación entre Hipódromos</h2>
         <p class="hero-desc">
           Modelado de agentes competitivos bajo el marco PEAS y formulación Softmax Plackett-Luce anti-fuga sobre 66,390 carreras del Hong Kong Jockey Club y circuitos internacionales. Incluye transferencia de dominio demostrada desde Sha Tin hacia Happy Valley.
         </p>
-        <div class="hero-chips-bar stats stats-horizontal bg-transparent text-white divide-x divide-white/15">
-          <div class="stat py-2.5 px-4 bg-white/5 backdrop-blur-sm">
-            <div class="stat-title text-slate-300 text-xs">Carreras Históricas</div>
-            <div class="stat-value text-xl font-black text-white">66,390</div>
-            <div class="stat-desc text-slate-400 text-[10px]">2017 – 2020</div>
+        <div class="hero-chips-bar">
+          <div class="hero-chip-stat">
+            <span class="hero-chip-val">66,390</span>
+            <span class="hero-chip-lbl">Carreras Históricas</span>
+            <span class="hero-chip-sub">2017 – 2020</span>
           </div>
-          <div class="stat py-2.5 px-4 bg-white/5 backdrop-blur-sm">
-            <div class="stat-title text-slate-300 text-xs">Prueba Temporal</div>
-            <div class="stat-value text-xl font-black text-white">14,700</div>
-            <div class="stat-desc text-slate-400 text-[10px]">Año 2020 (Sin fuga)</div>
+          <div class="hero-chip-stat">
+            <span class="hero-chip-val">14,700</span>
+            <span class="hero-chip-lbl">Prueba Temporal</span>
+            <span class="hero-chip-sub">Año 2020 (Sin fuga)</span>
           </div>
-          <div class="stat py-2.5 px-4 bg-white/5 backdrop-blur-sm">
-            <div class="stat-title text-slate-300 text-xs">Hit Rate@1</div>
-            <div class="stat-value text-xl font-black text-emerald-400">22.98%</div>
-            <div class="stat-desc text-emerald-300 text-[10px]">+8.2 pp vs Azar</div>
+          <div class="hero-chip-stat">
+            <span class="hero-chip-val" style="color:#4ade80;">22.98%</span>
+            <span class="hero-chip-lbl">Hit Rate@1 Test</span>
+            <span class="hero-chip-sub">+8.2 pp vs Azar</span>
           </div>
-          <div class="stat py-2.5 px-4 bg-white/5 backdrop-blur-sm">
-            <div class="stat-title text-slate-300 text-xs">Zero-Shot HV</div>
-            <div class="stat-value text-xl font-black text-sky-400">21.81%</div>
-            <div class="stat-desc text-sky-300 text-[10px]">Sha Tin → Happy Valley</div>
+          <div class="hero-chip-stat">
+            <span class="hero-chip-val" style="color:#38bdf8;">21.81%</span>
+            <span class="hero-chip-lbl">Zero-Shot HV</span>
+            <span class="hero-chip-sub">Sha Tin → Happy Valley</span>
           </div>
         </div>
-        <div style="margin-top:16px; display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
-          <button class="btn-action-primary" style="width:auto; padding:11px 22px; font-size:0.88rem; box-shadow:0 6px 20px rgba(0,0,0,0.3);" onclick="selectRace(411357); runInferenceAndGo();">
+        <div style="margin-top:10px; display:flex; gap:14px; flex-wrap:wrap; align-items:center;">
+          <button class="btn-action-primary" style="width:auto; padding:12px 24px; font-size:0.92rem; box-shadow:0 6px 20px rgba(0,0,0,0.3);" onclick="selectRace(411357); runInferenceAndGo();">
             <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
             Probar Caso Destacado: Sha Tin #411357 →
           </button>
-          <button class="btn-action-secondary" style="width:auto; padding:11px 20px; font-size:0.88rem; background:rgba(255,255,255,0.12); color:white; border-color:rgba(255,255,255,0.2);" onclick="goScreen(4)">
+          <button class="btn-action-secondary" style="width:auto; padding:12px 22px; font-size:0.92rem; background:rgba(255,255,255,0.12); color:white; border-color:rgba(255,255,255,0.22);" onclick="goScreen(4)">
             Ver Métricas y Curva de Transferencia ↗
           </button>
-          <button type="button" class="btn btn-sm bg-white/10 hover:bg-white/20 border border-white/20 text-white font-bold ml-auto" onclick="document.getElementById('photo_modal').showModal()">
+          <button type="button" class="btn-action-secondary" style="width:auto; padding:12px 20px; font-size:0.88rem; background:rgba(255,255,255,0.08); color:#cbd5e1; border-color:rgba(255,255,255,0.15);" onclick="openPhotoModalDirect()">
             🔍 Ver Foto HD (Sha Tin)
           </button>
         </div>
@@ -5551,49 +5597,35 @@ renderScreen4();
     goScreen(4);
   }
 })();
+function openPhotoModalDirect() {
+  const m = document.getElementById("photo-modal-custom");
+  if (m) m.style.display = "flex";
+}
+function closePhotoModalDirect() {
+  const m = document.getElementById("photo-modal-custom");
+  if (m) m.style.display = "none";
+}
 </script>
 
-<!-- Flowbite Tooltips -->
-<div id="tooltip-stall" role="tooltip" class="absolute z-50 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-slate-900 rounded-lg shadow-xl opacity-0 tooltip border border-slate-700">
-  Posición de cajón: 1 es cuerda interna. En curvas peraltadas (Happy Valley), cajones bajos tienen ventaja biomecánica.
-  <div class="tooltip-arrow" data-popper-arrow></div>
-</div>
-
-<div id="tooltip-rest" role="tooltip" class="absolute z-50 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-slate-900 rounded-lg shadow-xl opacity-0 tooltip border border-slate-700">
-  Días de descanso: Mide recuperación física. Inactividad prolongada (&gt; 90 días) o sobreexigencia (&lt; 7 días) penaliza la probabilidad.
-  <div class="tooltip-arrow" data-popper-arrow></div>
-</div>
-
-<div id="tooltip-or" role="tooltip" class="absolute z-50 invisible inline-block px-3 py-2 text-xs font-medium text-white transition-opacity duration-300 bg-slate-900 rounded-lg shadow-xl opacity-0 tooltip border border-slate-700">
-  Official Rating (OR): Calificación ponderada por comisarios internacionales. Es el predictor individual más correlacionado con la clase.
-  <div class="tooltip-arrow" data-popper-arrow></div>
-</div>
-
-<!-- Modal HD Fotográfico Nativo (DaisyUI + Flowbite) -->
-<dialog id="photo_modal" class="modal">
-  <div class="modal-box max-w-4xl bg-[#081726] border border-slate-700 text-white shadow-2xl">
-    <form method="dialog">
-      <button class="btn btn-sm btn-circle btn-ghost absolute right-3 top-3 text-white">✕</button>
-    </form>
-    <div class="flex items-center gap-2 mb-3">
-      <span class="badge badge-info badge-sm">Sha Tin Turf Course</span>
-      <h3 class="font-bold text-base text-white">Recta Final bajo Iluminación Nocturna · Hong Kong</h3>
+<!-- Modal HD Fotográfico de Carrera -->
+<div id="photo-modal-custom" style="position:fixed; inset:0; background:rgba(0,0,0,0.88); backdrop-filter:blur(8px); z-index:9999; display:none; align-items:center; justify-content:center; padding:24px;" onclick="closePhotoModalDirect()">
+  <div style="position:relative; max-width:960px; width:100%; background:#081726; border:1px solid rgba(255,255,255,0.15); border-radius:18px; padding:24px; box-shadow:0 24px 60px rgba(0,0,0,0.6);" onclick="event.stopPropagation()">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:12px;">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span class="badge badge-sky">Sha Tin Turf Course</span>
+        <h3 style="font-size:1.05rem; font-weight:800; color:#fff; margin:0;">Recta Final bajo Iluminación Nocturna · Hong Kong</h3>
+      </div>
+      <button style="background:transparent; border:none; color:#cbd5e1; font-size:1.2rem; cursor:pointer; font-weight:bold; padding:4px 8px;" onclick="closePhotoModalDirect()">✕</button>
     </div>
-    <div class="overflow-hidden rounded-xl border border-white/10 bg-black/40">
-      <img src="assets/hero_action.jpg" alt="Foto HD Pura Sangre" class="w-full max-h-[68vh] object-contain">
+    <div style="overflow:hidden; border-radius:12px; border:1px solid rgba(255,255,255,0.1); max-height:70vh; display:flex; justify-content:center; background:#000;">
+      <img src="assets/hero_action.jpg" alt="Foto HD Pura Sangre" style="width:100%; height:auto; max-height:70vh; object-fit:contain;">
     </div>
-    <div class="modal-action flex justify-between items-center text-xs text-slate-400 mt-4">
-      <span>Fotografía oficial integrada en RacePulse AI · PTIA Hito 3 Grupo 2</span>
-      <form method="dialog">
-        <button class="btn btn-sm btn-primary">Cerrar</button>
-      </form>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; font-size:0.8rem; color:#94a3b8;">
+      <span>Fotografía de alta definición integrada en RacePulse AI · Hito 3 PTIA</span>
+      <button class="btn-action-primary" style="width:auto; padding:8px 18px; font-size:0.82rem;" onclick="closePhotoModalDirect()">Cerrar</button>
     </div>
   </div>
-  <form method="dialog" class="modal-backdrop bg-black/80 backdrop-blur-sm">
-    <button>close</button>
-  </form>
-</dialog>
+</div>
 
-<script src="assets/flowbite.min.js"></script>
 </body>
 </html>
