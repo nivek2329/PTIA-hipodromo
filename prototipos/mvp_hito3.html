@@ -260,6 +260,10 @@
 </head>
 <body>
 
+<div id="file-protocol-warning" style="display:none; background:#fef3c7; border-bottom:1px solid #fde68a; color:#92400e; padding:11px 24px; font-size:0.85rem; text-align:center; font-weight:600;">
+  ⚠️ Estás visualizando este archivo como HTML estático (<code>file://</code>). Para el <strong>Hito 3</strong>, la entrega debe ejecutarse en <strong>localhost</strong>. Inicia el servidor ejecutando <code>python app.py</code> o abriendo <code>iniciar_mvp.bat</code> para acceder a <a href="http://localhost:8000" style="color:#b45309; text-decoration:underline; font-weight:750;">http://localhost:8000</a> con el backend y la API REST activa.
+</div>
+
 <header class="desktop-header">
   <div class="header-left">
     <div class="brand-logo" onclick="goScreen(1)">
@@ -279,9 +283,10 @@
   </nav>
 
   <div class="header-right">
+    <a href="/docs" target="_blank" id="api-docs-btn" style="display:none; color:#7dd3fc; text-decoration:none; font-size:0.78rem; font-weight:700; background:rgba(255,255,255,0.08); padding:6px 12px; border-radius:999px; border:1px solid rgba(255,255,255,0.14);" title="Abrir documentación interactiva OpenAPI / Swagger">API Swagger Docs ↗</a>
     <div class="status-badge" id="engine-status">
       <span class="status-dot"></span>
-      <span id="engine-status-txt">Modelo Hito 3 Listo</span>
+      <span id="engine-status-txt">Localhost (8000) Conectado</span>
     </div>
   </div>
 </header>
@@ -5307,6 +5312,20 @@ function renderScreen4() {
 }
 
 // Inicialización
+const isLocalhost = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+if (window.location.protocol === "file:") {
+  document.getElementById("file-protocol-warning").style.display = "block";
+  document.getElementById("engine-status-txt").textContent = "Estático (Inicia en localhost:8000)";
+  const dot = document.querySelector(".status-dot");
+  if (dot) dot.style.background = "#f59e0b";
+} else if (isLocalhost) {
+  document.getElementById("engine-status-txt").textContent = `Localhost:${window.location.port || '8000'} Backend Activo`;
+  const dot = document.querySelector(".status-dot");
+  if (dot) dot.style.background = "#10b981";
+  const apiBtn = document.getElementById("api-docs-btn");
+  if (apiBtn) apiBtn.style.display = "inline-flex";
+}
+
 renderFilters();
 renderRacesGrid();
 renderScreen4();

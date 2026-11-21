@@ -16,10 +16,10 @@
 ##  Enlaces Rápidos de la Entrega (Hito 3)
 
 *  **Documento Técnico Final (Hito 3):** [`docs/Proyecto_PTIA_Grupo2_Hito3.docx`](docs/Proyecto_PTIA_Grupo2_Hito3.docx)
-*  **Prototipo Funcional MVP (Hito 3):** [`prototipos/mvp_hito3.html`](prototipos/mvp_hito3.html) (también servido vía `python src/server_mvp.py`)
+*  **Aplicación Web MVP en Localhost (Hito 3):** [`app.py`](app.py) o [`iniciar_mvp.bat`](iniciar_mvp.bat) (`http://localhost:8000`)
+*  **Documentación Interactiva API REST:** [`http://localhost:8000/docs`](http://localhost:8000/docs) (OpenAPI / Swagger UI)
 *  **Pipeline Final y Evaluación (Hito 3):** [`src/pipeline_hito3.py`](src/pipeline_hito3.py)
-*  **Prototipo Móvil Interactivo (Hito 2):** [`prototipos/prototipo_hito2.html`](prototipos/prototipo_hito2.html)
-*  **Prototipo de Escritorio (Hito 2):** [`prototipos/prototipo_desktop.html`](prototipos/prototipo_desktop.html)
+*  **Prototipos Anteriores de Interfaz (Hito 2):** [`prototipos/prototipo_hito2.html`](prototipos/prototipo_hito2.html) y [`prototipos/prototipo_desktop.html`](prototipos/prototipo_desktop.html)
 
 ---
 
@@ -78,19 +78,30 @@ Los prototipos son aplicaciones web interactivas completamente autocontenidas:
 * **Prototipo de Escritorio:** Abre el archivo [`prototipos/prototipo_desktop.html`](prototipos/prototipo_desktop.html) en pantalla completa.
   * Haz clic en el botón azul **"Simular Carrera y Ejecutar Inferencia PEAS"** para observar el cálculo probabilístico en tiempo real, latencia de inferencia (18 ms), selección del caballo ganador (*Waterproof* con 38.4%) y el panel de explicabilidad.
 
-### 2. Ejecución del Pipeline Final y Servidor MVP (Hito 3)
-Para ejecutar el pipeline completo anti-fuga (658,407 participaciones, 2017–2020) o iniciar el servidor MVP interactivo:
+### 2. Ejecución del MVP Funcional en Localhost (Hito 3)
+A diferencia de los prototipos conceptuales del Hito 2, el **Hito 3** es una aplicación web funcional desplegada en **localhost** conectada en tiempo real al backend de Inteligencia Artificial mediante una API REST:
 
 ```bash
-# Clonar la rama hito-3
+# Clonar la rama hito-3 (si es primera vez)
 git clone -b hito-3 https://github.com/nivek2329/PTIA-hipodromo.git
 cd PTIA-hipodromo
 
-# 1) Ejecutar pipeline final (genera métricas, transferencia de dominio y mvp_artifacts_hito3.json)
-python src/pipeline_hito3.py
+# Opción A (Recomendada en Windows):
+# Haz doble clic en iniciar_mvp.bat o ejecútalo en consola:
+.\iniciar_mvp.bat
 
-# 2) Iniciar servidor web del MVP Funcional (http://127.0.0.1:8050)
-python src/server_mvp.py
+# Opción B (Directamente con Python):
+python app.py
+```
+
+La aplicación abrirá automáticamente en tu navegador:
+* **Aplicación Web MVP:** [http://localhost:8000](http://localhost:8000)
+* **Documentación Interactiva Swagger:** [http://localhost:8000/docs](http://localhost:8000/docs)
+* **Endpoint de Inferencia en Tiempo Real:** `POST http://localhost:8000/api/predict` (latencia < 1 ms)
+
+```bash
+# Para re-entrenar y evaluar el pipeline temporal (2017–2020) desde cero:
+python src/pipeline_hito3.py
 ```
 
 **Métricas reales verificadas en Test 2020 (14,700 carreras):**

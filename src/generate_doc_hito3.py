@@ -395,15 +395,17 @@ def main():
 
     # 4. Añadir subsección 9.5 al final de la sección de Prototipo (antes de Referencias)
     ref_p = next(p for p in doc.paragraphs if "Referencias Bibliográficas" in p.text)
-    insert_paragraph_before(ref_p, "9.5. Prototipo Funcional MVP (Hito 3)", "Heading 2")
+    insert_paragraph_before(ref_p, "9.5. Prototipo Funcional MVP en Localhost (Hito 3)", "Heading 2")
     insert_paragraph_before(
         ref_p,
-        "Para el Hito 3 se evolucionó el prototipo visual hacia un Producto Mínimo Viable (MVP) funcional manteniendo exactamente la "
-        "identidad visual de RacePulse (prototipos/mvp_hito3.html) conectado al motor de inferencia en Python (src/server_mvp.py). "
-        "El MVP permite: (1) explorar carreras reales del conjunto de prueba 2020 por hipódromo; (2) inspeccionar variables precompetencia "
-        "y editar parámetros (OR, tasa histórica, cajón) para simular escenarios; (3) ejecutar inferencia Softmax Plackett-Luce en vivo "
-        "con explicabilidad de factores y comparación directa contra el ganador oficial real; y (4) visualizar las métricas globales "
-        "y la curva de transferencia de dominio Sha Tin → Happy Valley.",
+        "Para el Hito 3 se evolucionó el prototipo hacia un Producto Mínimo Viable (MVP) funcional desplegado como servicio web en "
+        "localhost (http://localhost:8000) mediante FastAPI y Python (app.py e iniciar_mvp.bat). A diferencia de un archivo HTML estático, "
+        "el MVP en localhost opera conectado a un backend de IA activo que expone una API REST para inferencia en tiempo real (< 1 ms) "
+        "y documentación interactiva OpenAPI Swagger (/docs). El sistema permite: (1) explorar carreras reales del conjunto de prueba "
+        "2020 por hipódromo; (2) inspeccionar variables precompetencia y simular escenarios en vivo editando parámetros como OR, tasa "
+        "histórica o cajón; (3) ejecutar inferencia Softmax Plackett-Luce en tiempo real con panel de explicabilidad de factores y cotejo "
+        "directo contra el ganador oficial real; y (4) auditar interactivamente las métricas globales del Hito 3 y la curva de transferencia "
+        "de dominio Sha Tin → Happy Valley.",
         "Body Text"
     )
 
