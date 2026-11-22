@@ -1,5 +1,6 @@
 /* ==========================================================================
-   RacePulse AI — Executive Dark & Gold Design System (Exact Mockup Match)
+   RacePulse AI — Executive Dark & Gold Design System (Impeccable Edition)
+   Legible typography (≥12px functional floor), natural proportions, 0px overflow.
    ========================================================================== */
 
 :root {
@@ -22,7 +23,7 @@
   --accent-green: #22C55E;
   --accent-blue: #38BDF8;
 
-  --sidebar-w: 155px;
+  --sidebar-w: clamp(190px, 17vw, 220px);
   --radius-sm: 6px;
   --radius-md: 8px;
   --radius-lg: 10px;
@@ -45,15 +46,15 @@ body {
   background-color: var(--bg-deep);
   color: var(--text-white);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 13px;
-  line-height: 1.4;
+  font-size: 14px;
+  line-height: 1.45;
   display: flex;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
 /* ==========================================================================
-   A. Barra Lateral Izquierda (Sidebar - Exacta a la Referencia)
+   A. Barra Lateral Izquierda (Sidebar)
    ========================================================================== */
 .sidebar {
   width: var(--sidebar-w);
@@ -67,7 +68,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 14px 10px 0px 10px;
+  padding: 16px 14px 12px 14px;
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -82,12 +83,13 @@ body {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding-bottom: 10px;
+  padding-bottom: 14px;
   border-bottom: 1px solid var(--border-subtle);
 }
 
 .brand-exact-img {
-  width: 114px;
+  width: 132px;
+  max-width: 90%;
   height: auto;
   display: block;
   margin: 0 auto;
@@ -97,20 +99,20 @@ body {
 .sidebar-nav {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  margin-top: 12px;
+  gap: 6px;
+  margin-top: 16px;
 }
 
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 9px;
-  padding: 6px 10px;
+  gap: 10px;
+  padding: 8px 14px;
   border-radius: 20px;
   color: var(--text-white);
   text-decoration: none;
   font-weight: 550;
-  font-size: 0.8rem;
+  font-size: 0.88rem;
   cursor: pointer;
   border: none;
   background: transparent;
@@ -120,8 +122,8 @@ body {
 }
 
 .nav-item svg {
-  width: 15px;
-  height: 15px;
+  width: 17px;
+  height: 17px;
   stroke: var(--text-gray);
   stroke-width: 2;
   flex-shrink: 0;
@@ -135,7 +137,7 @@ body {
   background: var(--gold-gradient);
   color: #080B10 !important;
   font-weight: 750;
-  box-shadow: 0 2px 10px rgba(214, 166, 60, 0.35);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
 }
 
 .nav-item.active svg {
@@ -144,37 +146,37 @@ body {
 
 /* Tarjeta IA en Barra Lateral */
 .sidebar-bottom-group {
-  padding-bottom: 12px;
+  padding-bottom: 6px;
 }
 
 .sidebar-ai-clean-card {
-  background: rgba(16, 24, 39, 0.85);
+  background: rgba(16, 24, 39, 0.95);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  padding: 10px 8px;
+  padding: 12px 10px;
   text-align: center;
 }
 
 .ai-chip-clean-icon svg {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   stroke: var(--gold-main);
-  margin: 0 auto 5px auto;
+  margin: 0 auto 6px auto;
   display: block;
 }
 
 .ai-clean-title {
   color: var(--text-white);
-  font-size: 0.72rem;
+  font-size: 0.82rem;
   font-weight: 650;
   letter-spacing: -0.1px;
 }
 
 .ai-clean-desc {
   color: var(--text-muted);
-  font-size: 0.62rem;
-  line-height: 1.25;
-  margin-top: 3px;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  margin-top: 4px;
 }
 
 /* ==========================================================================
@@ -190,33 +192,33 @@ body {
   flex-direction: column;
   position: relative;
   box-sizing: border-box;
-  padding: 10px 14px 20px 14px;
+  padding: 14px 20px 24px 20px;
   overflow-x: hidden;
 }
 
 /* Encabezado Principal */
 .dashboard-header {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .header-top-line-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .header-gold-line {
   height: 1px;
   flex: 1;
   background: linear-gradient(90deg, rgba(214, 166, 60, 0.6) 0%, rgba(48, 55, 70, 0.2) 100%);
-  margin-right: 14px;
+  margin-right: 16px;
 }
 
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .header-icon-btn {
@@ -228,7 +230,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3px;
+  padding: 4px;
   transition: color 0.2s;
 }
 
@@ -238,17 +240,17 @@ body {
 
 .badge-dot {
   position: absolute;
-  top: 1px;
-  right: 1px;
-  width: 5px;
-  height: 5px;
+  top: 2px;
+  right: 2px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background-color: var(--gold-main);
 }
 
 .user-avatar-btn {
-  width: 25px;
-  height: 25px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid var(--border-subtle);
@@ -270,15 +272,15 @@ body {
 }
 
 .header-title {
-  font-size: 1.25rem;
+  font-size: 1.55rem;
   font-weight: 750;
   color: var(--text-white);
-  letter-spacing: -0.3px;
-  margin-bottom: 1px;
+  letter-spacing: -0.4px;
+  margin-bottom: 2px;
 }
 
 .header-subtitle {
-  font-size: 0.77rem;
+  font-size: 0.85rem;
   color: var(--text-gray);
 }
 
@@ -286,28 +288,28 @@ body {
    C. Banner Panorámico de Carrera
    ========================================================================== */
 .race-banner {
-  background: linear-gradient(90deg, #101827 0%, rgba(16, 24, 39, 0.92) 50%, rgba(16, 24, 39, 0.2) 100%),
+  background: linear-gradient(90deg, #101827 0%, rgba(16, 24, 39, 0.92) 50%, rgba(16, 24, 39, 0.25) 100%),
               url('../horses_faded_banner.png') right center / cover no-repeat;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  padding: 10px 16px;
-  min-height: 64px;
+  padding: 12px 18px;
+  min-height: 72px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  margin-bottom: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 .banner-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   z-index: 2;
 }
 
 .banner-coliseum-img {
-  width: 48px;
+  width: 52px;
   height: auto;
   display: block;
 }
@@ -315,11 +317,11 @@ body {
 .banner-info {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 4px;
 }
 
 .banner-title {
-  font-size: 0.92rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: var(--text-white);
 }
@@ -327,15 +329,15 @@ body {
 .banner-badges {
   display: flex;
   align-items: center;
-  gap: 7px;
-  font-size: 0.72rem;
+  gap: 8px;
+  font-size: 0.8rem;
   color: var(--text-gray);
 }
 
 .badge-item {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
 }
 
 .badge-item.turf {
@@ -356,14 +358,14 @@ body {
 }
 
 /* ==========================================================================
-   D, E, F. Cuadrícula Principal de 3 Columnas (Exacta y Sin Desborde)
+   D, E, F. Cuadrícula Principal de 3 Columnas
    ========================================================================== */
 .analysis-grid {
   display: grid;
-  grid-template-columns: 125px 1fr 245px;
-  gap: 8px;
+  grid-template-columns: minmax(140px, 175px) 1fr minmax(240px, 285px);
+  gap: 10px;
   align-items: stretch;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -373,7 +375,7 @@ body {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  padding: 8px 10px;
+  padding: 10px 14px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -384,16 +386,16 @@ body {
 .card-header-clean {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.76rem;
+  gap: 8px;
+  font-size: 0.88rem;
   font-weight: 650;
   color: var(--text-white);
-  margin-bottom: 7px;
+  margin-bottom: 9px;
 }
 
 .card-header-clean svg {
-  width: 13px;
-  height: 13px;
+  width: 15px;
+  height: 15px;
   stroke: var(--gold-main);
   flex-shrink: 0;
 }
@@ -410,14 +412,14 @@ body {
 }
 
 .filter-group {
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
 .filter-label {
   display: block;
-  font-size: 0.65rem;
+  font-size: 0.76rem;
   color: var(--text-muted);
-  margin-bottom: 2px;
+  margin-bottom: 3px;
 }
 
 .form-select-dark {
@@ -426,8 +428,8 @@ body {
   border: 1px solid #303746;
   border-radius: var(--radius-sm);
   color: var(--text-white);
-  font-size: 0.69rem;
-  padding: 4px 6px;
+  font-size: 0.8rem;
+  padding: 6px 8px;
   cursor: pointer;
   outline: none;
   transition: border-color 0.2s;
@@ -447,16 +449,16 @@ body {
   color: #080B10;
   border: none;
   border-radius: var(--radius-sm);
-  padding: 5px 6px;
-  font-size: 0.71rem;
+  padding: 7px 10px;
+  font-size: 0.82rem;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 6px;
   cursor: pointer;
-  margin-top: 4px;
-  box-shadow: 0 2px 8px rgba(214, 166, 60, 0.25);
+  margin-top: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   transition: opacity 0.2s;
 }
 
@@ -466,18 +468,20 @@ body {
 
 /* Columna 2: Tabla de Resultados */
 .prediction-table-card {
-  padding: 8px 10px;
+  padding: 10px 14px;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .table-wrapper {
   width: 100%;
-  overflow-x: hidden;
+  overflow-x: auto;
 }
 
 .table-racepulse {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.69rem;
+  font-size: 0.8rem;
   table-layout: auto;
 }
 
@@ -485,14 +489,15 @@ body {
   color: var(--text-gray);
   font-weight: 600;
   text-align: left;
-  padding: 3px 2px;
+  padding: 5px 4px;
   border-bottom: 1px solid var(--border-color);
-  font-size: 0.66rem;
+  font-size: 0.78rem;
   white-space: nowrap;
+  letter-spacing: 0.2px;
 }
 
 .table-racepulse td {
-  padding: 3px 2px;
+  padding: 5px 4px;
   border-bottom: 1px solid rgba(48, 55, 70, 0.4);
   vertical-align: middle;
   white-space: nowrap;
@@ -525,7 +530,9 @@ body {
 
 /* Columna 3: Probabilidad de Victoria */
 .prob-bars-card {
-  padding: 8px 10px;
+  padding: 10px 14px;
+  overflow: hidden;
+  min-width: 0;
 }
 
 .prob-chart-body-wrapper {
@@ -544,18 +551,18 @@ body {
 .exact-chart-body {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 7px;
 }
 
 .exact-chart-row {
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.69rem;
+  gap: 8px;
+  font-size: 0.8rem;
 }
 
 .exact-chart-name {
-  width: 92px;
+  width: clamp(88px, 9.5vw, 102px);
   text-align: right;
   color: #FFFFFF;
   font-weight: 500;
@@ -563,7 +570,7 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   flex-shrink: 0;
-  font-size: 0.68rem;
+  font-size: 0.78rem;
 }
 
 .exact-chart-name.gold-top-name {
@@ -575,38 +582,38 @@ body {
   flex: 1;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   border-left: 1px solid var(--border-color);
-  padding-left: 4px;
+  padding-left: 6px;
   position: relative;
 }
 
 .exact-chart-bar {
-  height: 9px;
+  height: 12px;
   border-radius: 2px;
   transition: width 0.4s ease;
-  min-width: 4px;
+  min-width: 5px;
 }
 
 .exact-chart-val {
-  font-size: 0.66rem;
+  font-size: 0.78rem;
   color: var(--text-white);
   font-weight: 650;
-  min-width: 34px;
+  min-width: 42px;
   text-align: left;
 }
 
 .exact-chart-axis-row {
   display: flex;
   align-items: center;
-  gap: 6px;
-  margin-top: 5px;
-  padding-top: 3px;
+  gap: 8px;
+  margin-top: 7px;
+  padding-top: 5px;
   border-top: 1px solid var(--border-color);
 }
 
 .exact-chart-name-spacer {
-  width: 92px;
+  width: clamp(88px, 9.5vw, 102px);
   flex-shrink: 0;
 }
 
@@ -614,9 +621,16 @@ body {
   flex: 1;
   display: flex;
   justify-content: space-between;
-  font-size: 0.61rem;
+  font-size: 0.78rem;
   color: var(--text-gray);
   padding-left: 4px;
+  overflow: hidden;
+  min-width: 0;
+}
+.exact-chart-ticks span {
+  flex-shrink: 1;
+  min-width: 0;
+  font-size: 0.78rem;
 }
 
 /* ==========================================================================
@@ -624,33 +638,33 @@ body {
    ========================================================================== */
 .bottom-panels-grid {
   display: grid;
-  grid-template-columns: 1fr 245px;
-  gap: 8px;
+  grid-template-columns: 1fr minmax(240px, 285px);
+  gap: 10px;
   align-items: stretch;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
   width: 100%;
   box-sizing: border-box;
 }
 
 /* Factores de Predicción */
 .factors-card {
-  padding: 8px 12px;
+  padding: 10px 16px;
 }
 
 .factors-horizontal-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 3px;
+  margin-top: 4px;
 }
 
 .factor-segment {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 9px;
   flex: 1;
   border-right: 1px solid rgba(48, 55, 70, 0.45);
-  padding-right: 6px;
+  padding-right: 8px;
 }
 
 .factor-segment.no-border {
@@ -659,8 +673,8 @@ body {
 }
 
 .factor-icon-wrap svg {
-  width: 15px;
-  height: 15px;
+  width: 18px;
+  height: 18px;
   stroke: var(--gold-main);
   display: block;
 }
@@ -671,32 +685,32 @@ body {
 }
 
 .factor-title {
-  font-size: 0.63rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
 }
 
 .factor-val {
-  font-size: 0.74rem;
+  font-size: 0.84rem;
   font-weight: 700;
   color: var(--text-white);
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 4px;
 }
 
 .green-triangle {
   color: #22C55E;
-  font-size: 0.58rem;
+  font-size: 0.65rem;
 }
 
-/* Nota Informativa (HTML Crisp Card con Marca de Agua de Caballo Dorado) */
+/* Nota Informativa (HTML Crisp Card) */
 .disclaimer-card {
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 10px;
+  padding: 10px 14px;
 }
 
 .disclaimer-content {
@@ -707,24 +721,24 @@ body {
 .disclaimer-header {
   display: flex;
   align-items: center;
-  gap: 5px;
-  font-size: 0.74rem;
+  gap: 6px;
+  font-size: 0.84rem;
   font-weight: 650;
   color: var(--text-white);
-  margin-bottom: 3px;
+  margin-bottom: 4px;
 }
 
 .disclaimer-text {
-  font-size: 0.66rem;
+  font-size: 0.78rem;
   color: var(--text-gray);
-  line-height: 1.35;
+  line-height: 1.4;
 }
 
 .disclaimer-watermark-img {
   position: absolute;
-  right: 4px;
+  right: 6px;
   bottom: 0px;
-  height: 64px;
+  height: 70px;
   width: auto;
   pointer-events: none;
   z-index: 1;
@@ -737,11 +751,12 @@ body {
   margin-top: auto;
   text-align: center;
   width: 100%;
-  padding-top: 4px;
+  padding-top: 8px;
 }
 
 .footer-ribbon-img {
-  width: 250px;
+  width: 270px;
+  max-width: 90%;
   height: auto;
   display: inline-block;
   opacity: 0.95;
@@ -761,37 +776,37 @@ body {
 .eval-metrics-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: 12px;
 }
 
 .eval-metric-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  padding: 12px 14px;
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
 }
 
 .eval-metric-card.gold-border {
   border-color: var(--gold-main);
-  box-shadow: 0 0 10px rgba(214, 166, 60, 0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 .eval-metric-label {
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   color: var(--text-gray);
   margin-bottom: 4px;
 }
 
 .eval-metric-val {
-  font-size: 1.55rem;
+  font-size: 1.7rem;
   font-weight: 800;
   color: var(--gold-light);
 }
 
 .eval-metric-sub {
-  font-size: 0.66rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
   margin-top: 4px;
 }
@@ -799,5 +814,40 @@ body {
 .eval-two-col {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: 14px;
+}
+
+/* ==========================================================================
+   Reglas Responsivas Fluidas (Para pantallas estrechas sin romper proporciones)
+   ========================================================================== */
+@media (max-width: 1100px) {
+  :root {
+    --sidebar-w: 185px;
+  }
+  .dashboard-wrapper {
+    padding: 12px 14px 20px 14px;
+  }
+  .analysis-grid {
+    grid-template-columns: 130px 1fr 232px;
+    gap: 8px;
+  }
+  .bottom-panels-grid {
+    grid-template-columns: 1fr 232px;
+    gap: 8px;
+  }
+  .exact-chart-name, .exact-chart-name-spacer {
+    width: 88px;
+  }
+  .table-racepulse {
+    font-size: 0.74rem;
+  }
+  .table-racepulse th {
+    font-size: 0.69rem;
+  }
+  .table-racepulse td {
+    padding: 4px 3px;
+  }
+  .table-racepulse th {
+    padding: 4px 3px;
+  }
 }
