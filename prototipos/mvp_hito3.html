@@ -3,8 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>RacePulse · Panel de Análisis Hípico con Inteligencia Artificial</title>
-  <link rel="stylesheet" href="assets/css/racepulse_dashboard.css">
+  <link rel="stylesheet" href="assets/css/racepulse_dashboard.css?v=3.6.0">
 </head>
 <body>
 
@@ -44,8 +47,8 @@
         <button class="nav-item" data-section="prediccion">
           <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"/>
-            <circle cx="12" cy="12" r="6"/>
-            <circle cx="12" cy="12" r="2"/>
+            <circle cx="12" cy="6"/>
+            <circle cx="12" cy="2"/>
           </svg>
           <span>Predicción</span>
         </button>
@@ -122,7 +125,7 @@
                 </span>
                 <span class="badge-divider">|</span>
                 <span id="banner-badge-runners" class="badge-item runners">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3zm-8.27-7a2 2 0 0 0-3.46 0"/></svg>
+                  <img src="assets/horse_head_pure2.png" alt="" style="height:12px; width:auto; vertical-align:middle; margin-right:3px;">
                   <span>11 participantes</span>
                 </span>
               </div>
@@ -264,9 +267,22 @@
             </div>
           </div>
 
-          <!-- H. Nota Informativa (Exacta a la Referencia) -->
-          <div class="card-panel disclaimer-card" style="padding:0; border:none; background:transparent;">
-            <img src="assets/crop_disclaimer.png" alt="Nota Importante: Estimaciones sujetas a incertidumbre; no constituye recomendación de apuestas." style="width:100%; height:100%; object-fit:cover; display:block; border-radius:10px;">
+          <!-- H. Nota Informativa (Idéntica a la Referencia) -->
+          <div class="card-panel disclaimer-card">
+            <div class="disclaimer-content">
+              <div class="disclaimer-header">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold-main)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="16" x2="12" y2="12"/>
+                  <line x1="12" y1="8" x2="12.01" y2="8"/>
+                </svg>
+                <span>Nota Importante</span>
+              </div>
+              <p class="disclaimer-text">
+                Estimaciones sujetas a incertidumbre;<br>no constituye recomendación de apuestas.
+              </p>
+            </div>
+            <img src="assets/pure_disclaimer_horse.png" alt="" class="disclaimer-watermark-img">
           </div>
 
         </div>
@@ -296,7 +312,7 @@
         <div class="eval-two-col">
           <div class="card-panel">
             <div class="card-header-clean">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 10 16 10 8"/></svg>
               <span>Ganador Top-1 Predicho por RacePulse AI</span>
             </div>
             <div style="font-size:2rem; font-weight:900; color:var(--gold-light); margin:8px 0;" id="deep-winner-name">
@@ -349,22 +365,12 @@
           </div>
         </div>
 
-        <div class="eval-two-col">
-          <div class="card-panel">
-            <div class="card-header-clean">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
-              <span>Radar PEAS · Agente Inteligente RacePulse</span>
-            </div>
-            <div id="peas-radar-container"></div>
+        <div class="card-panel" style="margin-top:16px;">
+          <div class="card-header-clean">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            <span>Transferencia Entre Hipódromos (Sha Tin a Happy Valley)</span>
           </div>
-
-          <div class="card-panel">
-            <div class="card-header-clean">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-              <span>Curva de Transferencia: Sha Tin → Happy Valley</span>
-            </div>
-            <div id="transfer-chart-container"></div>
-          </div>
+          <div id="transfer-chart-container"></div>
         </div>
       </section>
 
@@ -379,10 +385,10 @@
 
   </main>
 
-  <!-- Scripts del Dashboard MVP -->
-  <script src="assets/js/racepulse_data.js"></script>
-  <script src="assets/js/racepulse_api.js"></script>
-  <script src="assets/js/racepulse_charts.js"></script>
-  <script src="assets/js/racepulse_app.js"></script>
+  <!-- Scripts del Dashboard MVP con Cache-Busting -->
+  <script src="assets/js/racepulse_data.js?v=3.6.0"></script>
+  <script src="assets/js/racepulse_api.js?v=3.6.0"></script>
+  <script src="assets/js/racepulse_charts.js?v=3.6.0"></script>
+  <script src="assets/js/racepulse_app.js?v=3.6.0"></script>
 </body>
 </html>

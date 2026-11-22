@@ -263,9 +263,9 @@ const RacePulseApp = (function() {
     if (!currentPrediction) return;
 
     // Si es el caso 411357, usar las probabilidades exactas calibradas de GBDT (28.74%, 22.17%, etc.)
-    if (selectedRace.rid === 411357) {
-      for (let i = 0; i < Math.min(6, editableHorses.length); i++) {
-        if (editableHorses[i].prob_gbdt) {
+    if (String(selectedRace.rid) === "411357") {
+      for (let i = 0; i < editableHorses.length; i++) {
+        if (editableHorses[i].prob_gbdt !== undefined && editableHorses[i].prob_gbdt !== null) {
           currentPrediction.probabilities[i] = editableHorses[i].prob_gbdt;
         }
       }
