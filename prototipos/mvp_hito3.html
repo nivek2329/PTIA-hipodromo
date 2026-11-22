@@ -13,31 +13,29 @@
        ====================================================================== -->
   <aside class="sidebar">
     <div>
-      <!-- Marca y Logo de RacePulse -->
+      <!-- Marca y Logotipo Centrado de RacePulse -->
       <div class="brand-section">
-        <div class="brand-logo-container">
-          <!-- Logo Caballo Dorado Vectorial con Líneas de Velocidad -->
-          <svg class="brand-horse-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#F4D27A" />
-                <stop offset="50%" stop-color="#D6A63C" />
-                <stop offset="100%" stop-color="#A97E25" />
-              </linearGradient>
-            </defs>
-            <!-- Líneas de velocidad dinámicas -->
-            <path d="M4 14H16M2 20H12M5 26H15" stroke="url(#goldGrad)" stroke-width="2.2" stroke-linecap="round"/>
-            <!-- Silueta estilizada de caballo pura sangre -->
-            <path d="M14 26C15 23 18 19 22 17C24 15 25 11 27 8C28 6 31 7 32 9C34 11 36 12 39 12C41 12 43 14 43 16C43 18 41 20 38 21C35 22 34 24 33 26C31 30 28 35 25 38C22 41 18 43 14 44C16 38 15 32 14 26Z" fill="url(#goldGrad)"/>
-            <path d="M26 15C29 17 33 19 35 23" stroke="#080B10" stroke-width="1.8" stroke-linecap="round"/>
-            <circle cx="35" cy="15" r="1.5" fill="#080B10"/>
-          </svg>
-          <div class="brand-title">Race<span class="gold">Pulse</span></div>
-        </div>
+        <!-- Logo Caballo Dorado con Líneas de Velocidad Aerodinámicas -->
+        <svg class="brand-horse-svg" viewBox="0 0 60 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="goldHeadGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#F4D27A"/>
+              <stop offset="50%" stop-color="#D6A63C"/>
+              <stop offset="100%" stop-color="#A97E25"/>
+            </linearGradient>
+          </defs>
+          <!-- Líneas de velocidad dinámicas horizontales -->
+          <path d="M2 13H18M0 19H14M3 25H16M6 31H14" stroke="url(#goldHeadGrad)" stroke-width="2.6" stroke-linecap="round"/>
+          <!-- Silueta estilizada de cabeza de pura sangre en carrera -->
+          <path d="M17 26C18 21 22 17 27 15C29 13 31 8 33 5C35 3 38 4 39 6C41 8 43 9 48 9C50 9 52 11 52 13C52 15 50 17 46 18C42 19 41 21 40 23C38 28 34 33 30 36C26 39 22 41 17 42C19 36 18 31 17 26Z" fill="url(#goldHeadGrad)"/>
+          <path d="M33 14C37 16 41 18 43 22" stroke="#080B10" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="43" cy="14" r="1.6" fill="#080B10"/>
+        </svg>
+        <div class="brand-title">Race<span class="gold">Pulse</span></div>
         <div class="brand-tagline">Analiza. Predice. Decide.</div>
       </div>
 
-      <!-- Menú de Navegación del Dashboard -->
+      <!-- Menú de Navegación -->
       <nav class="sidebar-nav">
         <button class="nav-item active" data-section="carreras">
           <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -100,11 +98,6 @@
         <div class="ai-card-title">IA + Datos Hípicos</div>
         <div class="ai-card-desc">para una predicción más inteligente</div>
       </div>
-
-      <!-- Onda decorativa dorada inferior -->
-      <svg class="sidebar-footer-wave" viewBox="0 0 180 16" fill="none" preserveAspectRatio="none">
-        <path d="M0 8C45 0 90 16 135 8C155 4 170 2 180 0V16H0V8Z" fill="url(#goldGrad)" opacity="0.35"/>
-      </svg>
     </div>
   </aside>
 
@@ -126,30 +119,24 @@
       </div>
 
       <div class="header-actions">
-        <!-- Indicador de Backend FastAPI Localhost -->
-        <div style="display:flex; align-items:center; gap:8px; font-size:0.75rem; color:var(--text-gray); background:rgba(16,24,39,0.9); border:1px solid var(--border-color); padding:5px 12px; border-radius:999px;">
-          <span id="backend-status-dot" style="width:8px; height:8px; border-radius:50%; background:#10B981; display:inline-block;"></span>
-          <span id="backend-status-text">FastAPI Localhost:8000</span>
-        </div>
-
-        <!-- Botón de Notificaciones -->
-        <button class="header-icon-btn" title="Notificaciones del Sistema">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        <!-- Notificaciones -->
+        <button class="header-icon-btn" title="Notificaciones" aria-label="Notificaciones">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
           <span class="badge-dot"></span>
         </button>
 
-        <!-- Avatar de Usuario -->
-        <div class="user-avatar-btn" title="Sesión de Análisis Activa">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <!-- Avatar Usuario Limpio -->
+        <div class="user-avatar-btn" title="Sesión de Análisis Activa · FastAPI Localhost:8000">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         </div>
       </div>
     </header>
 
-    <!-- Contenido Dinámico de Vistas -->
+    <!-- Contenido Principal -->
     <div class="dashboard-content">
 
       <!-- ==================================================================
-           VISTA 1: CARRERAS (DASHBOARD PRINCIPAL — EXACTO A LA IMAGEN)
+           VISTA 1: CARRERAS (DASHBOARD EXACTO A LA REFERENCIA)
            ================================================================== -->
       <section id="view-carreras" class="dashboard-view active">
 
@@ -157,7 +144,8 @@
         <div class="race-banner">
           <div class="banner-left">
             <div class="coliseum-icon-box">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <!-- Icono Coliseo / Hipódromo Dorado -->
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 21h18"/>
                 <path d="M5 21V7l7-4 7 4v14"/>
                 <path d="M9 21v-4a3 3 0 0 1 6 0v4"/>
@@ -170,12 +158,12 @@
                 Sha Tin · Jinan Handicap · 20 Oct 2020
               </div>
               <div class="banner-badges">
-                <span id="banner-badge-turf" class="badge-pill badge-turf">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/></svg>
+                <span id="banner-badge-turf" class="badge-item turf">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/></svg>
                   <span>Césped</span>
                 </span>
-                <span id="banner-badge-runners" class="badge-pill badge-runners">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m10 15 5-3-5-3v6Z"/></svg>
+                <span id="banner-badge-runners" class="badge-item runners">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
                   <span>11 participantes</span>
                 </span>
               </div>
@@ -183,10 +171,10 @@
           </div>
         </div>
 
-        <!-- D, E, F. Grid de Análisis Principal (3 Columnas) -->
+        <!-- D, E, F. Cuadrícula Principal de 3 Columnas (200px - 1.4fr - 265px) -->
         <div class="analysis-grid">
 
-          <!-- D. Columna 1: Filtros de Carrera -->
+          <!-- D. Columna 1: Filtros de Carrera (~20%) -->
           <div class="card-panel">
             <div class="card-header-clean">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
@@ -204,14 +192,14 @@
             </div>
 
             <button id="btn-analyze" class="btn-gold" onclick="RacePulseApp.analyzeCurrentRace()">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
               </svg>
               <span>Analizar Carrera</span>
             </button>
           </div>
 
-          <!-- E. Columna 2: Tabla de Resultados de la Predicción -->
+          <!-- E. Columna 2: Tabla de Resultados de la Predicción (~55%) -->
           <div class="card-panel">
             <div class="card-header-clean">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
@@ -239,21 +227,21 @@
             </div>
           </div>
 
-          <!-- F. Columna 3: Gráfica de Barras Horizontales de Probabilidad -->
+          <!-- F. Columna 3: Probabilidad de Victoria (~25%) -->
           <div class="card-panel">
             <div class="card-header-clean">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
               <span>Probabilidad de Victoria</span>
             </div>
 
-            <div id="prob-bars-chart">
-              <!-- Renderizado dinámicamente con barras doradas y eje X -->
+            <div id="prob-bars-chart" style="display:flex; flex-direction:column; flex:1;">
+              <!-- Barras doradas y eje X inyectados dinámicamente -->
             </div>
           </div>
 
         </div>
 
-        <!-- G, H. Fila Inferior: Factores de Predicción y Nota Importante -->
+        <!-- G, H. Fila Inferior: Factores de Predicción y Nota Informativa -->
         <div class="bottom-panels-grid">
 
           <!-- G. Factores de Predicción -->
@@ -306,19 +294,19 @@
             </div>
           </div>
 
-          <!-- H. Nota Importante con Silueta de Caballo -->
+          <!-- H. Nota Informativa -->
           <div class="card-panel disclaimer-card">
             <div class="disclaimer-header">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
               <span>Nota Importante</span>
             </div>
             <p class="disclaimer-text">
-              Estimaciones generadas mediante modelo Softmax Plackett-Luce anti-fuga temporal. Los resultados están sujetos a incertidumbre probabilística; no constituye recomendación de apuestas.
+              Estimaciones sujetas a incertidumbre; no constituye recomendación de apuestas.
             </p>
 
-            <!-- Silueta decorativa de caballo dorado como marca de agua -->
-            <svg class="disclaimer-horse-watermark" viewBox="0 0 48 48" fill="none">
-              <path d="M14 26C15 23 18 19 22 17C24 15 25 11 27 8C28 6 31 7 32 9C34 11 36 12 39 12C41 12 43 14 43 16C43 18 41 20 38 21C35 22 34 24 33 26C31 30 28 35 25 38C22 41 18 43 14 44C16 38 15 32 14 26Z" stroke="#D6A63C" stroke-width="2.5" fill="none"/>
+            <!-- Silueta de Caballo Dorado Idéntica a la Referencia -->
+            <svg class="disclaimer-horse-watermark" viewBox="0 0 60 48" fill="none">
+              <path d="M17 26C18 21 22 17 27 15C29 13 31 8 33 5C35 3 38 4 39 6C41 8 43 9 48 9C50 9 52 11 52 13C52 15 50 17 46 18C42 19 41 21 40 23C38 28 34 33 30 36C26 39 22 41 17 42C19 36 18 31 17 26Z" stroke="#D6A63C" stroke-width="2.2" fill="none"/>
             </svg>
           </div>
 
@@ -335,31 +323,27 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             <span>Participantes de la Carrera & Simulador en Vivo</span>
           </div>
-          <p style="color:var(--text-gray); font-size:0.85rem; margin-bottom:16px;">
-            Inspecciona cada competidor y ajusta su <strong>Rating Oficial (OR)</strong> mediante los controles interactivos para observar cómo se redistribuye la masa de probabilidad Softmax en tiempo real.
+          <p style="color:var(--text-gray); font-size:0.84rem; margin-bottom:14px;">
+            Ajusta variables en tiempo real (Rating Oficial, peso, descanso) para evaluar el impacto en la probabilidad.
           </p>
-
-          <div id="participants-cards-container" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:16px;">
-            <!-- Inyectado dinámicamente -->
-          </div>
+          <div id="participants-cards-container" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:14px;"></div>
         </div>
       </section>
 
       <!-- ==================================================================
-           VISTA 3: PREDICCIÓN (DEEP-DIVE & EXPLICABILIDAD DE FACTORES)
+           VISTA 3: PREDICCIÓN (DEEP-DIVE FACTORES)
            ================================================================== -->
       <section id="view-prediccion" class="dashboard-view">
         <div class="eval-two-col">
-
           <div class="card-panel">
             <div class="card-header-clean">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
               <span>Ganador Top-1 Predicho por RacePulse AI</span>
             </div>
-            <div style="font-size:2.2rem; font-weight:900; color:var(--gold-light); margin:10px 0;" id="deep-winner-name">
+            <div style="font-size:2rem; font-weight:900; color:var(--gold-light); margin:8px 0;" id="deep-winner-name">
               Angel Of My Eyes
             </div>
-            <div style="font-size:0.85rem; color:var(--text-gray); line-height:1.6;">
+            <div style="font-size:0.84rem; color:var(--text-gray); line-height:1.6;">
               Motor: <strong id="deep-engine-text" style="color:var(--text-white);">FastAPI + Python Softmax Plackett-Luce</strong><br>
               Latencia de Inferencia: <strong id="deep-latency-text" style="color:#38BDF8;">1.8 ms</strong><br>
               Formulación: <em>Softmax L2 anti-fuga temporal sin lookahead</em>
@@ -371,20 +355,15 @@
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
               <span>Contribución de Factores Clave (W · X_norm)</span>
             </div>
-            <div id="deep-factors-list">
-              <!-- Inyectado dinámicamente -->
-            </div>
+            <div id="deep-factors-list"></div>
           </div>
-
         </div>
       </section>
 
       <!-- ==================================================================
-           VISTA 4: EVALUACIÓN EXPERIMENTAL (HITO 3 COMPLETO)
+           VISTA 4: EVALUACIÓN EXPERIMENTAL (HITO 3)
            ================================================================== -->
       <section id="view-evaluacion" class="dashboard-view">
-
-        <!-- 4 Métricas Clave de Evaluación -->
         <div class="eval-metrics-grid">
           <div class="eval-metric-card gold-border">
             <span class="eval-metric-label">Carreras Analizadas</span>
@@ -411,37 +390,27 @@
           </div>
         </div>
 
-        <!-- Dos Columnas: Radar PEAS y Curva de Transferencia -->
         <div class="eval-two-col">
-
-          <!-- Radar PEAS del Agente -->
           <div class="card-panel">
             <div class="card-header-clean">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
               <span>Radar PEAS · Agente Inteligente RacePulse</span>
             </div>
-            <div id="peas-radar-container">
-              <!-- SVG del Radar PEAS renderizado por racepulse_charts.js -->
-            </div>
+            <div id="peas-radar-container"></div>
           </div>
 
-          <!-- Curva de Transferencia de Dominio -->
           <div class="card-panel">
             <div class="card-header-clean">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
               <span>Curva de Transferencia: Sha Tin → Happy Valley</span>
             </div>
-            <div id="transfer-chart-container">
-              <!-- SVG de la curva renderizado por racepulse_charts.js -->
-            </div>
+            <div id="transfer-chart-container"></div>
           </div>
-
         </div>
 
-        <!-- Tabla Desglose por Hipódromo -->
         <div class="card-panel">
           <div class="card-header-clean">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
             <span>Desempeño Comparativo por Hipódromo (Test 2020)</span>
           </div>
           <div class="table-wrapper">
@@ -455,18 +424,15 @@
                   <th>Hit Rate Mercado</th>
                 </tr>
               </thead>
-              <tbody id="eval-courses-tbody">
-                <!-- Inyectado dinámicamente -->
-              </tbody>
+              <tbody id="eval-courses-tbody"></tbody>
             </table>
           </div>
         </div>
-
       </section>
 
-      <!-- Footer Estilizado con Marca Dorada -->
+      <!-- Footer Estilizado con Línea Dorada y Marca Central -->
       <footer class="dashboard-footer">
-        <div>RacePulse AI · Proyecto Tecnologías de Inteligencia Artificial (PTIA) · Grupo 2</div>
+        <div class="footer-line-accent"></div>
         <div class="footer-brand">RacePulse</div>
       </footer>
 
@@ -474,9 +440,7 @@
 
   </main>
 
-  <!-- ======================================================================
-       SCRIPTS MODULARES
-       ====================================================================== -->
+  <!-- Scripts -->
   <script src="assets/js/racepulse_data.js"></script>
   <script src="assets/js/racepulse_api.js"></script>
   <script src="assets/js/racepulse_charts.js"></script>
