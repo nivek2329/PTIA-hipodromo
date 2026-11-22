@@ -213,8 +213,9 @@ def main():
     for f_line in [
         "Figura 6. Comparativa de Hit Rate@1 y Log-Loss multiclase en el conjunto de prueba (2020).",
         "Figura 7. Curva de aprendizaje en transferencia de dominio Sha Tin → Happy Valley (Test 2020, n = 298).",
-        "Figura 8. MVP Funcional Hito 3 (Pantalla 3): Inferencia PEAS en vivo sobre Sha Tin (RID 411357).",
-        "Figura 9. MVP Funcional Hito 3 (Pantalla 4): Evaluación global (2020) y transferencia de dominio.",
+        "Figura 8. MVP Funcional Hito 3: Módulo de Acceso, Autenticación y Control de Roles con Mascota Oficial.",
+        "Figura 9. MVP Funcional Hito 3: Panel de Análisis Hípico e Inferencia PEAS en vivo (RID 411357, Sha Tin).",
+        "Figura 10. MVP Funcional Hito 3: Auditoría de Evaluación Global (2020) y Transferencia de Dominio.",
     ]:
         insert_paragraph_before(intro_h1, f_line, "Body Text")
 
@@ -400,25 +401,62 @@ def main():
         ref_p,
         "Para el Hito 3 se evolucionó el prototipo hacia un Producto Mínimo Viable (MVP) funcional desplegado como servicio web en "
         "localhost (http://localhost:8000) mediante FastAPI y Python (app.py e iniciar_mvp.bat). A diferencia de un archivo HTML estático, "
-        "el MVP en localhost opera conectado a un backend de IA activo que expone una API REST para inferencia en tiempo real (< 1 ms) "
-        "y documentación interactiva OpenAPI Swagger (/docs). El sistema permite: (1) explorar carreras reales del conjunto de prueba "
-        "2020 por hipódromo; (2) inspeccionar variables precompetencia y simular escenarios en vivo editando parámetros como OR, tasa "
-        "histórica o cajón; (3) ejecutar inferencia Softmax Plackett-Luce en tiempo real con panel de explicabilidad de factores y cotejo "
-        "directo contra el ganador oficial real; y (4) auditar interactivamente las métricas globales del Hito 3 y la curva de transferencia "
-        "de dominio Sha Tin → Happy Valley.",
+        "el MVP en localhost opera conectado a un backend de IA activo que expone una API REST para inferencia en tiempo real (< 1 ms), "
+        "módulo de autenticación seguro, base de datos relacional SQLite y documentación interactiva OpenAPI Swagger (/docs).",
+        "Body Text"
+    )
+    insert_paragraph_before(
+        ref_p,
+        "Módulo de Seguridad, Autenticación y Control de Acceso por Roles (RBAC): El acceso a la plataforma se encuentra protegido "
+        "mediante credenciales cifradas con PBKDF2 y HMAC-SHA256 (240,000 iteraciones con salt criptográfico por usuario) almacenadas en "
+        "data/racepulse_users.sqlite3. La sesión se gestiona con cookies seguras (racepulse_session) y segmentación estricta de privilegios "
+        "en tres roles operativos: (1) Administrador (admin): acceso total a las cuatro vistas del sistema, simulación interactiva y "
+        "auditoría técnica de modelos mediante el endpoint protegido /api/artifacts; (2) Analista Hípico (analista): acceso a carreras, "
+        "predicción PEAS y panel de participantes con simulación contra-fáctica de Official Rating (OR) en tiempo real; y (3) Consulta "
+        "(consulta): interfaz de solo lectura para carreras y predicciones básicas, bloqueando la exposición de métricas internas y "
+        "artefactos de entrenamiento para evitar fuga de propiedad intelectual o decisiones no autorizadas.",
+        "Body Text"
+    )
+
+    mvp_login = os.path.join(DOCS_DIR, "fig_hito3_mvp_login.png")
+    if os.path.exists(mvp_login):
+        p_f8 = insert_paragraph_before(ref_p, "", "Normal")
+        p_f8.add_run().add_picture(mvp_login, width=Inches(6.1))
+        insert_paragraph_before(ref_p, "Figura 8. MVP Funcional Hito 3: Módulo de Acceso, Autenticación y Control de Roles con Mascota Oficial.", "Normal")
+
+    insert_paragraph_before(
+        ref_p,
+        "Diseño Visual, Identidad de Marca y Cero Desbordamiento (0px Overflow): La interfaz fue diseñada bajo la identidad visual "
+        "Dark & Gold de RacePulse (#050608, #0B1322, #D6A63C), integrando el logotipo oficial, la mascota del proyecto tanto en la "
+        "pantalla de inicio de sesión nocturna como en la barra lateral mediante micro-badge dorado, y una cuadrícula responsive "
+        "estrictamente calibrada (barra lateral de 155px, cuadrícula de análisis 118px / 1fr / 228px). En resoluciones estándar de "
+        "escritorio (1024×576, 1024×649 y 1280×720), la interfaz garantiza 0 píxeles de scroll horizontal o vertical, ofreciendo una "
+        "visualización de alta fidelidad donde todos los componentes (filtros, tabla de 8 columnas, barras de probabilidad, factores y "
+        "aviso de incertidumbre) se presentan simultáneamente sin cortes.",
         "Body Text"
     )
 
     mvp_inf = os.path.join(DOCS_DIR, "fig_hito3_mvp_inferencia.png")
-    mvp_eval = os.path.join(DOCS_DIR, "fig_hito3_mvp_evaluacion.png")
     if os.path.exists(mvp_inf):
-        p_f8 = insert_paragraph_before(ref_p, "", "Normal")
-        p_f8.add_run().add_picture(mvp_inf, width=Inches(6.1))
-        insert_paragraph_before(ref_p, "Figura 8. MVP Funcional Hito 3 (Pantalla 3): Inferencia PEAS en vivo sobre Sha Tin (RID 411357).", "Normal")
-    if os.path.exists(mvp_eval):
         p_f9 = insert_paragraph_before(ref_p, "", "Normal")
-        p_f9.add_run().add_picture(mvp_eval, width=Inches(6.1))
-        insert_paragraph_before(ref_p, "Figura 9. MVP Funcional Hito 3 (Pantalla 4): Evaluación global (2020) y transferencia de dominio.", "Normal")
+        p_f9.add_run().add_picture(mvp_inf, width=Inches(6.1))
+        insert_paragraph_before(ref_p, "Figura 9. MVP Funcional Hito 3: Panel de Análisis Hípico e Inferencia PEAS en vivo (RID 411357, Sha Tin).", "Normal")
+
+    insert_paragraph_before(
+        ref_p,
+        "Capacidades Operativas del MVP: El sistema permite: (1) explorar carreras reales del conjunto de prueba temporal (Test 2020) "
+        "organizadas por hipódromo; (2) inspeccionar variables precompetencia libres de fuga de datos; (3) ejecutar inferencia Softmax "
+        "Plackett-Luce instantánea con ranking calibrado de probabilidades de victoria y explicabilidad de factores clave; y (4) auditar "
+        "las métricas globales de validación, radar PEAS y curva de transferencia de dominio (Sha Tin → Happy Valley) desde la vista "
+        "exclusiva para administradores.",
+        "Body Text"
+    )
+
+    mvp_eval = os.path.join(DOCS_DIR, "fig_hito3_mvp_evaluacion.png")
+    if os.path.exists(mvp_eval):
+        p_f10 = insert_paragraph_before(ref_p, "", "Normal")
+        p_f10.add_run().add_picture(mvp_eval, width=Inches(6.1))
+        insert_paragraph_before(ref_p, "Figura 10. MVP Funcional Hito 3: Auditoría de Evaluación Global (2020) y Transferencia de Dominio.", "Normal")
 
     doc.save(HITO3_DOCX)
     print(f"Documento Hito 3 guardado exitosamente en: {HITO3_DOCX}")
