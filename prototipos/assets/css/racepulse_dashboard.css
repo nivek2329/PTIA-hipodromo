@@ -23,7 +23,7 @@
   --accent-green: #22C55E;
   --accent-blue: #38BDF8;
 
-  --sidebar-w: clamp(190px, 17vw, 220px);
+  --sidebar-w: 155px;
   --radius-sm: 6px;
   --radius-md: 8px;
   --radius-lg: 10px;
@@ -68,7 +68,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 16px 14px 12px 14px;
+  padding: 14px 10px 10px 10px;
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -88,7 +88,7 @@ body {
 }
 
 .brand-exact-img {
-  width: 132px;
+  width: 110px;
   max-width: 90%;
   height: auto;
   display: block;
@@ -106,13 +106,13 @@ body {
 .nav-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 14px;
+  gap: 8px;
+  padding: 6px 12px;
   border-radius: 20px;
   color: var(--text-white);
   text-decoration: none;
   font-weight: 550;
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   cursor: pointer;
   border: none;
   background: transparent;
@@ -137,7 +137,7 @@ body {
   background: var(--gold-gradient);
   color: #080B10 !important;
   font-weight: 750;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 }
 
 .nav-item.active svg {
@@ -153,27 +153,33 @@ body {
   background: rgba(16, 24, 39, 0.95);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  padding: 12px 10px;
+  padding: 8px 6px;
   text-align: center;
 }
 
 
 /* Mascota Oficial Avatar en Barra Lateral */
 .sidebar-mascot-avatar {
-  width: 74px;
-  height: 74px;
+  width: 48px;
+  height: 48px;
   object-fit: cover;
   object-position: center 15%;
   border-radius: 50%;
-  border: 2px solid var(--gold-main);
+  border: 1.5px solid var(--gold-main);
   display: block;
-  margin: 0 auto 8px auto;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  margin: 0 auto 5px auto;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
 }
 .sidebar-ai-clean-card:hover .sidebar-mascot-avatar {
-  transform: scale(1.05);
-  border-color: var(--gold-light);
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  object-position: center 15%;
+  border-radius: 50%;
+  border: 1.5px solid var(--gold-main);
+  display: block;
+  margin: 0 auto 5px auto;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
 }
 
 .ai-chip-clean-icon svg {
@@ -211,7 +217,7 @@ body {
   flex-direction: column;
   position: relative;
   box-sizing: border-box;
-  padding: 14px 20px 24px 20px;
+  padding: 12px 18px 16px 18px;
   overflow-x: hidden;
 }
 
@@ -291,15 +297,15 @@ body {
 }
 
 .header-title {
-  font-size: 1.8rem;
-  font-weight: 800;
+  font-size: 1.45rem;
+  font-weight: 750;
   color: var(--text-white);
-  letter-spacing: -0.4px;
+  letter-spacing: -0.3px;
   margin-bottom: 2px;
 }
 
 .header-subtitle {
-  font-size: 0.92rem;
+  font-size: 0.82rem;
   color: var(--text-gray);
 }
 
@@ -311,12 +317,14 @@ body {
               url('../horses_faded_banner.png') right center / cover no-repeat;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  padding: 16px 22px;
-  min-height: 90px;
+  padding: 10px 18px;
+  min-height: 72px;
+  height: 72px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
@@ -328,7 +336,7 @@ body {
 }
 
 .banner-coliseum-img {
-  width: 64px;
+  width: 50px;
   height: auto;
   display: block;
 }
@@ -340,8 +348,8 @@ body {
 }
 
 .banner-title {
-  font-size: 1.3rem;
-  font-weight: 750;
+  font-size: 1.08rem;
+  font-weight: 700;
   color: var(--text-white);
 }
 
@@ -349,7 +357,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.88rem;
+  font-size: 0.8rem;
   color: var(--text-gray);
 }
 
@@ -381,9 +389,10 @@ body {
    ========================================================================== */
 .analysis-grid {
   display: grid;
-  grid-template-columns: minmax(140px, 175px) 1fr minmax(240px, 285px);
+  grid-template-columns: 118px 1fr 228px;
   gap: 10px;
   align-items: stretch;
+  min-height: 230px;
   margin-bottom: 10px;
   width: 100%;
   box-sizing: border-box;
@@ -394,7 +403,7 @@ body {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  padding: 10px 14px;
+  padding: 8px 12px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -447,8 +456,8 @@ body {
   border: 1px solid #303746;
   border-radius: var(--radius-sm);
   color: var(--text-white);
-  font-size: 0.8rem;
-  padding: 6px 8px;
+  font-size: 0.76rem;
+  padding: 5px 6px;
   cursor: pointer;
   outline: none;
   transition: border-color 0.2s;
@@ -468,13 +477,13 @@ body {
   color: #080B10;
   border: none;
   border-radius: var(--radius-sm);
-  padding: 7px 10px;
-  font-size: 0.82rem;
+  padding: 6px 8px;
+  font-size: 0.78rem;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 5px;
   cursor: pointer;
   margin-top: 6px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -508,18 +517,19 @@ body {
   color: var(--text-gray);
   font-weight: 600;
   text-align: left;
-  padding: 5px 4px;
+  padding: 4px 2px;
   border-bottom: 1px solid var(--border-color);
-  font-size: 0.78rem;
+  font-size: 0.71rem;
   white-space: nowrap;
-  letter-spacing: 0.2px;
+  letter-spacing: 0.1px;
 }
 
 .table-racepulse td {
-  padding: 5px 4px;
+  padding: 4px 2px;
   border-bottom: 1px solid rgba(48, 55, 70, 0.4);
   vertical-align: middle;
   white-space: nowrap;
+  font-size: 0.73rem;
 }
 
 .table-racepulse tr.winner-row {
@@ -581,7 +591,7 @@ body {
 }
 
 .exact-chart-name {
-  width: clamp(88px, 9.5vw, 102px);
+  width: 74px;
   text-align: right;
   color: #FFFFFF;
   font-weight: 500;
@@ -589,7 +599,7 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   flex-shrink: 0;
-  font-size: 0.78rem;
+  font-size: 0.74rem;
 }
 
 .exact-chart-name.gold-top-name {
@@ -615,10 +625,10 @@ body {
 }
 
 .exact-chart-val {
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   color: var(--text-white);
   font-weight: 650;
-  min-width: 42px;
+  min-width: 40px;
   text-align: left;
 }
 
@@ -632,7 +642,7 @@ body {
 }
 
 .exact-chart-name-spacer {
-  width: clamp(88px, 9.5vw, 102px);
+  width: 74px;
   flex-shrink: 0;
 }
 
@@ -657,17 +667,18 @@ body {
    ========================================================================== */
 .bottom-panels-grid {
   display: grid;
-  grid-template-columns: 1fr minmax(240px, 285px);
+  grid-template-columns: 1fr 275px;
   gap: 10px;
   align-items: stretch;
-  margin-bottom: 20px;
+  min-height: 85px;
+  margin-bottom: 12px;
   width: 100%;
   box-sizing: border-box;
 }
 
 /* Factores de Predicción */
 .factors-card {
-  padding: 10px 16px;
+  padding: 8px 14px;
 }
 
 .factors-horizontal-row {
@@ -704,12 +715,12 @@ body {
 }
 
 .factor-title {
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   color: var(--text-muted);
 }
 
 .factor-val {
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   font-weight: 700;
   color: var(--text-white);
   display: flex;
@@ -729,7 +740,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 14px;
+  padding: 8px 12px;
 }
 
 .disclaimer-content {
@@ -748,9 +759,9 @@ body {
 }
 
 .disclaimer-text {
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   color: var(--text-gray);
-  line-height: 1.4;
+  line-height: 1.35;
 }
 
 .disclaimer-watermark-img {
@@ -841,32 +852,88 @@ body {
    ========================================================================== */
 @media (max-width: 1100px) {
   :root {
-    --sidebar-w: 185px;
+    --sidebar-w: 145px;
   }
   .dashboard-wrapper {
-    padding: 12px 14px 20px 14px;
+    padding: 10px 12px 14px 12px;
   }
   .analysis-grid {
-    grid-template-columns: 130px 1fr 232px;
+    grid-template-columns: 115px 1fr 225px;
     gap: 8px;
   }
   .bottom-panels-grid {
-    grid-template-columns: 1fr 232px;
+    grid-template-columns: 1fr 250px;
     gap: 8px;
   }
   .exact-chart-name, .exact-chart-name-spacer {
-    width: 88px;
+    width: 72px;
   }
+}
+  .dashboard-wrapper {
+  margin-left: var(--sidebar-w);
+  width: calc(100% - var(--sidebar-w));
+  max-width: calc(100vw - var(--sidebar-w));
+  min-height: 100vh;
+  background-color: var(--bg-deep);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-sizing: border-box;
+  padding: 12px 18px 16px 18px;
+  overflow-x: hidden;
+}
+  .analysis-grid {
+  display: grid;
+  grid-template-columns: 118px 1fr 228px;
+  gap: 10px;
+  align-items: stretch;
+  min-height: 230px;
+  margin-bottom: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+  .bottom-panels-grid {
+  display: grid;
+  grid-template-columns: 1fr 275px;
+  gap: 10px;
+  align-items: stretch;
+  min-height: 85px;
+  margin-bottom: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+  .exact-chart-name, .exact-chart-name-spacer {
+  width: 74px;
+  flex-shrink: 0;
+}
   .table-racepulse {
     font-size: 0.74rem;
   }
   .table-racepulse th {
-    font-size: 0.69rem;
-  }
+  color: var(--text-gray);
+  font-weight: 600;
+  text-align: left;
+  padding: 4px 2px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.71rem;
+  white-space: nowrap;
+  letter-spacing: 0.1px;
+}
   .table-racepulse td {
-    padding: 4px 3px;
-  }
+  padding: 4px 2px;
+  border-bottom: 1px solid rgba(48, 55, 70, 0.4);
+  vertical-align: middle;
+  white-space: nowrap;
+  font-size: 0.73rem;
+}
   .table-racepulse th {
-    padding: 4px 3px;
-  }
+  color: var(--text-gray);
+  font-weight: 600;
+  text-align: left;
+  padding: 4px 2px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.71rem;
+  white-space: nowrap;
+  letter-spacing: 0.1px;
+}
 }
