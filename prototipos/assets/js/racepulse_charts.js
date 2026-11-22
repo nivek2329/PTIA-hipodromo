@@ -62,11 +62,8 @@ const RacePulseCharts = (function() {
           <div class="exact-chart-name-spacer"></div>
           <div class="exact-chart-ticks">
             <span>0%</span>
-            <span>5%</span>
             <span>10%</span>
-            <span>15%</span>
             <span>20%</span>
-            <span>25%</span>
             <span>30%</span>
           </div>
         </div>

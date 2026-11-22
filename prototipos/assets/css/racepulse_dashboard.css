@@ -1,6 +1,6 @@
 /* ==========================================================================
-   RacePulse AI — Executive Dark & Gold Design System v5.0.0
-   Full-height layout, new logo + mascot, legible typography, 0px overflow.
+   RacePulse AI — Executive Dark & Gold Design System (Impeccable Edition)
+   Legible typography (≥12px functional floor), natural proportions, 0px overflow.
    ========================================================================== */
 
 :root {
@@ -87,15 +87,40 @@ body {
   border-bottom: 1px solid var(--border-subtle);
 }
 
+
+/* Mascota Oficial en Barra Lateral */
+.mascot-avatar-wrap {
+  width: 100%;
+  height: 98px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-bottom: 7px;
+  background: #080B10;
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mascot-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-ai-clean-card:hover .mascot-img {
+  transform: scale(1.04);
+}
+
 .brand-exact-img {
-  width: 148px;
-  max-width: 92%;
+  width: 140px;
+  max-width: 90%;
   height: auto;
   display: block;
   margin: 0 auto;
-  border-radius: 6px;
-  object-fit: cover;
-  object-position: center center;
+  object-fit: contain;
 }
 
 /* Menú de Navegación */
@@ -147,18 +172,6 @@ body {
   stroke: #080B10;
 }
 
-/* Mascota en Sidebar */
-.mascot-sidebar-img {
-  width: 100%;
-  max-width: 115px;
-  height: auto;
-  display: block;
-  margin: 0 auto 8px auto;
-  border-radius: 6px;
-  object-fit: cover;
-  object-position: right center;
-}
-
 /* Tarjeta IA en Barra Lateral */
 .sidebar-bottom-group {
   padding-bottom: 6px;
@@ -201,31 +214,21 @@ body {
   margin-left: var(--sidebar-w);
   width: calc(100% - var(--sidebar-w));
   max-width: calc(100vw - var(--sidebar-w));
-  height: 100vh;
   min-height: 100vh;
   background-color: var(--bg-deep);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   position: relative;
   box-sizing: border-box;
-  padding: 14px 20px 16px 20px;
+  padding: 14px 20px 14px 20px;
   overflow-x: hidden;
-  overflow-y: hidden;
 }
 
 /* Encabezado Principal */
 .dashboard-header {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   flex-shrink: 0;
-}
-
-/* Contenido Principal — ocupa todo el espacio vertical restante */
-.dashboard-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  overflow: hidden;
 }
 
 .header-top-line-bar {
@@ -320,7 +323,7 @@ body {
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   padding: 12px 18px;
-  min-height: 72px;
+  min-height: 68px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -394,7 +397,7 @@ body {
   gap: 10px;
   align-items: stretch;
   flex: 1;
-  min-height: 0;
+  min-height: 270px;
   margin-bottom: 10px;
   width: 100%;
   box-sizing: border-box;
@@ -411,6 +414,7 @@ body {
   flex-direction: column;
   box-sizing: border-box;
   min-width: 0;
+  height: 100%;
 }
 
 .card-header-clean {
@@ -506,6 +510,10 @@ body {
 .table-wrapper {
   width: 100%;
   overflow-x: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 .table-racepulse {
@@ -527,7 +535,7 @@ body {
 }
 
 .table-racepulse td {
-  padding: 5px 4px;
+  padding: 6px 4px;
   border-bottom: 1px solid rgba(48, 55, 70, 0.4);
   vertical-align: middle;
   white-space: nowrap;
@@ -569,7 +577,20 @@ body {
   display: flex;
   flex-direction: column;
   flex: 1;
-  justify-content: center;
+  justify-content: space-between;
+}
+.exact-chart-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+}
+.exact-chart-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-around;
 }
 
 .exact-chart-wrapper {
@@ -651,11 +672,15 @@ body {
   flex: 1;
   display: flex;
   justify-content: space-between;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   color: var(--text-gray);
   padding-left: 4px;
   overflow: hidden;
   min-width: 0;
+}
+.exact-chart-ticks span {
+  flex-shrink: 0;
+  font-size: 0.72rem;
 }
 .exact-chart-ticks span {
   flex-shrink: 1;
@@ -671,10 +696,10 @@ body {
   grid-template-columns: 1fr minmax(240px, 285px);
   gap: 10px;
   align-items: stretch;
-  flex-shrink: 0;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   width: 100%;
   box-sizing: border-box;
+  flex-shrink: 0;
 }
 
 /* Factores de Predicción */
@@ -782,7 +807,7 @@ body {
   flex-shrink: 0;
   text-align: center;
   width: 100%;
-  padding-top: 6px;
+  padding-top: 4px;
 }
 
 .footer-ribbon-img {
@@ -801,10 +826,7 @@ body {
 }
 
 .dashboard-view.active {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  min-height: 0;
+  display: block;
 }
 
 .eval-metrics-grid {
@@ -862,28 +884,42 @@ body {
     padding: 12px 14px 12px 14px;
   }
   .analysis-grid {
-    grid-template-columns: 130px 1fr 232px;
+    grid-template-columns: 135px 1fr 215px;
     gap: 8px;
     flex: 1;
-    min-height: 0;
+    min-height: 270px;
   }
   .bottom-panels-grid {
-    grid-template-columns: 1fr 232px;
+    grid-template-columns: 1fr 215px;
     gap: 8px;
   }
   .exact-chart-name, .exact-chart-name-spacer {
-    width: 88px;
+    width: 82px;
   }
   .table-racepulse {
-    font-size: 0.74rem;
+    font-size: 0.76rem;
   }
   .table-racepulse th {
-    font-size: 0.69rem;
+    font-size: 0.72rem;
+    padding: 5px 3px;
   }
   .table-racepulse td {
-    padding: 4px 3px;
+    padding: 6px 3px;
   }
-  .table-racepulse th {
-    padding: 4px 3px;
-  }
+}
+
+/* Full-Height Stretch Extensions */
+.dashboard-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+#view-carreras {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 0;
 }
