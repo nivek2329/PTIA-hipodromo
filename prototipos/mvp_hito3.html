@@ -9,30 +9,13 @@
 <body>
 
   <!-- ======================================================================
-       A. BARRA LATERAL IZQUIERDA (SIDEBAR)
+       A. BARRA LATERAL IZQUIERDA (SIDEBAR - EXACTA A LA REFERENCIA)
        ====================================================================== -->
   <aside class="sidebar">
-    <div>
-      <!-- Marca y Logotipo Centrado de RacePulse -->
+    <div class="sidebar-top-group">
+      <!-- Marca y Logotipo Oficial de Referencia -->
       <div class="brand-section">
-        <!-- Logo Caballo Dorado con Líneas de Velocidad Aerodinámicas -->
-        <svg class="brand-horse-svg" viewBox="0 0 60 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="goldHeadGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#F4D27A"/>
-              <stop offset="50%" stop-color="#D6A63C"/>
-              <stop offset="100%" stop-color="#A97E25"/>
-            </linearGradient>
-          </defs>
-          <!-- Líneas de velocidad dinámicas horizontales -->
-          <path d="M2 13H18M0 19H14M3 25H16M6 31H14" stroke="url(#goldHeadGrad)" stroke-width="2.6" stroke-linecap="round"/>
-          <!-- Silueta estilizada de cabeza de pura sangre en carrera -->
-          <path d="M17 26C18 21 22 17 27 15C29 13 31 8 33 5C35 3 38 4 39 6C41 8 43 9 48 9C50 9 52 11 52 13C52 15 50 17 46 18C42 19 41 21 40 23C38 28 34 33 30 36C26 39 22 41 17 42C19 36 18 31 17 26Z" fill="url(#goldHeadGrad)"/>
-          <path d="M33 14C37 16 41 18 43 22" stroke="#080B10" stroke-width="2" stroke-linecap="round"/>
-          <circle cx="43" cy="14" r="1.6" fill="#080B10"/>
-        </svg>
-        <div class="brand-title">Race<span class="gold">Pulse</span></div>
-        <div class="brand-tagline">Analiza. Predice. Decide.</div>
+        <img src="assets/logo_exact.png" alt="RacePulse" class="brand-exact-img">
       </div>
 
       <!-- Menú de Navegación -->
@@ -78,25 +61,14 @@
       </nav>
     </div>
 
-    <div>
-      <!-- Tarjeta IA en Barra Lateral -->
-      <div class="sidebar-ai-card">
-        <div class="ai-chip-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="4" y="4" width="16" height="16" rx="2"/>
-            <rect x="9" y="9" width="6" height="6"/>
-            <line x1="9" y1="1" x2="9" y2="4"/>
-            <line x1="15" y1="1" x2="15" y2="4"/>
-            <line x1="9" y1="20" x2="9" y2="23"/>
-            <line x1="15" y1="20" x2="15" y2="23"/>
-            <line x1="20" y1="9" x2="23" y2="9"/>
-            <line x1="20" y1="14" x2="23" y2="14"/>
-            <line x1="1" y1="9" x2="4" y2="9"/>
-            <line x1="1" y1="14" x2="4" y2="14"/>
-          </svg>
+    <!-- Tarjeta IA en Barra Lateral (Exacta a la Referencia) -->
+    <div class="sidebar-bottom-group">
+      <div class="sidebar-ai-clean-card">
+        <div class="ai-chip-clean-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
         </div>
-        <div class="ai-card-title">IA + Datos Hípicos</div>
-        <div class="ai-card-desc">para una predicción más inteligente</div>
+        <div class="ai-clean-title">IA + Datos Hípicos</div>
+        <div class="ai-clean-desc">para una predicción más inteligente</div>
       </div>
     </div>
   </aside>
@@ -106,29 +78,24 @@
        ====================================================================== -->
   <main class="dashboard-wrapper">
 
-    <!-- Encabezado Principal -->
+    <!-- Encabezado Principal con Línea Dorada y Perfil -->
     <header class="dashboard-header">
-      <div style="display:flex; align-items:center; gap:16px;">
-        <button id="mobile-menu-btn" class="mobile-menu-toggle" aria-label="Abrir Menú">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        </button>
-        <div class="header-text-group">
-          <h1 class="header-title">Panel de análisis</h1>
-          <p class="header-subtitle">Predicción del caballo con mayor probabilidad de ganar</p>
+      <div class="header-top-line-bar">
+        <div class="header-gold-line"></div>
+        <div class="header-actions">
+          <button class="header-icon-btn" title="Notificaciones" aria-label="Notificaciones">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+            <span class="badge-dot"></span>
+          </button>
+          <div class="user-avatar-btn" title="Sesión de Análisis Activa · FastAPI Localhost:8000">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
         </div>
       </div>
 
-      <div class="header-actions">
-        <!-- Notificaciones -->
-        <button class="header-icon-btn" title="Notificaciones" aria-label="Notificaciones">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
-          <span class="badge-dot"></span>
-        </button>
-
-        <!-- Avatar Usuario Limpio -->
-        <div class="user-avatar-btn" title="Sesión de Análisis Activa · FastAPI Localhost:8000">
-          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        </div>
+      <div class="header-text-group">
+        <h1 class="header-title">Panel de análisis</h1>
+        <p class="header-subtitle">Predicción del caballo con mayor probabilidad de ganar</p>
       </div>
     </header>
 
@@ -136,34 +103,26 @@
     <div class="dashboard-content">
 
       <!-- ==================================================================
-           VISTA 1: CARRERAS (DASHBOARD EXACTO A LA REFERENCIA)
+           VISTA 1: CARRERAS (EXACTA A LA REFERENCIA)
            ================================================================== -->
       <section id="view-carreras" class="dashboard-view active">
 
         <!-- C. Banner Panorámico de Carrera Seleccionada -->
         <div class="race-banner">
           <div class="banner-left">
-            <div class="coliseum-icon-box">
-              <!-- Icono Coliseo / Hipódromo Dorado -->
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 21h18"/>
-                <path d="M5 21V7l7-4 7 4v14"/>
-                <path d="M9 21v-4a3 3 0 0 1 6 0v4"/>
-                <line x1="9" y1="10" x2="9" y2="12"/>
-                <line x1="15" y1="10" x2="15" y2="12"/>
-              </svg>
-            </div>
+            <img src="assets/coliseum_exact.png" alt="Hipódromo" class="banner-coliseum-img">
             <div class="banner-info">
               <div id="banner-race-title" class="banner-title">
                 Sha Tin · Jinan Handicap · 20 Oct 2020
               </div>
               <div class="banner-badges">
                 <span id="banner-badge-turf" class="badge-item turf">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/></svg>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/></svg>
                   <span>Césped</span>
                 </span>
+                <span class="badge-divider">|</span>
                 <span id="banner-badge-runners" class="badge-item runners">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3zm-8.27-7a2 2 0 0 0-3.46 0"/></svg>
                   <span>11 participantes</span>
                 </span>
               </div>
@@ -171,13 +130,12 @@
           </div>
         </div>
 
-        <!-- D, E, F. Cuadrícula Principal de 3 Columnas (200px - 1.4fr - 265px) -->
+        <!-- D, E, F. Cuadrícula Principal de 3 Columnas -->
         <div class="analysis-grid">
 
-          <!-- D. Columna 1: Filtros de Carrera (~20%) -->
-          <div class="card-panel">
-            <div class="card-header-clean">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+          <!-- D. Columna 1: Filtros de Carrera -->
+          <div class="card-panel filters-card">
+            <div class="card-header-clean no-icon">
               <span>Filtros de carrera</span>
             </div>
 
@@ -192,15 +150,15 @@
             </div>
 
             <button id="btn-analyze" class="btn-gold" onclick="RacePulseApp.analyzeCurrentRace()">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
               </svg>
               <span>Analizar Carrera</span>
             </button>
           </div>
 
-          <!-- E. Columna 2: Tabla de Resultados de la Predicción (~55%) -->
-          <div class="card-panel">
+          <!-- E. Columna 2: Tabla de Resultados de la Predicción -->
+          <div class="card-panel prediction-table-card">
             <div class="card-header-clean">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
               <span>Resultados de la Predicción</span>
@@ -227,14 +185,14 @@
             </div>
           </div>
 
-          <!-- F. Columna 3: Probabilidad de Victoria (~25%) -->
-          <div class="card-panel">
+          <!-- F. Columna 3: Probabilidad de Victoria -->
+          <div class="card-panel prob-bars-card">
             <div class="card-header-clean">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
               <span>Probabilidad de Victoria</span>
             </div>
 
-            <div id="prob-bars-chart" style="display:flex; flex-direction:column; flex:1;">
+            <div id="prob-bars-chart" class="prob-chart-body-wrapper">
               <!-- Barras doradas y eje X inyectados dinámicamente -->
             </div>
           </div>
@@ -245,69 +203,70 @@
         <div class="bottom-panels-grid">
 
           <!-- G. Factores de Predicción -->
-          <div class="card-panel">
+          <div class="card-panel factors-card">
             <div class="card-header-clean">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
               <span>Factores de predicción</span>
             </div>
 
-            <div class="factors-chips-row">
-              <div class="factor-chip">
-                <div class="factor-chip-top">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                  <span>Rating Oficial</span>
+            <div class="factors-horizontal-row">
+              <!-- Item 1: Rating Oficial -->
+              <div class="factor-segment">
+                <div class="factor-icon-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
                 </div>
-                <div id="factor-val-or" class="factor-chip-val">
-                  86 <span class="unit">pts ▲</span>
+                <div class="factor-text-wrap">
+                  <span class="factor-title">Rating Oficial</span>
+                  <span id="factor-val-or" class="factor-val">
+                    86 pts <span class="green-triangle">▲</span>
+                  </span>
                 </div>
               </div>
 
-              <div class="factor-chip">
-                <div class="factor-chip-top">
+              <!-- Item 2: Historial Previo -->
+              <div class="factor-segment">
+                <div class="factor-icon-wrap">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-                  <span>Historial Previo</span>
                 </div>
-                <div id="factor-val-hist" class="factor-chip-val">
-                  2.8 (últimas 5)
+                <div class="factor-text-wrap">
+                  <span class="factor-title">Historial Previo</span>
+                  <span id="factor-val-hist" class="factor-val">
+                    2.8 (últimas 5)
+                  </span>
                 </div>
               </div>
 
-              <div class="factor-chip">
-                <div class="factor-chip-top">
+              <!-- Item 3: Descanso -->
+              <div class="factor-segment">
+                <div class="factor-icon-wrap">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                  <span>Descanso</span>
                 </div>
-                <div id="factor-val-rest" class="factor-chip-val">
-                  12 días
+                <div class="factor-text-wrap">
+                  <span class="factor-title">Descanso</span>
+                  <span id="factor-val-rest" class="factor-val">
+                    12 días
+                  </span>
                 </div>
               </div>
 
-              <div class="factor-chip">
-                <div class="factor-chip-top">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                  <span>Jinete / Entrenador</span>
+              <!-- Item 4: Jinete / Entrenador -->
+              <div class="factor-segment no-border">
+                <div class="factor-icon-wrap">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 18a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v2z"/><path d="M10 10V5a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v5"/><circle cx="12" cy="12" r="7"/></svg>
                 </div>
-                <div id="factor-val-jockey" class="factor-chip-val" style="font-size:0.92rem;">
-                  Zac Purton
+                <div class="factor-text-wrap">
+                  <span class="factor-title">Jinete / Entrenador</span>
+                  <span id="factor-val-jockey" class="factor-val">
+                    Zac Purton
+                  </span>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- H. Nota Informativa -->
-          <div class="card-panel disclaimer-card">
-            <div class="disclaimer-header">
-              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-              <span>Nota Importante</span>
-            </div>
-            <p class="disclaimer-text">
-              Estimaciones sujetas a incertidumbre; no constituye recomendación de apuestas.
-            </p>
-
-            <!-- Silueta de Caballo Dorado Idéntica a la Referencia -->
-            <svg class="disclaimer-horse-watermark" viewBox="0 0 60 48" fill="none">
-              <path d="M17 26C18 21 22 17 27 15C29 13 31 8 33 5C35 3 38 4 39 6C41 8 43 9 48 9C50 9 52 11 52 13C52 15 50 17 46 18C42 19 41 21 40 23C38 28 34 33 30 36C26 39 22 41 17 42C19 36 18 31 17 26Z" stroke="#D6A63C" stroke-width="2.2" fill="none"/>
-            </svg>
+          <!-- H. Nota Informativa (Exacta a la Referencia) -->
+          <div class="card-panel disclaimer-card" style="padding:0; border:none; background:transparent;">
+            <img src="assets/crop_disclaimer.png" alt="Nota Importante: Estimaciones sujetas a incertidumbre; no constituye recomendación de apuestas." style="width:100%; height:100%; object-fit:cover; display:block; border-radius:10px;">
           </div>
 
         </div>
@@ -407,40 +366,20 @@
             <div id="transfer-chart-container"></div>
           </div>
         </div>
-
-        <div class="card-panel">
-          <div class="card-header-clean">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            <span>Desempeño Comparativo por Hipódromo (Test 2020)</span>
-          </div>
-          <div class="table-wrapper">
-            <table class="table-racepulse">
-              <thead>
-                <tr>
-                  <th>Hipódromo</th>
-                  <th>Carreras Evaluadas</th>
-                  <th>Hit Rate PL</th>
-                  <th>Hit Rate GBDT Calibrado</th>
-                  <th>Hit Rate Mercado</th>
-                </tr>
-              </thead>
-              <tbody id="eval-courses-tbody"></tbody>
-            </table>
-          </div>
-        </div>
       </section>
 
-      <!-- Footer Estilizado con Línea Dorada y Marca Central -->
-      <footer class="dashboard-footer">
-        <div class="footer-line-accent"></div>
-        <div class="footer-brand">RacePulse</div>
-      </footer>
+    </div>
 
+    <!-- ======================================================================
+         CINTA DORADA INFERIOR DECORATIVA (EXACTA A LA REFERENCIA)
+         ====================================================================== -->
+    <div class="dashboard-footer-ribbon">
+      <img src="assets/bottom_ribbon_exact.png" alt="RacePulse" class="footer-ribbon-img">
     </div>
 
   </main>
 
-  <!-- Scripts -->
+  <!-- Scripts del Dashboard MVP -->
   <script src="assets/js/racepulse_data.js"></script>
   <script src="assets/js/racepulse_api.js"></script>
   <script src="assets/js/racepulse_charts.js"></script>

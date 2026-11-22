@@ -225,7 +225,7 @@ const RacePulseApp = (function() {
     }
     if (runnersBadge) {
       runnersBadge.innerHTML = `
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        <img src="assets/horse_head_pure2.png" alt="" style="height:12px; width:auto; vertical-align:middle; margin-right:3px;">
         <span>${editableHorses.length} participantes</span>
       `;
     }
@@ -348,7 +348,7 @@ const RacePulseApp = (function() {
     const elRest = document.getElementById("factor-val-rest");
     const elJockey = document.getElementById("factor-val-jockey");
 
-    if (elOr) elOr.innerHTML = `${orVal} <span class="unit">pts ▲</span>`;
+    if (elOr) elOr.innerHTML = `${orVal} pts <span class="green-triangle">▲</span>`;
     if (elHist) elHist.textContent = histText;
     if (elRest) elRest.textContent = restText;
     if (elJockey) elJockey.textContent = jockeyName;

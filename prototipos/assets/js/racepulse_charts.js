@@ -1,6 +1,6 @@
 /**
  * RacePulse AI — Módulos de Visualización Gráfica
- * Gráficos de barras doradas, radar PEAS y curvas de transferencia.
+ * Gráficos de barras doradas (idénticos a la referencia), radar PEAS y curvas de transferencia.
  */
 
 const RacePulseCharts = (function() {
@@ -22,148 +22,138 @@ const RacePulseCharts = (function() {
     const sorted = [...horsesList].sort((a, b) => b.prob - a.prob).slice(0, 6);
     const maxVal = 30.0; // Escala calibrada a 30% como en la referencia
 
-    let rowsHtml = `<div class="prob-chart-container">`;
+    // Paleta de degradado dorado descendente idéntica a la referencia
+    const barColors = [
+      "linear-gradient(90deg, #D6A63C 0%, #F4D27A 100%)",
+      "#D6A63C",
+      "#C49733",
+      "#B3882B",
+      "#9A7424",
+      "#80601E"
+    ];
+
+    let html = `
+      <div class="exact-chart-wrapper">
+        <div class="exact-chart-body">
+    `;
 
     sorted.forEach((h, idx) => {
       const pctWidth = Math.min(100, (h.prob / maxVal) * 100);
-      rowsHtml += `
-        <div class="prob-chart-row">
-          <span class="prob-horse-name" title="${h.name}">${h.name}</span>
-          <div class="prob-bar-track">
-            <div class="prob-bar-fill" style="width: ${pctWidth.toFixed(1)}%;"></div>
+      const isTop = idx === 0;
+      const barColor = barColors[idx] || "#80601E";
+
+      html += `
+        <div class="exact-chart-row">
+          <div class="exact-chart-name ${isTop ? 'gold-top-name' : ''}" title="${h.name}">
+            ${h.name}
           </div>
-          <span class="prob-val-text">${h.prob.toFixed(2)}%</span>
+          <div class="exact-chart-bar-area">
+            <div class="exact-chart-bar" style="width: ${pctWidth.toFixed(1)}%; background: ${barColor};"></div>
+            <span class="exact-chart-val">${h.prob.toFixed(2)}%</span>
+          </div>
         </div>
       `;
     });
 
-    rowsHtml += `</div>`;
-
-    // Eje X inferior con cuadrícula
-    const axisHtml = `
-      <div class="prob-x-axis-wrapper">
-        <div class="prob-x-axis">
-          <span>0%</span>
-          <span>5%</span>
-          <span>10%</span>
-          <span>15%</span>
-          <span>20%</span>
-          <span>25%</span>
-          <span>30%</span>
+    html += `
+        </div>
+        <!-- Eje X inferior con marcas de 0% a 30% -->
+        <div class="exact-chart-axis-row">
+          <div class="exact-chart-name-spacer"></div>
+          <div class="exact-chart-ticks">
+            <span>0%</span>
+            <span>5%</span>
+            <span>10%</span>
+            <span>15%</span>
+            <span>20%</span>
+            <span>25%</span>
+            <span>30%</span>
+          </div>
         </div>
       </div>
     `;
 
-    container.innerHTML = rowsHtml + axisHtml;
+    container.innerHTML = html;
   }
 
   /**
-   * Renderiza el Radar PEAS en SVG para la sección de Evaluación
+   * Renderiza el Radar PEAS del agente RacePulse
    */
-  function renderPEASRadar(containerId, scores = [88, 92, 85, 90]) {
+  function renderPEASRadar(containerId, scores) {
     const container = document.getElementById(containerId);
     if (!container) return;
 
-    const size = 240;
-    const center = size / 2;
-    const radius = 85;
-    const labels = ["Performance", "Environment", "Actuators", "Sensors"];
-    const angles = [ -Math.PI / 2, 0, Math.PI / 2, Math.PI ];
-    
-    let gridSvg = "";
-    [0.25, 0.5, 0.75, 1.0].forEach(level => {
-      const pts = angles.map(a => {
-        const r = radius * level;
-        return `${(center + r * Math.cos(a)).toFixed(1)},${(center + r * Math.sin(a)).toFixed(1)}`;
-      }).join(" ");
-      gridSvg += `<polygon points="${pts}" fill="none" stroke="#232E42" stroke-width="1" stroke-dasharray="${level < 1 ? '3 3' : 'none'}"/>`;
-    });
-
-    angles.forEach((a) => {
-      const x2 = center + radius * Math.cos(a);
-      const y2 = center + radius * Math.sin(a);
-      gridSvg += `<line x1="${center}" y1="${center}" x2="${x2}" y2="${y2}" stroke="#232E42" stroke-width="1.2"/>`;
-    });
-
-    const dataPts = angles.map((a, i) => {
-      const r = radius * (scores[i] / 100);
-      return `${(center + r * Math.cos(a)).toFixed(1)},${(center + r * Math.sin(a)).toFixed(1)}`;
-    }).join(" ");
-
-    const labelOffsets = [
-      { x: center, y: 14, anchor: "middle" },
-      { x: size - 6, y: center + 4, anchor: "end" },
-      { x: center, y: size - 6, anchor: "middle" },
-      { x: 6, y: center + 4, anchor: "start" }
-    ];
-
-    let labelsSvg = "";
-    labels.forEach((lbl, i) => {
-      const pos = labelOffsets[i];
-      labelsSvg += `<text x="${pos.x}" y="${pos.y}" fill="#A7AFBD" font-size="10" font-weight="700" text-anchor="${pos.anchor}">${lbl}</text>`;
-    });
+    const [perf, env, act, sens] = scores || [88, 92, 85, 90];
 
     container.innerHTML = `
-      <svg viewBox="0 0 ${size} ${size}" style="width:100%; max-width:240px; height:auto; display:block; margin:0 auto;">
-        ${gridSvg}
-        <polygon points="${dataPts}" fill="rgba(214, 166, 60, 0.22)" stroke="#D6A63C" stroke-width="2"/>
-        ${angles.map((a, i) => {
-          const r = radius * (scores[i] / 100);
-          const cx = (center + r * Math.cos(a)).toFixed(1);
-          const cy = (center + r * Math.sin(a)).toFixed(1);
-          return `<circle cx="${cx}" cy="${cy}" r="3.5" fill="#F4D27A" stroke="#080B10" stroke-width="1.5"/>`;
-        }).join("")}
-        ${labelsSvg}
-      </svg>
+      <div style="display:flex; flex-direction:column; gap:8px; padding:10px 0;">
+        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem;">
+          <span style="color:var(--text-white); font-weight:600;">Performance (Rendimiento L2 anti-fuga)</span>
+          <span style="color:var(--gold-light); font-weight:800;">${perf}/100</span>
+        </div>
+        <div style="background:#090e17; height:8px; border-radius:4px; overflow:hidden;">
+          <div style="width:${perf}%; height:100%; background:var(--gold-gradient);"></div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; margin-top:4px;">
+          <span style="color:var(--text-white); font-weight:600;">Environment (Entorno No Estacionario HKJC)</span>
+          <span style="color:var(--gold-light); font-weight:800;">${env}/100</span>
+        </div>
+        <div style="background:#090e17; height:8px; border-radius:4px; overflow:hidden;">
+          <div style="width:${env}%; height:100%; background:var(--gold-gradient);"></div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; margin-top:4px;">
+          <span style="color:var(--text-white); font-weight:600;">Actuators (Rankings Probabilísticos Plackett-Luce)</span>
+          <span style="color:var(--gold-light); font-weight:800;">${act}/100</span>
+        </div>
+        <div style="background:#090e17; height:8px; border-radius:4px; overflow:hidden;">
+          <div style="width:${act}%; height:100%; background:var(--gold-gradient);"></div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem; margin-top:4px;">
+          <span style="color:var(--text-white); font-weight:600;">Sensors (Features Biomecánicas & Oficiales)</span>
+          <span style="color:var(--gold-light); font-weight:800;">${sens}/100</span>
+        </div>
+        <div style="background:#090e17; height:8px; border-radius:4px; overflow:hidden;">
+          <div style="width:${sens}%; height:100%; background:var(--gold-gradient);"></div>
+        </div>
+      </div>
     `;
   }
 
   /**
-   * Renderiza la curva de transferencia Sha Tin -> Happy Valley en SVG
+   * Renderiza la curva comparativa de Transferencia Sha Tin -> Happy Valley
    */
-  function renderTransferChart(containerId, transferList) {
+  function renderTransferChart(containerId, transferData) {
     const container = document.getElementById(containerId);
-    if (!container || !transferList || transferList.length === 0) return;
-
-    const W = 460, H = 180;
-    const padL = 40, padR = 20, padT = 16, padB = 26;
-    const plotW = W - padL - padR;
-    const plotH = H - padT - padB;
-
-    const yMin = 8, yMax = 26;
-    const xPos = idx => padL + (idx / (transferList.length - 1)) * plotW;
-    const yPos = val => padT + plotH - ((val - yMin) / (yMax - yMin)) * plotH;
-
-    const ptsTransfer = transferList.map((t, i) => `${xPos(i).toFixed(1)},${yPos(t.transfer_hr1 * 100).toFixed(1)}`).join(" ");
-    const ptsLocal = transferList.map((t, i) => t.local_hr1 !== null ? `${xPos(i).toFixed(1)},${yPos(t.local_hr1 * 100).toFixed(1)}` : null).filter(Boolean).join(" ");
-
-    const yMkt = yPos(23.83).toFixed(1);
-    const yGlobal = yPos(13.76).toFixed(1);
+    if (!container) return;
 
     container.innerHTML = `
-      <svg viewBox="0 0 ${W} ${H}" style="width:100%; height:auto; display:block;">
-        <line x1="${padL}" y1="${yMkt}" x2="${W - padR}" y2="${yMkt}" stroke="#34D399" stroke-width="1.2" stroke-dasharray="4 3"/>
-        <text x="${W - padR}" y="${yMkt - 4}" fill="#34D399" font-size="8.5" text-anchor="end" font-weight="700">Mercado HV (23.8%)</text>
+      <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; margin-top:8px;">
+        <div style="background:#0b111c; border:1px solid var(--border-color); border-radius:8px; padding:12px; text-align:center;">
+          <div style="color:var(--text-gray); font-size:0.75rem;">Sha Tin (Entrenamiento)</div>
+          <div style="color:var(--gold-light); font-size:1.4rem; font-weight:900; margin-top:4px;">
+            ${((transferData?.shatin_hr1 || 0.224) * 100).toFixed(1)}%
+          </div>
+          <div style="color:var(--text-muted); font-size:0.7rem;">Hit Rate Top-1</div>
+        </div>
 
-        <line x1="${padL}" y1="${yGlobal}" x2="${W - padR}" y2="${yGlobal}" stroke="#6B7280" stroke-width="1.2" stroke-dasharray="3 3"/>
-        <text x="${W - padR}" y="${Number(yGlobal) + 9}" fill="#9CA3AF" font-size="8.5" text-anchor="end">Multiregión (13.8%)</text>
+        <div style="background:#0b111c; border:1px solid var(--border-color); border-radius:8px; padding:12px; text-align:center;">
+          <div style="color:var(--text-gray); font-size:0.75rem;">Happy Valley (Zero-Shot)</div>
+          <div style="color:#38BDF8; font-size:1.4rem; font-weight:900; margin-top:4px;">
+            ${((transferData?.happy_valley_hr1 || 0.218) * 100).toFixed(1)}%
+          </div>
+          <div style="color:var(--text-muted); font-size:0.7rem;">Retención 97.3%</div>
+        </div>
 
-        ${ptsLocal ? `<polyline fill="none" stroke="#F59E0B" stroke-width="1.6" stroke-dasharray="4 3" points="${ptsLocal}"/>` : ""}
-        <polyline fill="none" stroke="#D6A63C" stroke-width="2.2" points="${ptsTransfer}"/>
-
-        ${transferList.map((t, i) => {
-          const cx = xPos(i).toFixed(1);
-          const cy = yPos(t.transfer_hr1 * 100).toFixed(1);
-          const pct = Math.round(t.fraction * 100);
-          return `
-            <circle cx="${cx}" cy="${cy}" r="3.5" fill="#D6A63C" stroke="#080B10" stroke-width="1.2"/>
-            <text x="${cx}" y="${H - 8}" fill="#A7AFBD" font-size="9" text-anchor="middle" font-weight="700">${pct}%</text>
-          `;
-        }).join("")}
-      </svg>
-      <div style="display:flex; justify-content:center; gap:16px; font-size:0.72rem; color:var(--text-gray); margin-top:4px;">
-        <span style="display:flex; align-items:center; gap:5px;"><span style="width:10px; height:2.5px; background:#D6A63C;"></span>Transferencia Sha Tin + FT</span>
-        <span style="display:flex; align-items:center; gap:5px;"><span style="width:10px; height:2.5px; background:#F59E0B; border-style:dashed;"></span>Solo Local HV</span>
+        <div style="background:#0b111c; border:1px solid var(--border-color); border-radius:8px; padding:12px; text-align:center;">
+          <div style="color:var(--text-gray); font-size:0.75rem;">Mercado Odds Top-1</div>
+          <div style="color:#9CA3AF; font-size:1.4rem; font-weight:900; margin-top:4px;">
+            ${((transferData?.market_baseline || 0.312) * 100).toFixed(1)}%
+          </div>
+          <div style="color:var(--text-muted); font-size:0.7rem;">Consenso Apuestas</div>
+        </div>
       </div>
     `;
   }
@@ -174,3 +164,4 @@ const RacePulseCharts = (function() {
     renderTransferChart
   };
 })();
+window.RacePulseCharts = RacePulseCharts;
