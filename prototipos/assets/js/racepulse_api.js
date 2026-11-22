@@ -29,6 +29,10 @@ const RacePulseAPI = (function() {
         if (resp.ok) {
           return await resp.json();
         }
+        if (resp.status === 401 || resp.status === 403) {
+          console.warn("Acceso a artefactos denegado para el rol actual (401/403)");
+          return null;
+        }
       } catch (e) {
         console.warn("Fallo al obtener /api/artifacts, usando embedded:", e);
       }

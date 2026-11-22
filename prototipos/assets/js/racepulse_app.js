@@ -30,6 +30,7 @@ const RacePulseApp = (function() {
   async function init() {
     setupSidebarEvents();
     setupMobileToggle();
+    await setupRoleLogin();
 
     // 1. Cargar artefactos y datos de backend
     artifacts = await RacePulseAPI.getArtifacts();
@@ -52,6 +53,187 @@ const RacePulseApp = (function() {
     renderEvaluationSection();
   }
 
+  function setupRoleLogin() {
+    const overlay = document.getElementById("auth-overlay");
+    const profileButton = document.getElementById("open-login");
+    const loginForm = document.getElementById("auth-form");
+    const registerForm = document.getElementById("auth-register-form");
+    const sessionView = document.getElementById("auth-session");
+    const message = document.getElementById("auth-message");
+    const roleLabels = { admin: "Administrador", analista: "Analista hípico", consulta: "Consulta" };
+    const roleSections = {
+      admin: ["carreras", "participantes", "prediccion", "evaluacion"],
+      analista: ["carreras", "participantes", "prediccion"],
+      consulta: ["carreras", "prediccion"]
+    };
+    let user = null;
+    let registerMode = false;
+    let resolveReady = null;
+
+    if (!overlay || !profileButton || !loginForm || !registerForm || !sessionView) return;
+
+    function applyRole(role) {
+      const allowed = roleSections[role] || [];
+      document.querySelectorAll(".nav-item[data-section]").forEach((item) => {
+        item.hidden = !allowed.includes(item.dataset.section);
+      });
+      if (role && !allowed.includes(activeSection)) switchSection(allowed[0]);
+    }
+
+    function updateProfile() {
+      loginForm.hidden = Boolean(user) || registerMode;
+      registerForm.hidden = Boolean(user) || !registerMode;
+      sessionView.hidden = !user;
+      const title = document.getElementById("auth-title");
+      const description = document.getElementById("auth-description");
+      title.textContent = user ? "Tu sesión" : registerMode ? "Crear cuenta" : "Bienvenido de nuevo";
+      description.textContent = user
+        ? "Este es el perfil activo en esta pestaña."
+        : registerMode
+          ? "Crea tu cuenta para comenzar a usar RacePulse."
+          : "Accede a tu panel de análisis hípico.";
+      if (message) {
+        message.textContent = "";
+        message.classList.remove("is-error");
+      }
+      const avatarLabel = user ? `${user.name} · ${roleLabels[user.role]}` : "Iniciar sesión";
+      document.querySelector(".auth-close").hidden = !user;
+      profileButton.title = avatarLabel;
+      profileButton.setAttribute("aria-label", avatarLabel);
+      if (user) {
+        document.getElementById("auth-user-name").textContent = user.name;
+        document.getElementById("auth-user-role").textContent = roleLabels[user.role];
+      }
+      applyRole(user?.role || null);
+    }
+
+    function setMessage(text, isError = false) {
+      if (!message) return;
+      message.textContent = text;
+      message.classList.toggle("is-error", isError);
+    }
+
+    async function authRequest(path, payload = null) {
+      const options = { method: payload ? "POST" : "GET", credentials: "same-origin" };
+      if (payload) {
+        options.headers = { "Content-Type": "application/json" };
+        options.body = JSON.stringify(payload);
+      }
+      const response = await fetch(`${window.location.origin}/api/auth/${path}`, options);
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.detail || "No se pudo completar la solicitud.");
+      return result;
+    }
+
+    function setMode(showRegister) {
+      registerMode = showRegister;
+      updateProfile();
+      if (overlay.hidden) openDialog();
+    }
+
+    function openDialog() {
+      updateProfile();
+      overlay.hidden = false;
+      overlay.setAttribute("aria-hidden", "false");
+      if (!user) {
+        const input = registerMode ? document.getElementById("register-name") : document.getElementById("auth-email");
+        window.setTimeout(() => input.focus(), 30);
+      }
+    }
+
+    function closeDialog() {
+      if (!user) return;
+      overlay.hidden = true;
+      overlay.setAttribute("aria-hidden", "true");
+    }
+
+    function startSession(profile) {
+      user = profile;
+      registerMode = false;
+      updateProfile();
+      overlay.hidden = true;
+      overlay.setAttribute("aria-hidden", "true");
+      loginForm.reset();
+      registerForm.reset();
+      if (resolveReady) {
+        resolveReady();
+        resolveReady = null;
+      }
+    }
+
+    profileButton.addEventListener("click", openDialog);
+    document.getElementById("auth-show-register").addEventListener("click", () => setMode(true));
+    document.getElementById("auth-forgot-password").addEventListener("click", () => setMessage("Para restablecer tu contraseña, contacta al administrador de RacePulse."));
+    document.getElementById("auth-toggle-password").addEventListener("click", (event) => {
+      const password = document.getElementById("auth-password");
+      const show = password.type === "password";
+      password.type = show ? "text" : "password";
+      event.currentTarget.setAttribute("aria-label", show ? "Ocultar contraseña" : "Mostrar contraseña");
+      const slash = event.currentTarget.querySelector("path:last-of-type");
+      if (slash) slash.style.display = show ? "none" : "";
+    });
+    document.getElementById("auth-show-login").addEventListener("click", () => setMode(false));
+    overlay.querySelectorAll("[data-auth-dismiss]").forEach((control) => control.addEventListener("click", closeDialog));
+
+    loginForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!loginForm.reportValidity()) return;
+      try {
+        const result = await authRequest("login", {
+          email: loginForm.elements.email.value.trim(),
+          password: loginForm.elements.password.value,
+          remember: loginForm.elements.remember.checked
+        });
+        startSession(result.user);
+      } catch (error) {
+        setMessage(error.message, true);
+      }
+    });
+
+    registerForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!registerForm.reportValidity()) return;
+      const password = registerForm.elements.password.value;
+      if (password !== registerForm.elements.confirmPassword.value) {
+        setMessage("Las contraseñas no coinciden.", true);
+        return;
+      }
+      try {
+        const result = await authRequest("register", {
+          name: registerForm.elements.name.value.trim(),
+          email: registerForm.elements.email.value.trim(),
+          password
+        });
+        startSession(result.user);
+      } catch (error) {
+        setMessage(error.message, true);
+      }
+    });
+
+    document.getElementById("auth-logout").addEventListener("click", async () => {
+      try { await authRequest("logout", {}); } catch (_error) { /* clear the local view even if the server stopped */ }
+      user = null;
+      registerMode = false;
+      updateProfile();
+      openDialog();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeDialog();
+    });
+
+    updateProfile();
+    return new Promise((resolve) => {
+      resolveReady = resolve;
+      authRequest("me").then((result) => {
+        startSession(result.user);
+      }).catch(() => {
+        user = null;
+        updateProfile();
+        openDialog();
+      });
+    });
+  }
   function updateHealthIndicator(health) {
     const statusTxt = document.getElementById("backend-status-text");
     const statusDot = document.getElementById("backend-status-dot");

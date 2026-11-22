@@ -7,7 +7,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>RacePulse · Panel de Análisis Hípico con Inteligencia Artificial</title>
-  <link rel="stylesheet" href="assets/css/racepulse_dashboard.css?v=8.0.0">
+  <link rel="stylesheet" href="assets/css/racepulse_dashboard.css?v=30.0.0">
 </head>
 <body>
 
@@ -28,6 +28,7 @@
             <line x1="18" y1="20" x2="18" y2="10"/>
             <line x1="12" y1="20" x2="12" y2="4"/>
             <line x1="6" y1="20" x2="6" y2="14"/>
+            <line x1="4" y1="20" x2="20" y2="20"/>
           </svg>
           <span>Carreras</span>
         </button>
@@ -49,6 +50,7 @@
             <circle cx="12" cy="12" r="10"/>
             <circle cx="12" cy="12" r="6"/>
             <circle cx="12" cy="12" r="2"/>
+            <path d="M14 10 21 3m-5 0h5v5"/>
           </svg>
           <span>Predicción</span>
         </button>
@@ -88,9 +90,8 @@
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
             <span class="badge-dot"></span>
           </button>
-          <div class="user-avatar-btn" title="Sesión de Análisis Activa · FastAPI Localhost:8000">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          </div>
+          <button id="open-login" class="user-avatar-btn" type="button" title="Iniciar sesión" aria-label="Iniciar sesión">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></button>
         </div>
       </div>
 
@@ -189,7 +190,8 @@
           <!-- F. Columna 3: Probabilidad de Victoria -->
           <div class="card-panel prob-bars-card">
             <div class="card-header-clean">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+            <line x1="4" y1="20" x2="20" y2="20"/></svg>
               <span>Probabilidad de Victoria</span>
             </div>
 
@@ -227,7 +229,8 @@
               <!-- Item 2: Historial Previo -->
               <div class="factor-segment">
                 <div class="factor-icon-wrap">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+            <line x1="4" y1="20" x2="20" y2="20"/></svg>
                 </div>
                 <div class="factor-text-wrap">
                   <span class="factor-title">Historial Previo</span>
@@ -325,7 +328,8 @@
 
           <div class="card-panel">
             <div class="card-header-clean">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+            <line x1="4" y1="20" x2="20" y2="20"/></svg>
               <span>Contribución de Factores Clave (W · X_norm)</span>
             </div>
             <div id="deep-factors-list"></div>
@@ -374,19 +378,77 @@
 
     </div>
 
-    <!-- ======================================================================
-         CINTA DORADA INFERIOR DECORATIVA
-         ====================================================================== -->
+        <!-- Footer Ribbon -->
     <div class="dashboard-footer-ribbon">
       <img src="assets/bottom_ribbon_exact.png" alt="RacePulse" class="footer-ribbon-img">
     </div>
-
   </main>
+
+  <div id="auth-overlay" class="auth-overlay" aria-hidden="false">
+      <div class="auth-backdrop" data-auth-dismiss></div>
+      <img class="auth-logo" src="assets/logo_clean.png" alt="RacePulse">
+      <section class="auth-card" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+        <button class="auth-close" type="button" hidden data-auth-dismiss aria-label="Cerrar">&times;</button>
+
+
+        <h2 id="auth-title">Bienvenido de nuevo</h2>
+        <p id="auth-description" class="auth-description">Inicia sesión para ver el panel según tu perfil.</p>
+
+        <form id="auth-form" class="auth-form">
+          <div class="auth-field">
+            <label for="auth-email">Correo electrónico</label>
+            <div class="auth-input-wrap">
+              <svg class="auth-field-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+              <input id="auth-email" name="email" type="email" placeholder="tu@email.com" autocomplete="username" required>
+            </div>
+          </div>
+          <div class="auth-field">
+            <label for="auth-password">Contraseña</label>
+            <div class="auth-input-wrap">
+              <svg class="auth-field-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="10" width="18" height="11" rx="2"/><path d="M7 10V7a5 5 0 0 1 10 0v3"/></svg>
+              <input id="auth-password" name="password" type="password" placeholder="Ingresa tu contraseña" autocomplete="current-password" required>
+              <button id="auth-toggle-password" class="auth-eye" type="button" aria-label="Mostrar contraseña">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/><path d="m3 21 18-18"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="auth-options">
+            <label class="auth-remember"><input name="remember" type="checkbox"><span>Recordarme</span></label>
+            <button id="auth-forgot-password" class="auth-forgot" type="button">¿Olvidaste tu contraseña?</button>
+          </div>
+          <button class="btn-gold auth-submit" type="submit">Iniciar sesión</button>
+          <p class="auth-switch-copy">¿No tienes una cuenta? <button id="auth-show-register" class="auth-link" type="button">Crear cuenta</button></p>
+        </form>
+
+        <form id="auth-register-form" class="auth-form" hidden>
+          <label for="register-name">Nombre</label>
+          <input id="register-name" name="name" type="text" placeholder="Tu nombre" autocomplete="name" required>
+          <label for="register-email">Correo electrónico</label>
+          <input id="register-email" name="email" type="email" placeholder="nombre@correo.com" autocomplete="email" required>
+          <label for="register-password">Contraseña</label>
+          <input id="register-password" name="password" type="password" placeholder="Mínimo 8 caracteres" minlength="8" autocomplete="new-password" required>
+          <label for="register-confirm">Confirmar contraseña</label>
+          <input id="register-confirm" name="confirmPassword" type="password" placeholder="Repite tu contraseña" minlength="8" autocomplete="new-password" required>
+          <p class="auth-demo-note">Las cuentas nuevas reciben rol Consulta. Admin y Analista se asignan desde el backend.</p>
+          <button class="btn-gold auth-submit" type="submit">Crear cuenta</button>
+          <p class="auth-switch-copy">¿Ya tienes cuenta? <button id="auth-show-login" class="auth-link" type="button">Inicia sesión</button></p>
+        </form>
+        <p id="auth-message" class="auth-message" role="status" aria-live="polite"></p>
+
+        <div id="auth-session" class="auth-session" hidden>
+          <div class="auth-session-avatar" aria-hidden="true">RP</div>
+          <strong id="auth-user-name"></strong>
+          <span id="auth-user-role" class="auth-role-badge"></span>
+          <button id="auth-logout" class="auth-logout" type="button">Cerrar sesión</button>
+        </div>
+      </section>
+      <div class="auth-footer"><span>Predicciones basadas en datos · Resultados sujetos a incertidumbre</span></div>
+    </div>
 
   <!-- Scripts del Dashboard MVP con Cache-Busting -->
   <script src="assets/js/racepulse_data.js?v=8.0.0"></script>
-  <script src="assets/js/racepulse_api.js?v=8.0.0"></script>
+  <script src="assets/js/racepulse_api.js?v=13.0.0"></script>
   <script src="assets/js/racepulse_charts.js?v=8.0.0"></script>
-  <script src="assets/js/racepulse_app.js?v=8.0.0"></script>
+  <script src="assets/js/racepulse_app.js?v=13.0.0"></script>
 </body>
 </html>
