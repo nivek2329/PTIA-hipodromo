@@ -1,6 +1,6 @@
 /* ==========================================================================
-   RacePulse AI — Executive Dark & Gold Design System (Impeccable Edition)
-   Legible typography (≥12px functional floor), natural proportions, 0px overflow.
+   RacePulse AI — Executive Dark & Gold Design System v5.0.0
+   Full-height layout, new logo + mascot, legible typography, 0px overflow.
    ========================================================================== */
 
 :root {
@@ -88,11 +88,14 @@ body {
 }
 
 .brand-exact-img {
-  width: 132px;
-  max-width: 90%;
+  width: 148px;
+  max-width: 92%;
   height: auto;
   display: block;
   margin: 0 auto;
+  border-radius: 6px;
+  object-fit: cover;
+  object-position: center center;
 }
 
 /* Menú de Navegación */
@@ -144,6 +147,18 @@ body {
   stroke: #080B10;
 }
 
+/* Mascota en Sidebar */
+.mascot-sidebar-img {
+  width: 100%;
+  max-width: 115px;
+  height: auto;
+  display: block;
+  margin: 0 auto 8px auto;
+  border-radius: 6px;
+  object-fit: cover;
+  object-position: right center;
+}
+
 /* Tarjeta IA en Barra Lateral */
 .sidebar-bottom-group {
   padding-bottom: 6px;
@@ -186,19 +201,31 @@ body {
   margin-left: var(--sidebar-w);
   width: calc(100% - var(--sidebar-w));
   max-width: calc(100vw - var(--sidebar-w));
+  height: 100vh;
   min-height: 100vh;
   background-color: var(--bg-deep);
   display: flex;
   flex-direction: column;
   position: relative;
   box-sizing: border-box;
-  padding: 14px 20px 24px 20px;
+  padding: 14px 20px 16px 20px;
   overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 /* Encabezado Principal */
 .dashboard-header {
   margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+/* Contenido Principal — ocupa todo el espacio vertical restante */
+.dashboard-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .header-top-line-bar {
@@ -294,6 +321,7 @@ body {
   border-radius: var(--radius-lg);
   padding: 12px 18px;
   min-height: 72px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -365,6 +393,8 @@ body {
   grid-template-columns: minmax(140px, 175px) 1fr minmax(240px, 285px);
   gap: 10px;
   align-items: stretch;
+  flex: 1;
+  min-height: 0;
   margin-bottom: 10px;
   width: 100%;
   box-sizing: border-box;
@@ -641,7 +671,8 @@ body {
   grid-template-columns: 1fr minmax(240px, 285px);
   gap: 10px;
   align-items: stretch;
-  margin-bottom: 20px;
+  flex-shrink: 0;
+  margin-bottom: 8px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -748,10 +779,10 @@ body {
    Cinta Dorada Inferior (Footer Decorativo de Referencia)
    ========================================================================== */
 .dashboard-footer-ribbon {
-  margin-top: auto;
+  flex-shrink: 0;
   text-align: center;
   width: 100%;
-  padding-top: 8px;
+  padding-top: 6px;
 }
 
 .footer-ribbon-img {
@@ -770,7 +801,10 @@ body {
 }
 
 .dashboard-view.active {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
 }
 
 .eval-metrics-grid {
@@ -825,11 +859,13 @@ body {
     --sidebar-w: 185px;
   }
   .dashboard-wrapper {
-    padding: 12px 14px 20px 14px;
+    padding: 12px 14px 12px 14px;
   }
   .analysis-grid {
     grid-template-columns: 130px 1fr 232px;
     gap: 8px;
+    flex: 1;
+    min-height: 0;
   }
   .bottom-panels-grid {
     grid-template-columns: 1fr 232px;
