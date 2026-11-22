@@ -1,38 +1,76 @@
-# Resumen de Proyecto y Sesión — RacePulse AI (Hito 3)
+# Resumen de Proyecto y Solución Oficial — RacePulse AI (Hito 3)
 
-- **Rama Git:** `hito-3` (en `c:\Users\kevin\Downloads\ptia proyecto\PTIA-hipodromo`)
+- **Rama Git Oficial:** `hito-3` (en `c:\Users\kevin\Downloads\ptia proyecto\PTIA-hipodromo`)
 - **ID de Conversación Antigravity:** `1c90860b-be76-4b73-9b76-104ea465561e`
+- **Fecha de Consolidación:** 22 de noviembre de 2026
+- **Integrantes:** Kevin Andrey Angel / Nicolas Santiago Sanchez
 
-## MVP Funcional Oficial en Localhost
-Para el **Hito 3**, el sistema opera obligatoriamente como aplicación cliente-servidor en **`localhost:8000`** (no como archivo HTML estático):
+---
+
+## 1. MVP Funcional Oficial en Localhost
+
+Para el **Hito 3**, el sistema opera obligatoriamente como aplicación cliente-servidor en **`localhost:8000`** conectada a un backend activo de Inteligencia Artificial (FastAPI + Uvicorn + SQLite):
 - **Servidor Web / Backend:** `app.py` (FastAPI + Uvicorn + Inferencia en tiempo real con pesos Plackett-Luce Softmax).
-- **Lanzador Directo en Windows:** `iniciar_mvp.bat` (doble clic o desde CMD).
+- **Lanzador Directo en Windows:** `iniciar_mvp.bat` (doble clic o desde CMD/PowerShell).
 - **URL de la App Web:** `http://localhost:8000`
-- **Documentación Swagger API:** `http://localhost:8000/docs`
-- **Endpoint REST:** `POST http://localhost:8000/api/predict`
+- **Documentación Swagger API REST:** `http://localhost:8000/docs`
+- **Endpoint de Inferencia en Tiempo Real:** `POST http://localhost:8000/api/predict` (latencia < 1 ms).
 
-## Comandos para Abrir en CMD
+---
+
+## 2. Sistema de Autenticación, Seguridad y Roles (RBAC)
+
+El acceso a la aplicación está protegido mediante un módulo de autenticación con base de datos relacional SQLite (`data/racepulse_users.sqlite3`), cookies seguras de sesión (`racepulse_session`) y contraseñas hasheadas con **PBKDF2 + HMAC-SHA256 (240,000 iteraciones)**:
+
+| Usuario | Correo Electrónico | Rol | Contraseña | Vistas y Privilegios en la Aplicación |
+| :--- | :--- | :--- | :--- | :--- |
+| **Kevin** | `kevin@racepulse.local` | `admin` | `RacePulse-Kevin-2026!` | **Acceso Total:** Carreras, Participantes, Predicción, Evaluación y API `/api/artifacts` |
+| **Nicolaz** | `nicolaz@racepulse.local` | `analista` | `RacePulse-Nicolaz-2026!` | Carreras, Participantes (simulador interactivo de ratings) y Predicción PEAS |
+| **Andrey** | `andrey@racepulse.local` | `consulta` | `RacePulse-Andrey-2026!` | Carreras y Predicción básica (métricas internas protegidas contra fugas) |
+
+> La pantalla de inicio de sesión incorpora la mascota oficial en un entorno panorámico nocturno del hipódromo (`fig_hito3_mvp_login.png`) y permite el registro de nuevas cuentas (asignadas por defecto al rol Consulta).
+
+---
+
+## 3. Identidad Visual, Mascota y Cero Desbordamiento (0px Overflow)
+
+- **Paleta Oficial:** Dark & Gold (`#050608`, `#0B1322`, `#D6A63C`).
+- **Mascota Oficial:**
+  - En la pantalla de login: escena completa con pista iluminada de noche (`pulse_login_background.png`).
+  - En la barra lateral del dashboard: avatar circular con borde dorado de 48px (`mascot_char.jpg`) y tarjeta "IA + Datos Hípicos".
+- **Resoluciones Verificadas:** $1024 \times 576$, $1024 \times 649$ y $1280 \times 720$.
+- **Desbordamiento:** **0 píxeles de scroll horizontal o vertical**. Todas las 8 columnas de la tabla de predicción, filtros, barras y factores son visibles sin cortes.
+
+---
+
+## 4. Documento Formal Word (Hito 3)
+
+El documento técnico formal cumple con los lineamientos institucionales y la norma APA 7:
+- **Ruta del Archivo:** [`docs/Proyecto_PTIA_Grupo2_Hito3.docx`](docs/Proyecto_PTIA_Grupo2_Hito3.docx) *(2.20 MB, 347 párrafos, 7 tablas formales)*
+- **Script Generador Automatizado:** [`src/generate_doc_hito3.py`](src/generate_doc_hito3.py)
+- **Figuras Oficiales Embebidas:**
+  - *Figura 6:* Comparativa de Hit Rate@1 y Log-Loss multiclase (Test 2020).
+  - *Figura 7:* Curva de transferencia Sha Tin $\rightarrow$ Happy Valley.
+  - *Figura 8:* MVP Funcional Hito 3 — Módulo de Acceso, Autenticación y Control de Roles con Mascota Oficial.
+  - *Figura 9:* MVP Funcional Hito 3 — Panel de Análisis Hípico e Inferencia PEAS en vivo (RID 411357, Sha Tin).
+  - *Figura 10:* MVP Funcional Hito 3 — Auditoría de Evaluación Global (2020) y Transferencia de Dominio.
+
+---
+
+## 5. Comandos para Ejecución y Pruebas
+
 ```cmd
 cd /d "c:\Users\kevin\Downloads\ptia proyecto\PTIA-hipodromo"
+
+:: 1. Iniciar servidor FastAPI y abrir navegador automáticamente
 iniciar_mvp.bat
-```
-O directamente con python:
-```cmd
-python app.py
-```
 
-Abrir el documento final de Word (Hito 3):
-```cmd
-start "" "c:\Users\kevin\Downloads\ptia proyecto\PTIA-hipodromo\docs\Proyecto_PTIA_Grupo2_Hito3.docx"
+:: 2. Re-entrenar y evaluar el pipeline temporal (2017–2020) desde cero
+python src\pipeline_hito3.py
+
+:: 3. Regenerar el documento Word oficial Hito 3
+python src\generate_doc_hito3.py
+
+:: 4. Abrir directamente el documento Word en Windows
+start "" "docs\Proyecto_PTIA_Grupo2_Hito3.docx"
 ```
-
-## Archivos Clave del Hito 3
-1. `app.py` & `iniciar_mvp.bat`: Servidor web oficial y lanzador del MVP en localhost.
-2. `docs/Proyecto_PTIA_Grupo2_Hito3.docx`: Documento formal del Hito 3 (Sección 7 Análisis de Resultados, Sección 8 Conclusiones, Sección 9.5 MVP en Localhost).
-3. `src/pipeline_hito3.py`: Pipeline anti-fuga temporal (2017–2020) y experimento de transferencia Sha Tin -> Happy Valley.
-4. `src/mvp_artifacts_hito3.json`: Artefactos exportados para inferencia y visualización.
-5. `prototipos/mvp_hito3.html`: Interfaz servida en `http://localhost:8000/` con pulido visual Impeccable (0 hallazgos en detector).
-
-## Pendientes Opcionales
-- Subir la rama a GitHub: `git push -u origin hito-3`
-- Grabar video de presentación (máx. 10 min) mostrando la app corriendo en `http://localhost:8000` y las diapositivas/documento.

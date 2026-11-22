@@ -49,23 +49,37 @@ El agente predictivo está formalizado bajo el marco **PEAS** (Russell & Norvig)
 ```text
 PTIA-hipodromo/
 │
-├── README.md                              # Documentación general y guía del repositorio
+├── README.md                              # Documentación general y guía técnica del repositorio
 ├── .gitignore                             # Exclusión de temporales y datasets masivos
+├── app.py                                 # Servidor web FastAPI con endpoints REST, inferencia PEAS y autenticación
+├── iniciar_mvp.bat                        # Lanzador automático del MVP en Windows
 │
-├── prototipos/                            # Fuentes de diseño y experiencia de usuario
-│   ├── prototipo_hito2.html               # Interfaz móvil interactiva (RacePulse mobile)
-│   └── prototipo_desktop.html             # Interfaz widescreen panorámica para analistas (Desktop)
+├── prototipos/                            # Aplicación web oficial y prototipos anteriores
+│   ├── mvp_hito3.html                     # Interfaz oficial del MVP Hito 3 (tema Dark & Gold, 0px overflow)
+│   ├── assets/                            # Logotipo, mascota oficial, estilos CSS y scripts cliente
+│   │   ├── css/racepulse_dashboard.css    # Hoja de estilos del dashboard y modal de autenticación
+│   │   ├── js/racepulse_app.js            # Controlador cliente, gestión de roles y vistas
+│   │   ├── js/racepulse_api.js            # Cliente API con protección anti-fuga de artefactos
+│   │   └── js/racepulse_charts.js         # Renderizado de gráficos de probabilidad y radar PEAS
+│   ├── prototipo_hito2.html               # Prototipo conceptual móvil (Hito 2)
+│   └── prototipo_desktop.html             # Prototipo conceptual de escritorio (Hito 2)
 │
-├── src/                                   # Fuentes del código y pipeline de IA
-│   └── pipeline_preprocesamiento_hito2.py # Preprocesamiento, auditoría de variables y modelo baseline
+├── src/                                   # Modelos, pipelines de entrenamiento y generación de reportes
+│   ├── pipeline_hito3.py                  # Pipeline cronológico anti-fuga (2017–2020) y transferencia
+│   ├── generate_doc_hito3.py              # Generador automatizado del documento Word formal Hito 3
+│   └── mvp_artifacts_hito3.json           # Pesos calibrados Plackett-Luce y métricas de evaluación
 │
-├── data/                                  # Datos precompetencia enriquecidos
-│   └── forward.csv                        # Muestra representativa 2020 con variables fisiológicas y de pista (33.708 filas)
+├── data/                                  # Bases de datos y muestras
+│   ├── racepulse_users.sqlite3            # Base de datos relacional SQLite con usuarios y roles (RBAC)
+│   └── forward.csv                        # Muestra representativa 2020 con variables precompetencia
 │
-└── docs/                                  # Documentación académica formal
-    ├── Proyecto_PTIA_Grupo2_Hito2.docx    # Documento de entrega Hito 2 (Norma APA 7, 6 papers, PEAS)
-    ├── Guion_Video_Hito2_Dos_Personas.docx# Guion técnico del video cronometrado para 2 presentadores
-    └── Guion_Video_Hito2_5min.md          # Versión Markdown del guion de video (5 minutos)
+└── docs/                                  # Documentación académica y figuras del Hito 3
+    ├── Proyecto_PTIA_Grupo2_Hito3.docx    # Documento final formal Hito 3 (con capturas reales y APA 7)
+    ├── Proyecto_PTIA_Grupo2_Hito2.docx    # Documento de entrega Hito 2
+    ├── fig_hito3_mvp_login.png            # Captura de pantalla de inicio de sesión con mascota
+    ├── fig_hito3_mvp_inferencia.png       # Captura del panel principal de análisis (1280x720)
+    ├── fig_hito3_mvp_evaluacion.png       # Captura de la vista de evaluación global y transferencia
+    └── RESUMEN_HITO3.md                   # Resumen ejecutivo de la entrega Hito 3
 ```
 
 ---
@@ -99,10 +113,20 @@ La aplicación abrirá automáticamente en tu navegador:
 * **Documentación Interactiva Swagger:** [http://localhost:8000/docs](http://localhost:8000/docs)
 * **Endpoint de Inferencia en Tiempo Real:** `POST http://localhost:8000/api/predict` (latencia < 1 ms)
 
-```bash
-# Para re-entrenar y evaluar el pipeline temporal (2017–2020) desde cero:
-python src/pipeline_hito3.py
-```
+#### Cuentas de Acceso por Roles (Base de Datos SQLite)
+La aplicación cuenta con control de acceso por roles (RBAC) y contraseñas cifradas (PBKDF2 + HMAC-SHA256):
+
+| Usuario / Nombre | Correo Electrónico | Rol | Contraseña | Vistas Disponibles en la App |
+| :--- | :--- | :--- | :--- | :--- |
+| **Kevin** | `kevin@racepulse.local` | `admin` | `RacePulse-Kevin-2026!` | **Acceso total:** Carreras, Participantes, Predicción, Evaluación |
+| **Nicolaz** | `nicolaz@racepulse.local` | `analista` | `RacePulse-Nicolaz-2026!` | Carreras, Participantes (simulador de ratings), Predicción |
+| **Andrey** | `andrey@racepulse.local` | `consulta` | `RacePulse-Andrey-2026!` | Carreras, Predicción básica (métricas internas bloqueadas) |
+
+> **Nota:** También es posible registrar nuevas cuentas desde el modal de acceso (las cuentas creadas desde la interfaz se asignan por defecto al rol `consulta`).
+
+---
+
+### 3. Re-entrenamiento y Pipeline de IA
 
 **Métricas reales verificadas en Test 2020 (14,700 carreras):**
 * **Azar / Uniforme:** Hit Rate@1 `14.80%` | Log-Loss `2.2596` | Brier `0.0971`
