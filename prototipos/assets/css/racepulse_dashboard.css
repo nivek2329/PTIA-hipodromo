@@ -87,40 +87,12 @@ body {
   border-bottom: 1px solid var(--border-subtle);
 }
 
-
-/* Mascota Oficial en Barra Lateral */
-.mascot-avatar-wrap {
-  width: 100%;
-  height: 98px;
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  margin-bottom: 7px;
-  background: #080B10;
-  border: 1px solid var(--border-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.mascot-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 20%;
-  transition: transform 0.3s ease;
-}
-
-.sidebar-ai-clean-card:hover .mascot-img {
-  transform: scale(1.04);
-}
-
 .brand-exact-img {
-  width: 140px;
+  width: 132px;
   max-width: 90%;
   height: auto;
   display: block;
   margin: 0 auto;
-  object-fit: contain;
 }
 
 /* Menú de Navegación */
@@ -185,6 +157,25 @@ body {
   text-align: center;
 }
 
+
+/* Mascota Oficial Avatar en Barra Lateral */
+.sidebar-mascot-avatar {
+  width: 74px;
+  height: 74px;
+  object-fit: cover;
+  object-position: center 15%;
+  border-radius: 50%;
+  border: 2px solid var(--gold-main);
+  display: block;
+  margin: 0 auto 8px auto;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.sidebar-ai-clean-card:hover .sidebar-mascot-avatar {
+  transform: scale(1.05);
+  border-color: var(--gold-light);
+}
+
 .ai-chip-clean-icon svg {
   width: 20px;
   height: 20px;
@@ -218,17 +209,15 @@ body {
   background-color: var(--bg-deep);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   position: relative;
   box-sizing: border-box;
-  padding: 14px 20px 14px 20px;
+  padding: 14px 20px 24px 20px;
   overflow-x: hidden;
 }
 
 /* Encabezado Principal */
 .dashboard-header {
-  margin-bottom: 10px;
-  flex-shrink: 0;
+  margin-bottom: 12px;
 }
 
 .header-top-line-bar {
@@ -302,74 +291,66 @@ body {
 }
 
 .header-title {
-  font-size: 1.85rem;
+  font-size: 1.8rem;
   font-weight: 800;
   color: var(--text-white);
-  letter-spacing: -0.5px;
-  margin-bottom: 3px;
+  letter-spacing: -0.4px;
+  margin-bottom: 2px;
 }
 
 .header-subtitle {
-  font-size: 0.94rem;
+  font-size: 0.92rem;
   color: var(--text-gray);
-  font-weight: 500;
 }
 
 /* ==========================================================================
    C. Banner Panorámico de Carrera
    ========================================================================== */
 .race-banner {
-  background: linear-gradient(90deg, #101827 0%, rgba(16, 24, 39, 0.95) 46%, rgba(16, 24, 39, 0.15) 85%),
-              url('../horses_faded_large.png') right center / auto 100% no-repeat,
-              #101827;
+  background: linear-gradient(90deg, #101827 0%, rgba(16, 24, 39, 0.92) 50%, rgba(16, 24, 39, 0.25) 100%),
+              url('../horses_faded_banner.png') right center / cover no-repeat;
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  padding: 16px 24px;
-  min-height: 98px;
-  flex-shrink: 0;
+  padding: 16px 22px;
+  min-height: 90px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
-  position: relative;
-  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 .banner-left {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 14px;
   z-index: 2;
 }
 
 .banner-coliseum-img {
-  width: 66px;
+  width: 64px;
   height: auto;
   display: block;
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
 }
 
 .banner-info {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .banner-title {
-  font-size: 1.35rem;
+  font-size: 1.3rem;
   font-weight: 750;
   color: var(--text-white);
-  letter-spacing: -0.2px;
 }
 
 .banner-badges {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   font-size: 0.88rem;
   color: var(--text-gray);
-  font-weight: 550;
 }
 
 .badge-item {
@@ -403,8 +384,6 @@ body {
   grid-template-columns: minmax(140px, 175px) 1fr minmax(240px, 285px);
   gap: 10px;
   align-items: stretch;
-  flex: 1;
-  min-height: 270px;
   margin-bottom: 10px;
   width: 100%;
   box-sizing: border-box;
@@ -421,7 +400,6 @@ body {
   flex-direction: column;
   box-sizing: border-box;
   min-width: 0;
-  height: 100%;
 }
 
 .card-header-clean {
@@ -517,10 +495,6 @@ body {
 .table-wrapper {
   width: 100%;
   overflow-x: auto;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
 }
 
 .table-racepulse {
@@ -542,7 +516,7 @@ body {
 }
 
 .table-racepulse td {
-  padding: 6px 4px;
+  padding: 5px 4px;
   border-bottom: 1px solid rgba(48, 55, 70, 0.4);
   vertical-align: middle;
   white-space: nowrap;
@@ -584,20 +558,7 @@ body {
   display: flex;
   flex-direction: column;
   flex: 1;
-  justify-content: space-between;
-}
-.exact-chart-wrapper {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  justify-content: space-between;
-}
-.exact-chart-body {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 .exact-chart-wrapper {
@@ -679,15 +640,11 @@ body {
   flex: 1;
   display: flex;
   justify-content: space-between;
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   color: var(--text-gray);
   padding-left: 4px;
   overflow: hidden;
   min-width: 0;
-}
-.exact-chart-ticks span {
-  flex-shrink: 0;
-  font-size: 0.72rem;
 }
 .exact-chart-ticks span {
   flex-shrink: 1;
@@ -703,10 +660,9 @@ body {
   grid-template-columns: 1fr minmax(240px, 285px);
   gap: 10px;
   align-items: stretch;
-  margin-bottom: 6px;
+  margin-bottom: 20px;
   width: 100%;
   box-sizing: border-box;
-  flex-shrink: 0;
 }
 
 /* Factores de Predicción */
@@ -811,10 +767,10 @@ body {
    Cinta Dorada Inferior (Footer Decorativo de Referencia)
    ========================================================================== */
 .dashboard-footer-ribbon {
-  flex-shrink: 0;
+  margin-top: auto;
   text-align: center;
   width: 100%;
-  padding-top: 4px;
+  padding-top: 8px;
 }
 
 .footer-ribbon-img {
@@ -888,45 +844,29 @@ body {
     --sidebar-w: 185px;
   }
   .dashboard-wrapper {
-    padding: 12px 14px 12px 14px;
+    padding: 12px 14px 20px 14px;
   }
   .analysis-grid {
-    grid-template-columns: 135px 1fr 215px;
+    grid-template-columns: 130px 1fr 232px;
     gap: 8px;
-    flex: 1;
-    min-height: 270px;
   }
   .bottom-panels-grid {
-    grid-template-columns: 1fr 215px;
+    grid-template-columns: 1fr 232px;
     gap: 8px;
   }
   .exact-chart-name, .exact-chart-name-spacer {
-    width: 82px;
+    width: 88px;
   }
   .table-racepulse {
-    font-size: 0.76rem;
+    font-size: 0.74rem;
   }
   .table-racepulse th {
-    font-size: 0.72rem;
-    padding: 5px 3px;
+    font-size: 0.69rem;
   }
   .table-racepulse td {
-    padding: 6px 3px;
+    padding: 4px 3px;
   }
-}
-
-/* Full-Height Stretch Extensions */
-.dashboard-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-}
-
-#view-carreras {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 0;
+  .table-racepulse th {
+    padding: 4px 3px;
+  }
 }
