@@ -213,9 +213,10 @@ def main():
     for f_line in [
         "Figura 6. Comparativa de Hit Rate@1 y Log-Loss multiclase en el conjunto de prueba (2020).",
         "Figura 7. Curva de aprendizaje en transferencia de dominio Sha Tin → Happy Valley (Test 2020, n = 298).",
-        "Figura 8. MVP Funcional Hito 3: Módulo de Acceso, Autenticación y Control de Roles con Mascota Oficial.",
+        "Figura 8. MVP Funcional Hito 3: Módulo de Acceso, Autenticación PBKDF2 y Control de Roles con Mascota Oficial.",
         "Figura 9. MVP Funcional Hito 3: Panel de Análisis Hípico e Inferencia PEAS en vivo (RID 411357, Sha Tin).",
         "Figura 10. MVP Funcional Hito 3: Auditoría de Evaluación Global (2020) y Transferencia de Dominio.",
+        "Figura 11. MVP Funcional Hito 3: Módulo de Creación de Carreras en Vivo e Inferencia Inmediata de Cartelera Matutina.",
     ]:
         insert_paragraph_before(intro_h1, f_line, "Body Text")
 
@@ -399,22 +400,57 @@ def main():
     insert_paragraph_before(ref_p, "9.5. Prototipo Funcional MVP en Localhost (Hito 3)", "Heading 2")
     insert_paragraph_before(
         ref_p,
-        "Para el Hito 3 se evolucionó el prototipo hacia un Producto Mínimo Viable (MVP) funcional desplegado como servicio web en "
-        "localhost (http://localhost:8000) mediante FastAPI y Python (app.py e iniciar_mvp.bat). A diferencia de un archivo HTML estático, "
-        "el MVP en localhost opera conectado a un backend de IA activo que expone una API REST para inferencia en tiempo real (< 1 ms), "
-        "módulo de autenticación seguro, base de datos relacional SQLite y documentación interactiva OpenAPI Swagger (/docs).",
+        "Para el Hito 3 se evolucionó el prototipo conceptual hacia un Producto Mínimo Viable (MVP) operativo y funcional desplegado "
+        "como servicio web en localhost (http://localhost:8000) mediante FastAPI y Python (app.py e iniciar_mvp.bat). A diferencia de una "
+        "maqueta HTML estática, el MVP en localhost opera conectado a un motor de Inteligencia Artificial activo que expone una API REST "
+        "para inferencia en tiempo real (< 1 ms), autenticación segura con base de datos relacional SQLite y documentación interactiva "
+        "OpenAPI Swagger (/docs). A continuación se detallan las justificaciones teóricas, arquitectónicas y de diseño de cada cambio realizado.",
+        "Body Text"
+    )
+
+    insert_paragraph_before(ref_p, "9.5.1. Justificación de Roles de Usuario bajo el Marco de Agente Racional (PEAS)", "Heading 3")
+    insert_paragraph_before(
+        ref_p,
+        "En el marco conceptual del Agente Racional PEAS (Rendimiento, Entorno, Actuadores, Sensores) desarrollado en los Hitos 1 y 2, los "
+        "actuadores representan los canales mediante los cuales las decisiones del agente impactan el entorno. En un sistema hípico real, "
+        "el entorno incluye diferentes tipos de actores humanos con necesidades operativas, responsabilidades financieras y niveles de pericia técnica "
+        "completamente dispares. Si el sistema contara con un único rol genérico de 'usuario', se presentarían dos fallas graves: (a) fuga de propiedad "
+        "intelectual y riesgo de sobreajuste al exponer artefactos internos de entrenamiento y pesos de modelos a usuarios finales; y (b) riesgo "
+        "de error operativo por permitir que usuarios sin criterio técnico alteren variables contrafácticas o interpreten erróneamente telemetría interna. "
+        "Por esta razón, la arquitectura implementa Control de Acceso Basado en Roles (RBAC) estricto con tres perfiles diferenciados:",
         "Body Text"
     )
     insert_paragraph_before(
         ref_p,
-        "Módulo de Seguridad, Autenticación y Control de Acceso por Roles (RBAC): El acceso a la plataforma se encuentra protegido "
-        "mediante credenciales cifradas con PBKDF2 y HMAC-SHA256 (240,000 iteraciones con salt criptográfico por usuario) almacenadas en "
-        "data/racepulse_users.sqlite3. La sesión se gestiona con cookies seguras (racepulse_session) y segmentación estricta de privilegios "
-        "en tres roles operativos: (1) Administrador (admin): acceso total a las cuatro vistas del sistema, simulación interactiva y "
-        "auditoría técnica de modelos mediante el endpoint protegido /api/artifacts; (2) Analista Hípico (analista): acceso a carreras, "
-        "predicción PEAS y panel de participantes con simulación contra-fáctica de Official Rating (OR) en tiempo real; y (3) Consulta "
-        "(consulta): interfaz de solo lectura para carreras y predicciones básicas, bloqueando la exposición de métricas internas y "
-        "artefactos de entrenamiento para evitar fuga de propiedad intelectual o decisiones no autorizadas.",
+        "1. Administrador (admin / Data Scientist & MLOps): Diseñado para el equipo de ingeniería de inteligencia artificial. Tiene acceso irrestricto "
+        "a las cuatro vistas del sistema: Carreras, Participantes (con simulación), Predicción PEAS y la vista exclusiva de Evaluación. A través del "
+        "endpoint protegido /api/artifacts, el administrador audita las métricas de test out-of-time (Hit Rate@1 de 22.98%, Log-Loss de 2.0966), la "
+        "curva de transferencia entre hipódromos (Sha Tin → Happy Valley) y el radar PEAS de robustez, garantizando la supervisión del drift temporal "
+        "y el ciclo de vida del modelo.",
+        "Body Text"
+    )
+    insert_paragraph_before(
+        ref_p,
+        "2. Analista Hípico (analista / Entrenador o Cuantitativo): Orientado al especialista del hipódromo o apostador profesional. Cuenta con "
+        "acceso a las vistas de Carreras, Predicción y al módulo de Participantes con simuladores contrafácticos interactivos. Este rol puede modificar "
+        "el Official Rating (OR) y el peso asignado de un ejemplar mediante sliders en tiempo real para evaluar escenarios hipotéticos de carrera ('¿qué "
+        "ocurre con la probabilidad de victoria si el ejemplar A pierde 2 kg de handicap o sube su rating?'). No tiene acceso a la telemetría del servidor "
+        "ni a los pesos matemáticos del backend, evitando manipulaciones accidentales de la infraestructura.",
+        "Body Text"
+    )
+    insert_paragraph_before(
+        ref_p,
+        "3. Consulta (consulta / Apostador General o Aficionado): Pensado para el público general y apostadores recreativos. Proporciona una interfaz "
+        "limpia y segura limitada a la consulta del orden de probabilidades calculadas por la IA y factores determinantes precompetencia para las carreras "
+        "disponibles. Este perfil tiene bloqueados los sliders de simulación contrafáctica (para evitar que tomen decisiones basadas en datos ficticios) "
+        "y tiene restringido el acceso al panel de evaluación técnica, preservando el valor comercial del modelo y ofreciendo una experiencia sin sobrecarga técnica.",
+        "Body Text"
+    )
+    insert_paragraph_before(
+        ref_p,
+        "Seguridad y Cifrado: La autenticación se implementa en data/racepulse_users.sqlite3 mediante hashing criptográfico PBKDF2 con HMAC-SHA256 "
+        "(240,000 iteraciones con sal individual por usuario). Las credenciales viajan protegidas y la sesión se valida mediante cookies seguras "
+        "HttpOnly (racepulse_session), garantizando persistencia y protección contra inyecciones y falsificación de peticiones.",
         "Body Text"
     )
 
@@ -422,17 +458,77 @@ def main():
     if os.path.exists(mvp_login):
         p_f8 = insert_paragraph_before(ref_p, "", "Normal")
         p_f8.add_run().add_picture(mvp_login, width=Inches(6.1))
-        insert_paragraph_before(ref_p, "Figura 8. MVP Funcional Hito 3: Módulo de Acceso, Autenticación y Control de Roles con Mascota Oficial.", "Normal")
+        insert_paragraph_before(ref_p, "Figura 8. MVP Funcional Hito 3: Módulo de Acceso, Autenticación PBKDF2 y Control de Roles con Mascota Oficial.", "Normal")
 
+    insert_paragraph_before(ref_p, "9.5.2. Justificación Algorítmica: Aprendizaje de Ranking (Plackett-Luce / GBDT) vs. Modelos de Lenguaje (LLMs)", "Heading 3")
     insert_paragraph_before(
         ref_p,
-        "Diseño Visual, Identidad de Marca y Cero Desbordamiento (0px Overflow): La interfaz fue diseñada bajo la identidad visual "
-        "Dark & Gold de RacePulse (#050608, #0B1322, #D6A63C), integrando el logotipo oficial, la mascota del proyecto tanto en la "
-        "pantalla de inicio de sesión nocturna como en la barra lateral mediante micro-badge dorado, y una cuadrícula responsive "
-        "estrictamente calibrada (barra lateral de 155px, cuadrícula de análisis 118px / 1fr / 228px). En resoluciones estándar de "
-        "escritorio (1024×576, 1024×649 y 1280×720), la interfaz garantiza 0 píxeles de scroll horizontal o vertical, ofreciendo una "
-        "visualización de alta fidelidad donde todos los componentes (filtros, tabla de 8 columnas, barras de probabilidad, factores y "
-        "aviso de incertidumbre) se presentan simultáneamente sin cortes.",
+        "Una decisión arquitectónica fundamental del proyecto fue la selección del paradigma de aprendizaje automático. Aunque la tendencia reciente "
+        "en inteligencia artificial privilegia el uso de Modelos de Lenguaje Masivos (LLMs), un análisis riguroso de la tarea hípica justificó el descarte "
+        "de arquitecturas generativas en favor de modelos de Aprendizaje de Ranking Discreto (Learning to Rank - Plackett-Luce Softmax) y Ensambles GBDT "
+        "calibrados por temperatura, por las siguientes tres razones técnicas:",
+        "Body Text"
+    )
+    insert_paragraph_before(
+        ref_p,
+        "1. Calibración Probabilística Estricta: Una carrera hípica es una competencia cerrada de suma cero entre N competidores mutuamente excluyentes "
+        "(8 a 14 caballos). La probabilidad de victoria exige la restricción matemática formal sum_{i=1}^N P(Y_i=1) = 1.0. Los LLMs, al ser modelos autoregresivos "
+        "de generación de texto token a token, son incapaces de garantizar suma unitaria estricta de forma nativa y sufren de alucinación numérica. En contraste, "
+        "la formulación Plackett-Luce optimiza directamente la probabilidad de elección discreta mediante una función de pérdida Softmax multiclase acoplada "
+        "a una utilidad latente w^T x_i, logrando un Log-Loss riguroso de 2.0966 en el conjunto de test independiente.",
+        "Body Text"
+    )
+    insert_paragraph_before(
+        ref_p,
+        "2. Determinismo, Repetibilidad y Sin Sesgo de Prompt: Las decisiones de inversión o análisis deportivo requieren que ante idénticas condiciones "
+        "precompetencia (pista, distancia, cajón, rating oficial, peso), el sistema produzca resultados exactamente deterministas. Los LLMs introducen variabilidad "
+        "estocástica (temperatura de muestreo, orden de los caballos en el prompt, sesgo posicional). El modelo lineal regularizado Plackett-Luce (L2 = 0.0001) "
+        "y el GBDT garantizan invarianza a permutaciones espaciotemporales.",
+        "Body Text"
+    )
+    insert_paragraph_before(
+        ref_p,
+        "3. Latencia Ultrabaja (< 1 ms) y Eficiencia Energética: El MVP en localhost ejecuta la inferencia matricial completa de 14 competidores en 0.44 milisegundos "
+        "mediante operaciones vectorizadas NumPy en una CPU convencional, sin requerir aceleradores gráficos (GPU) ni dependencias externas de APIs en la nube. "
+        "Un LLM requeriría entre 800 y 3,500 milisegundos por consulta con un consumo computacional y costo por token inviables para despliegues locales de alta frecuencia.",
+        "Body Text"
+    )
+
+    insert_paragraph_before(ref_p, "9.5.3. Módulo de Cartelera en Vivo: Ingesta de Nuevas Carreras Matutinas", "Heading 3")
+    insert_paragraph_before(
+        ref_p,
+        "Uno de los hallazgos críticos de usabilidad identificados durante la transición del prototipo fue que un sistema limitado a visualizar carreras históricas "
+        "carece de utilidad práctica para el día a día del hipódromo. En la operación hípica real, la cartelera o programa oficial de las carreras vespertinas se publica "
+        "en las primeras horas de la mañana. Para que la herramienta aporte valor operativo real, el analista o usuario debe poder ingresar la nómina de una nueva carrera "
+        "antes de que se corra y obtener la inferencia predictiva al instante.",
+        "Body Text"
+    )
+    insert_paragraph_before(
+        ref_p,
+        "Por esta razón, se desarrolló el módulo interactivo 'Crear Carrera en Vivo' (#custom-race-modal). Este componente permite: (1) definir el hipódromo "
+        "(pistas locales de Hong Kong como Sha Tin o Happy Valley, o cualquier hipódromo nacional o internacional); (2) configurar los parámetros físicos del "
+        "evento (nombre de la prueba, distancia en metros y tipo de superficie: Césped o Arena); y (3) matricular dinámicamente hasta 14 competidores especificando "
+        "su nombre, Official Rating (OR), peso asignado en libras, cajón de salida (draw) y jinete. Al confirmar, el motor de inferencia calcula de inmediato las "
+        "probabilidades de victoria, actualiza los banners informativos, genera las barras de distribución doradas y traslada automáticamente los ejemplares al "
+        "panel de simulación contrafáctica.",
+        "Body Text"
+    )
+
+    mvp_custom = os.path.join(DOCS_DIR, "fig_hito3_mvp_carrera_en_vivo.png")
+    if os.path.exists(mvp_custom):
+        p_fc = insert_paragraph_before(ref_p, "", "Normal")
+        p_fc.add_run().add_picture(mvp_custom, width=Inches(6.1))
+        insert_paragraph_before(ref_p, "Figura 11. MVP Funcional Hito 3: Módulo de Creación de Carreras en Vivo e Inferencia Inmediata de Cartelera Matutina.", "Normal")
+
+    insert_paragraph_before(ref_p, "9.5.4. Diseño Visual, Cero Desbordamiento (0px Overflow) y Validación de Usabilidad", "Heading 3")
+    insert_paragraph_before(
+        ref_p,
+        "La interfaz del MVP fue refinada bajo la identidad visual Dark & Gold de RacePulse (#050608, #0B1322, #D6A63C), integrando el logotipo oficial "
+        "y la mascota del proyecto en un badge circular dorado de 48px en la barra lateral y en el panel nocturno de inicio de sesión. Para garantizar que "
+        "el usuario visualice toda la información analítica de un vistazo (filtros de carrera, tabla de 8 columnas de participantes, barras de probabilidad, "
+        "factores de impacto y aviso de incertidumbre), se diseñó una cuadrícula responsive calibrada milimétricamente (barra lateral de 155px, columnas 118px / 1fr / 228px). "
+        "En resoluciones estándar de escritorio (1024×576, 1024×649 y 1280×720), la pantalla mantiene exactamente 0 píxeles de scroll horizontal o vertical, "
+        "eliminando el desbordamiento visual y optimizando la velocidad de decisión en cabinas de análisis.",
         "Body Text"
     )
 
@@ -441,16 +537,6 @@ def main():
         p_f9 = insert_paragraph_before(ref_p, "", "Normal")
         p_f9.add_run().add_picture(mvp_inf, width=Inches(6.1))
         insert_paragraph_before(ref_p, "Figura 9. MVP Funcional Hito 3: Panel de Análisis Hípico e Inferencia PEAS en vivo (RID 411357, Sha Tin).", "Normal")
-
-    insert_paragraph_before(
-        ref_p,
-        "Capacidades Operativas del MVP: El sistema permite: (1) explorar carreras reales del conjunto de prueba temporal (Test 2020) "
-        "organizadas por hipódromo; (2) inspeccionar variables precompetencia libres de fuga de datos; (3) ejecutar inferencia Softmax "
-        "Plackett-Luce instantánea con ranking calibrado de probabilidades de victoria y explicabilidad de factores clave; y (4) auditar "
-        "las métricas globales de validación, radar PEAS y curva de transferencia de dominio (Sha Tin → Happy Valley) desde la vista "
-        "exclusiva para administradores.",
-        "Body Text"
-    )
 
     mvp_eval = os.path.join(DOCS_DIR, "fig_hito3_mvp_evaluacion.png")
     if os.path.exists(mvp_eval):

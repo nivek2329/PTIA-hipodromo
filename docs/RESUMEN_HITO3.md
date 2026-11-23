@@ -46,18 +46,34 @@ El acceso a la aplicación está protegido mediante un módulo de autenticación
 ## 4. Documento Formal Word (Hito 3)
 
 El documento técnico formal cumple con los lineamientos institucionales y la norma APA 7:
-- **Ruta del Archivo:** [`docs/Proyecto_PTIA_Grupo2_Hito3.docx`](docs/Proyecto_PTIA_Grupo2_Hito3.docx) *(2.20 MB, 347 párrafos, 7 tablas formales)*
+- **Ruta del Archivo:** [`docs/Proyecto_PTIA_Grupo2_Hito3.docx`](docs/Proyecto_PTIA_Grupo2_Hito3.docx) *(2.25 MB, 362 párrafos, 7 tablas formales)*
 - **Script Generador Automatizado:** [`src/generate_doc_hito3.py`](src/generate_doc_hito3.py)
 - **Figuras Oficiales Embebidas:**
   - *Figura 6:* Comparativa de Hit Rate@1 y Log-Loss multiclase (Test 2020).
   - *Figura 7:* Curva de transferencia Sha Tin $\rightarrow$ Happy Valley.
-  - *Figura 8:* MVP Funcional Hito 3 — Módulo de Acceso, Autenticación y Control de Roles con Mascota Oficial.
+  - *Figura 8:* MVP Funcional Hito 3 — Módulo de Acceso, Autenticación PBKDF2 y Control de Roles con Mascota Oficial.
   - *Figura 9:* MVP Funcional Hito 3 — Panel de Análisis Hípico e Inferencia PEAS en vivo (RID 411357, Sha Tin).
   - *Figura 10:* MVP Funcional Hito 3 — Auditoría de Evaluación Global (2020) y Transferencia de Dominio.
+  - *Figura 11:* MVP Funcional Hito 3 — Módulo de Creación de Carreras en Vivo e Inferencia Inmediata de Cartelera Matutina.
 
 ---
 
-## 5. Comandos para Ejecución y Pruebas
+## 5. Justificaciones de Decisiones de Arquitectura e IA
+
+1. **Control de Acceso RBAC (3 Roles vs. 1 Usuario):**
+   - *Fundamento PEAS:* Los actuadores del agente impactan decisiones humanas de diferente criticidad.
+   - *Admin:* MLOps, drift temporal, métricas out-of-time y salud del modelo.
+   - *Analista:* Simulación contrafáctica (sliders de OR y peso) y panel táctico sin exponer pesos internos.
+   - *Consulta:* Lectura de predicciones para apuestas; sin manipulación de datos ni acceso a propiedad intelectual.
+2. **Modelo Plackett-Luce Softmax & GBDT vs. LLMs:**
+   - La tarea es ranking multi-agente de suma cero con calibración estricta ($\sum p_i = 1.0$), determinismo y latencia < 1 ms (0.44 ms en CPU).
+   - Los LLMs alucinan números, no garantizan suma unitaria, tienen sesgo de prompt y latencias superiores a 1000 ms.
+3. **Módulo de Cartelera en Vivo ("Crear Carrera en Vivo"):**
+   - En la vida real, el programa oficial de la tarde sale en la mañana. Permite ingresar hipódromo (nacional/internacional), distancia, pista y competidores (OR, jinete, cajón) para predecir antes de que se corra.
+
+---
+
+## 6. Comandos para Ejecución y Pruebas
 
 ```cmd
 cd /d "c:\Users\kevin\Downloads\ptia proyecto\PTIA-hipodromo"
