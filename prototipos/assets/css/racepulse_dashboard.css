@@ -303,18 +303,18 @@ body {
    C. Hero Panorámico Unificado (Desde Panel de Análisis hasta la Carrera)
    ========================================================================== */
 .hero-analysis-banner {
-  background: linear-gradient(90deg, #090E17 0%, #090E17 38%, rgba(9, 14, 23, 0.78) 48%, rgba(9, 14, 23, 0) 62%),
+  background: linear-gradient(90deg, #090E17 0%, #090E17 38%, rgba(9, 14, 23, 0.80) 48%, rgba(9, 14, 23, 0) 62%),
               url('../horses_panoramic_exact.png') right center / cover no-repeat;
   border-radius: var(--radius-lg);
-  padding: 8px 14px;
-  min-height: 130px;
-  height: 130px;
+  padding: 12px 18px;
+  min-height: 204px;
+  height: 204px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   position: relative;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -325,35 +325,36 @@ body {
   justify-content: center;
   z-index: 2;
   max-width: 52%;
+  gap: 12px;
 }
 
 .header-text-group {
-  margin-bottom: 8px;
+  margin-bottom: 0;
 }
 
 .header-title {
-  font-size: 1.38rem;
+  font-size: 1.55rem;
   font-weight: 750;
   color: var(--text-white);
   letter-spacing: -0.2px;
-  margin: 0 0 2px 0;
+  margin: 0 0 4px 0;
 }
 
 .header-subtitle {
-  font-size: 0.80rem;
+  font-size: 0.85rem;
   color: var(--text-gray);
   margin: 0;
 }
 
 .race-banner-card {
-  background: rgba(14, 20, 31, 0.82);
-  border: 1px solid rgba(48, 55, 70, 0.75);
+  background: rgba(14, 20, 31, 0.85);
+  border: 1px solid rgba(48, 55, 70, 0.8);
   border-radius: var(--radius-md);
-  padding: 6px 14px;
+  padding: 10px 18px;
   display: inline-flex;
   align-items: center;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(6px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
   width: fit-content;
   max-width: 100%;
 }
@@ -361,11 +362,11 @@ body {
 .banner-left {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .banner-coliseum-img {
-  width: 44px;
+  width: 50px;
   height: auto;
   display: block;
 }
@@ -373,17 +374,22 @@ body {
 .banner-info {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 5px;
 }
 
 .banner-title {
-  font-size: 0.95rem;
-  font-weight: 700;
+  font-size: 1.05rem;
+  font-weight: 750;
   color: var(--text-white);
 }
 
 .banner-badges {
   display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.82rem;
+  color: var(--text-gray);
+}
   align-items: center;
   gap: 12px;
   font-size: 0.85rem;
