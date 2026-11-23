@@ -981,3 +981,247 @@ body {
 .nav-item[hidden] { display: none !important; }
 @media (max-width: 900px) { .auth-overlay { padding: 20px; background-position: 58% center; } .auth-logo { top: 3vh; left: 5vw; width: min(54vw,440px); max-height: 18vh; } .auth-card { top: 29%; left: 5vw; width: min(54vw,530px); max-height: 65vh; padding: 24px 28px; } }
 @media (max-width: 600px) { .auth-overlay { padding: 18px; background-position: 63% center; } .auth-backdrop { background: linear-gradient(90deg,rgba(0,0,0,.88),rgba(0,0,0,.68)); } .auth-logo { top: 4vh; left: 50%; width: min(82vw,380px); max-height: 16vh; transform: translateX(-50%); object-position: center; } .auth-card { top: 23%; left: 4vw; width: 92vw; max-height: 69vh; padding: 22px 20px; border-radius: 17px; background: rgba(5,6,8,.88); } .auth-card h2 { font-size: 1.9rem; } .auth-description { margin-bottom: 16px; font-size: 1rem; } .auth-footer { right: 4vw; bottom: 10px; left: 4vw; gap: 8px; font-size: .75rem; } .auth-footer::before, .auth-footer::after { width: 8vw; } }
+/* ==========================================================================
+   MODAL DE CREACIÓN DE CARRERA EN VIVO (INGRESO PERSONALIZADO)
+   ========================================================================== */
+.btn-create-race-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;
+  margin-top: 6px;
+  padding: 5px 6px;
+  background: rgba(214, 166, 60, 0.08);
+  border: 1px dashed rgba(214, 166, 60, 0.45);
+  border-radius: var(--radius-sm);
+  color: var(--gold-light);
+  font-size: 0.72rem;
+  font-weight: 650;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-create-race-link:hover {
+  background: rgba(214, 166, 60, 0.18);
+  border-color: var(--gold-main);
+  color: #FFFFFF;
+}
+
+.custom-race-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.custom-race-overlay[hidden] {
+  display: none !important;
+}
+.custom-race-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 4, 8, 0.82);
+  backdrop-filter: blur(6px);
+}
+.custom-race-dialog {
+  position: relative;
+  z-index: 2;
+  width: min(92vw, 680px);
+  max-height: 94vh;
+  background: #0B1220;
+  border: 1.5px solid var(--gold-main);
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: var(--text-white);
+}
+.custom-race-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 10px 18px 8px 18px;
+  border-bottom: 1px solid var(--border-color);
+  background: rgba(16, 24, 39, 0.6);
+}
+.custom-race-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  color: var(--gold-light);
+  background: rgba(214, 166, 60, 0.14);
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(214, 166, 60, 0.3);
+  margin-bottom: 4px;
+  letter-spacing: 0.05em;
+}
+.custom-race-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 750;
+  color: #FFFFFF;
+}
+.custom-race-subtitle {
+  margin: 2px 0 0 0;
+  font-size: 0.78rem;
+  color: var(--text-gray);
+}
+.custom-race-close {
+  background: transparent;
+  border: none;
+  color: var(--text-gray);
+  font-size: 1.6rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0 4px;
+}
+.custom-race-close:hover {
+  color: #FFFFFF;
+}
+#custom-race-form {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 10px 18px;
+  gap: 8px;
+}
+.custom-race-grid-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.custom-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.custom-field label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--gold-light);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.custom-field input, .custom-field select {
+  background: rgba(16, 24, 39, 0.95);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 5px 8px;
+  color: #FFFFFF;
+  font-size: 0.82rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.custom-field input:focus, .custom-field select:focus {
+  border-color: var(--gold-main);
+}
+.custom-horses-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.custom-horses-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+.btn-add-horse {
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  color: #4ADE80;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-add-horse:hover {
+  background: rgba(34, 197, 94, 0.25);
+  border-color: #4ADE80;
+}
+.custom-table-scroll {
+  max-height: 145px;
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: rgba(8, 12, 20, 0.6);
+}
+.custom-horses-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+.custom-horses-table th {
+  background: rgba(16, 24, 39, 0.9);
+  padding: 6px 8px;
+  font-weight: 700;
+  color: var(--text-gray);
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+.custom-horses-table td {
+  padding: 4px 6px;
+  border-bottom: 1px solid rgba(35, 46, 66, 0.5);
+}
+.custom-horses-table input {
+  width: 100%;
+  background: rgba(16, 24, 39, 0.8);
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  padding: 4px 6px;
+  color: #FFFFFF;
+  font-size: 0.78rem;
+  outline: none;
+}
+.custom-horses-table input:focus {
+  border-color: var(--gold-main);
+}
+.btn-del-horse {
+  background: transparent;
+  border: none;
+  color: #EF4444;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 2px 4px;
+}
+.btn-del-horse:hover {
+  color: #F87171;
+}
+.custom-race-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 4px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-color);
+}
+.btn-cancel-custom {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-gray);
+  border-radius: 8px;
+  padding: 7px 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-cancel-custom:hover {
+  color: #FFFFFF;
+  border-color: #64748B;
+}
+.btn-submit-custom {
+  padding: 7px 18px !important;
+  font-size: 0.84rem !important;
+  border-radius: 8px !important;
+}

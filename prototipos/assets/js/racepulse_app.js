@@ -335,21 +335,23 @@ const RacePulseApp = (function() {
 
     const filteredRaces = allRaces.filter(r => r.course === courseName);
     raceSelect.innerHTML = filteredRaces.map(r => {
-      const cleanTitle = r.title.split("(")[0].trim();
-      const dateText = r.rid === 411357 ? "2020-10-20" : `20${r.date.replace(/\//g, "-")}`;
+      const titleStr = r.title || r.race_name || "Carrera";
+      const cleanTitle = titleStr.split("(")[0].trim();
+      const rawDate = r.date ? String(r.date) : "2020-10-20";
+      const dateText = String(r.rid) === "411357" ? "2020-10-20" : (rawDate.includes("/") ? `20${rawDate.replace(/\//g, "-")}` : rawDate);
       return `<option value="${r.rid}">${cleanTitle} (${dateText})</option>`;
     }).join("");
 
-    if (preferRid && filteredRaces.some(r => r.rid === preferRid)) {
-      raceSelect.value = preferRid;
+    if (preferRid && filteredRaces.some(r => String(r.rid) === String(preferRid))) {
+      raceSelect.value = String(preferRid);
     } else if (filteredRaces.length > 0) {
-      raceSelect.value = filteredRaces[0].rid;
+      raceSelect.value = String(filteredRaces[0].rid);
       loadRace(filteredRaces[0].rid);
     }
   }
 
   async function loadRace(rid) {
-    selectedRace = allRaces.find(r => r.rid === rid);
+    selectedRace = allRaces.find(r => String(r.rid) === String(rid));
     if (!selectedRace) return;
 
     editableHorses = JSON.parse(JSON.stringify(selectedRace.horses || []));
@@ -630,12 +632,168 @@ const RacePulseApp = (function() {
     }
   }
 
-  return {
+
+  // =========================================================================
+  // CREACIÓN Y GESTIÓN DE CARRERAS PERSONALIZADAS EN VIVO
+  // =========================================================================
+  let customHorsesList = [
+    { name: "Rayo Dorado", or: 88, jockey: "Zac Purton", stall: 1, weight: 57 },
+    { name: "Relámpago Real", or: 84, jockey: "Douglas Whyte", stall: 2, weight: 56 },
+    { name: "Trueno Veloz", or: 80, jockey: "Hugh Bowman", stall: 3, weight: 57 },
+    { name: "Estrella del Sur", or: 76, jockey: "Vincent Ho", stall: 4, weight: 55 }
+  ];
+
+  function openCustomRaceModal() {
+    const modal = document.getElementById("custom-race-modal");
+    if (!modal) return;
+    renderCustomHorsesRows();
+    modal.hidden = false;
+  }
+
+  function closeCustomRaceModal() {
+    const modal = document.getElementById("custom-race-modal");
+    if (!modal) return;
+    modal.hidden = true;
+  }
+
+  function renderCustomHorsesRows() {
+    const tbody = document.getElementById("custom-horses-tbody");
+    const countEl = document.getElementById("cr-horses-count");
+    if (!tbody) return;
+
+    if (countEl) countEl.textContent = customHorsesList.length;
+
+    tbody.innerHTML = customHorsesList.map((h, i) => `
+      <tr>
+        <td style="color:var(--gold-light); font-weight:700; text-align:center;">${i + 1}</td>
+        <td>
+          <input type="text" value="${h.name}" placeholder="Nombre del caballo"
+                 onchange="RacePulseApp.updateCustomHorseField(${i}, 'name', this.value)" required>
+        </td>
+        <td>
+          <input type="number" value="${h.or}" min="30" max="130"
+                 onchange="RacePulseApp.updateCustomHorseField(${i}, 'or', Number(this.value))" required>
+        </td>
+        <td>
+          <input type="text" value="${h.jockey}" placeholder="Jinete"
+                 onchange="RacePulseApp.updateCustomHorseField(${i}, 'jockey', this.value)">
+        </td>
+        <td>
+          <input type="number" value="${h.stall || (i + 1)}" min="1" max="24"
+                 onchange="RacePulseApp.updateCustomHorseField(${i}, 'stall', Number(this.value))">
+        </td>
+        <td>
+          <input type="number" value="${h.weight || 57}" min="45" max="75"
+                 onchange="RacePulseApp.updateCustomHorseField(${i}, 'weight', Number(this.value))">
+        </td>
+        <td style="text-align:center;">
+          ${customHorsesList.length > 2 ? `
+            <button type="button" class="btn-del-horse" title="Eliminar" onclick="RacePulseApp.removeCustomHorseRow(${i})">✕</button>
+          ` : ""}
+        </td>
+      </tr>
+    `).join("");
+  }
+
+  function addCustomHorseRow() {
+    const idx = customHorsesList.length + 1;
+    customHorsesList.push({
+      name: `Caballo #${idx}`,
+      or: 78,
+      jockey: "Jinete Oficial",
+      stall: idx,
+      weight: 56
+    });
+    renderCustomHorsesRows();
+  }
+
+  function removeCustomHorseRow(index) {
+    if (customHorsesList.length <= 2) return;
+    customHorsesList.splice(index, 1);
+    renderCustomHorsesRows();
+  }
+
+  function updateCustomHorseField(index, field, value) {
+    if (customHorsesList[index]) {
+      customHorsesList[index][field] = value;
+    }
+  }
+
+  async function submitCustomRace(event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    const courseInput = document.getElementById("cr-course");
+    const raceNameInput = document.getElementById("cr-race-name");
+    const surfaceSelect = document.getElementById("cr-surface");
+    const distanceInput = document.getElementById("cr-distance");
+
+    const courseName = (courseInput && courseInput.value.trim()) || "Hipódromo Personalizado";
+    const raceName = (raceNameInput && raceNameInput.value.trim()) || "Carrera En Vivo";
+    const surface = (surfaceSelect && surfaceSelect.value) || "Césped";
+    const distance = (distanceInput && Number(distanceInput.value)) || 1600;
+
+    const formattedHorses = customHorsesList.map((h, i) => {
+      const orVal = Number(h.or) || 75;
+      return {
+        horseName: h.name || `Caballo #${i + 1}`,
+        official_rating: orVal,
+        jockey: h.jockey || "Jinete Oficial",
+        trainer: "Entrenador Oficial",
+        weight_kg: Number(h.weight) || 57,
+        stall: Number(h.stall) || (i + 1),
+        age: 4,
+        hist_win_rate: Math.max(5, Math.min(45, Math.round((orVal - 45) * 0.65))),
+        days_rest: 14
+      };
+    });
+
+    const newRid = Date.now();
+    const newRace = {
+      rid: newRid,
+      course: courseName,
+      title: raceName,
+      race_name: raceName,
+      surface: surface,
+      distance_m: distance,
+      date: "En Vivo (Hoy)",
+      horses: formattedHorses
+    };
+
+    allRaces.unshift(newRace);
+    closeCustomRaceModal();
+
+    const courseSelect = document.getElementById("select-course");
+    if (courseSelect) {
+      const uniqueCourses = [...new Set(allRaces.map(r => r.course))];
+      courseSelect.innerHTML = uniqueCourses.map(c => `<option value="${c}">${c.replace(" (HK)", "")}</option>`).join("");
+      courseSelect.value = courseName;
+    }
+    updateRaceDropdown(courseName, newRid);
+
+    await loadRace(newRid);
+    await analyzeCurrentRace();
+
+    if (activeSection !== "carreras") {
+      switchSection("carreras");
+    }
+    return false;
+  }
+
+return {
     init,
     switchSection,
     onSimulateOR,
     loadRace,
-    analyzeCurrentRace
+    analyzeCurrentRace,
+    openCustomRaceModal,
+    closeCustomRaceModal,
+    addCustomHorseRow,
+    removeCustomHorseRow,
+    updateCustomHorseField,
+    submitCustomRace
   };
 })();
 

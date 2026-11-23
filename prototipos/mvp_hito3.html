@@ -7,7 +7,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>RacePulse · Panel de Análisis Hípico con Inteligencia Artificial</title>
-  <link rel="stylesheet" href="assets/css/racepulse_dashboard.css?v=30.0.0">
+  <link rel="stylesheet" href="assets/css/racepulse_dashboard.css?v=31.0.0">
 </head>
 <body>
 
@@ -156,6 +156,11 @@
                 <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
               </svg>
               <span>Analizar Carrera</span>
+            </button>
+
+            <button id="btn-open-custom-race" class="btn-create-race-link" type="button" onclick="RacePulseApp.openCustomRaceModal()" title="Ingresar una carrera nueva con caballos personalizados">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              <span>+ Crear Carrera en Vivo</span>
             </button>
           </div>
 
@@ -445,10 +450,86 @@
       <div class="auth-footer"><span>Predicciones basadas en datos · Resultados sujetos a incertidumbre</span></div>
     </div>
 
+  <!-- Modal: Crear Carrera en Vivo (Ingreso Personalizado) -->
+  <div id="custom-race-modal" class="custom-race-overlay" hidden>
+    <div class="custom-race-backdrop" onclick="RacePulseApp.closeCustomRaceModal()"></div>
+    <div class="custom-race-dialog" role="dialog" aria-modal="true" aria-labelledby="custom-race-title">
+      <div class="custom-race-header">
+        <div class="custom-race-title-group">
+          <div class="custom-race-badge">⚡ INGRESO EN VIVO</div>
+          <h2 id="custom-race-title">Crear Carrera Personalizada</h2>
+          <p class="custom-race-subtitle">Ingresa los participantes de hoy para predecir probabilidades en tiempo real con IA.</p>
+        </div>
+        <button class="custom-race-close" type="button" onclick="RacePulseApp.closeCustomRaceModal()" aria-label="Cerrar">&times;</button>
+      </div>
+
+      <form id="custom-race-form" onsubmit="event.preventDefault(); RacePulseApp.submitCustomRace(event); return false;">
+        <!-- Parámetros Generales de la Carrera -->
+        <div class="custom-race-grid-meta">
+          <div class="custom-field">
+            <label for="cr-course">Hipódromo / Ciudad</label>
+            <input id="cr-course" type="text" placeholder="Ej: Hipódromo de los Andes, Bogotá" value="Hipódromo de los Andes (Bogotá)" required>
+          </div>
+          <div class="custom-field">
+            <label for="cr-race-name">Nombre de la Carrera</label>
+            <input id="cr-race-name" type="text" placeholder="Ej: Clásico Apertura 2026" value="Clásico Apertura 2026" required>
+          </div>
+          <div class="custom-field">
+            <label for="cr-surface">Superficie de Pista</label>
+            <select id="cr-surface">
+              <option value="Césped" selected>Césped</option>
+              <option value="Arena / Sintética">Arena / Sintética</option>
+            </select>
+          </div>
+          <div class="custom-field">
+            <label for="cr-distance">Distancia (metros)</label>
+            <input id="cr-distance" type="number" min="800" max="3200" step="100" value="1600" required>
+          </div>
+        </div>
+
+        <!-- Tabla de Participantes -->
+        <div class="custom-horses-section">
+          <div class="custom-horses-header">
+            <span>Participantes Inscritos (<span id="cr-horses-count">4</span> caballos)</span>
+            <button type="button" class="btn-add-horse" onclick="RacePulseApp.addCustomHorseRow()">+ Agregar Caballo</button>
+          </div>
+
+          <div class="custom-table-scroll">
+            <table class="custom-horses-table">
+              <thead>
+                <tr>
+                  <th style="width: 32px;">#</th>
+                  <th>Nombre del Caballo</th>
+                  <th style="width: 95px;" title="Official Rating (Hándicap)">Rating (OR)</th>
+                  <th style="width: 130px;">Jinete</th>
+                  <th style="width: 60px;">Cajón</th>
+                  <th style="width: 70px;">Peso (kg)</th>
+                  <th style="width: 35px;"></th>
+                </tr>
+              </thead>
+              <tbody id="custom-horses-tbody">
+                <!-- Se pobla dinámicamente desde JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="custom-race-actions">
+          <button type="button" class="btn-cancel-custom" onclick="RacePulseApp.closeCustomRaceModal()">Cancelar</button>
+          <button type="submit" class="btn-gold btn-submit-custom">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            <span>⚡ Calcular Predicción con IA</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- Scripts del Dashboard MVP con Cache-Busting -->
   <script src="assets/js/racepulse_data.js?v=8.0.0"></script>
   <script src="assets/js/racepulse_api.js?v=13.0.0"></script>
   <script src="assets/js/racepulse_charts.js?v=8.0.0"></script>
-  <script src="assets/js/racepulse_app.js?v=13.0.0"></script>
+  <script src="assets/js/racepulse_app.js?v=14.0.0"></script>
 </body>
 </html>
