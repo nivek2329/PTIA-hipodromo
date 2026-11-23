@@ -31,7 +31,7 @@ const RacePulseAPI = (function() {
         }
         if (resp.status === 401 || resp.status === 403) {
           console.warn("Acceso a artefactos denegado para el rol actual (401/403)");
-          return null;
+          return typeof EMBEDDED_ARTIFACTS !== "undefined" ? EMBEDDED_ARTIFACTS : null;
         }
       } catch (e) {
         console.warn("Fallo al obtener /api/artifacts, usando embedded:", e);

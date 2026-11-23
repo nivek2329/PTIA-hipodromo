@@ -114,12 +114,13 @@ const RacePulseApp = (function() {
     }
 
     async function authRequest(path, payload = null) {
-      const options = { method: payload ? "POST" : "GET", credentials: "same-origin" };
+      const baseUrl = window.location.protocol.startsWith("http") ? window.location.origin : "http://localhost:8000";
+      const options = { method: payload ? "POST" : "GET", credentials: "include" };
       if (payload) {
         options.headers = { "Content-Type": "application/json" };
         options.body = JSON.stringify(payload);
       }
-      const response = await fetch(`${window.location.origin}/api/auth/${path}`, options);
+      const response = await fetch(`${baseUrl}/api/auth/${path}`, options);
       const result = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(result.detail || "No se pudo completar la solicitud.");
       return result;
@@ -155,6 +156,14 @@ const RacePulseApp = (function() {
       overlay.setAttribute("aria-hidden", "true");
       loginForm.reset();
       registerForm.reset();
+      if (user && user.role === "admin") {
+        RacePulseAPI.getArtifacts().then((res) => {
+          if (res) {
+            artifacts = res;
+            renderEvaluationSection();
+          }
+        });
+      }
       if (resolveReady) {
         resolveReady();
         resolveReady = null;
@@ -686,23 +695,23 @@ const RacePulseApp = (function() {
         <td style="color:var(--gold-light); font-weight:700; text-align:center;">${i + 1}</td>
         <td>
           <input type="text" value="${h.name}" placeholder="Nombre del caballo"
-                 onchange="RacePulseApp.updateCustomHorseField(${i}, 'name', this.value)" required>
+                 oninput="RacePulseApp.updateCustomHorseField(${i}, 'name', this.value)" required>
         </td>
         <td>
           <input type="number" value="${h.or}" min="30" max="130"
-                 onchange="RacePulseApp.updateCustomHorseField(${i}, 'or', Number(this.value))" required>
+                 oninput="RacePulseApp.updateCustomHorseField(${i}, 'or', Number(this.value))" required>
         </td>
         <td>
           <input type="text" value="${h.jockey}" placeholder="Jinete"
-                 onchange="RacePulseApp.updateCustomHorseField(${i}, 'jockey', this.value)">
+                 oninput="RacePulseApp.updateCustomHorseField(${i}, 'jockey', this.value)">
         </td>
         <td>
           <input type="number" value="${h.stall || (i + 1)}" min="1" max="24"
-                 onchange="RacePulseApp.updateCustomHorseField(${i}, 'stall', Number(this.value))">
+                 oninput="RacePulseApp.updateCustomHorseField(${i}, 'stall', Number(this.value))">
         </td>
         <td>
           <input type="number" value="${h.weight || 57}" min="45" max="75"
-                 onchange="RacePulseApp.updateCustomHorseField(${i}, 'weight', Number(this.value))">
+                 oninput="RacePulseApp.updateCustomHorseField(${i}, 'weight', Number(this.value))">
         </td>
         <td style="text-align:center;">
           ${customHorsesList.length > 2 ? `

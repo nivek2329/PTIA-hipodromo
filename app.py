@@ -20,7 +20,7 @@ from typing import Any, Dict, List, Optional
 import numpy as np
 from fastapi import FastAPI, HTTPException, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 import uvicorn
@@ -77,6 +77,14 @@ async def add_no_cache_headers(request: Request, call_next):
 
 if os.path.exists(ASSETS_DIR):
     app.mount("/assets", StaticFiles(directory=ASSETS_DIR), name="assets")
+
+
+@app.get("/favicon.ico", include_in_schema=False)
+async def favicon():
+    icon_path = os.path.join(ASSETS_DIR, "logo_clean.png")
+    if os.path.exists(icon_path):
+        return FileResponse(icon_path)
+    return Response(status_code=204)
 
 
 class RegisterRequest(BaseModel):
