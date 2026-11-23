@@ -203,9 +203,7 @@ def _require_user(request: Request, allowed_roles: Optional[List[str]] = None) -
     if allowed_roles and user["role"] not in allowed_roles:
         raise HTTPException(status_code=403, detail="Tu rol no tiene permiso para esta sección.")
     return user
-@app.on_event("startup")
-async def startup_auth_database():
-    initialize_auth_database()
+initialize_auth_database()
 
 
 @app.post("/api/auth/register")
