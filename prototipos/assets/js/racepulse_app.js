@@ -446,8 +446,9 @@ const RacePulseApp = (function() {
 
     if (!currentPrediction) return;
 
-    // Si es el caso 411357, usar las probabilidades exactas calibradas de GBDT (28.74%, 22.17%, etc.)
-    if (String(selectedRace.rid) === "411357") {
+    // Solo aplicar el baseline calibrado inicial de 411357 si los caballos NO han sido alterados en la simulación
+    const hasModifiedOR = editableHorses.some(h => h.isSimulated);
+    if (String(selectedRace.rid) === "411357" && !hasModifiedOR) {
       for (let i = 0; i < editableHorses.length; i++) {
         if (editableHorses[i].prob_gbdt !== undefined && editableHorses[i].prob_gbdt !== null) {
           currentPrediction.probabilities[i] = editableHorses[i].prob_gbdt;
@@ -470,7 +471,7 @@ const RacePulseApp = (function() {
     // 3. Renderizar factores de predicción (G)
     renderPredictionFactors();
 
-    if (activeSection === "participantes") renderParticipantsView();
+    if (activeSection === "participantes") updateParticipantsProbBadges();
     if (activeSection === "prediccion") renderDeepPredictionView();
   }
 
@@ -522,9 +523,10 @@ const RacePulseApp = (function() {
     const winnerIdx = currentPrediction.winner_index;
     const winnerHorse = editableHorses[winnerIdx] || editableHorses[0];
 
-    const orVal = selectedRace.rid === 411357 ? 86 : (winnerHorse.official_rating ? Math.round(winnerHorse.official_rating) : 86);
-    const histText = selectedRace.rid === 411357 ? "2.8 (últimas 5)" : (winnerHorse.hist_win_rate ? `${winnerHorse.hist_win_rate}% vit.` : "2.8 (últimas 5)");
-    const restText = selectedRace.rid === 411357 ? "12 días" : (winnerHorse.days_rest !== null && winnerHorse.days_rest !== undefined ? `${winnerHorse.days_rest} días` : "12 días");
+    const hasModifiedOR = editableHorses.some(h => h.isSimulated);
+    const orVal = (selectedRace.rid === 411357 && !hasModifiedOR) ? 86 : (winnerHorse.official_rating ? Math.round(winnerHorse.official_rating) : 86);
+    const histText = (selectedRace.rid === 411357 && !hasModifiedOR) ? "2.8 (últimas 5)" : (winnerHorse.hist_display || (winnerHorse.hist_win_rate ? `${winnerHorse.hist_win_rate}% vit.` : "2.8 (últimas 5)"));
+    const restText = (selectedRace.rid === 411357 && !hasModifiedOR) ? "12 días" : (winnerHorse.days_rest !== null && winnerHorse.days_rest !== undefined ? `${winnerHorse.days_rest} días` : "12 días");
     const jockeyName = winnerHorse.jockey || "Zac Purton";
 
     const elOr = document.getElementById("factor-val-or");
@@ -551,7 +553,7 @@ const RacePulseApp = (function() {
               <div style="font-size:0.98rem; font-weight:800; color:var(--text-white);">${h.horseName}</div>
               <div style="font-size:0.76rem; color:var(--text-gray);">Cajón ${h.stall || (i+1)} · Jinete: ${h.jockey || "N/A"}</div>
             </div>
-            <span style="font-size:0.75rem; font-weight:800; color:var(--gold-light); background:rgba(214,166,60,0.12); padding:3px 8px; border-radius:999px;">
+            <span id="sim-prob-badge-${i}" style="font-size:0.75rem; font-weight:800; color:var(--gold-light); background:rgba(214,166,60,0.12); padding:3px 8px; border-radius:999px;">
               ${prob.toFixed(1)}% prob.
             </span>
           </div>
@@ -559,7 +561,7 @@ const RacePulseApp = (function() {
           <div style="font-size:0.78rem; color:var(--text-gray); display:flex; flex-direction:column; gap:4px; margin-bottom:10px;">
             <div><strong>Entrenador:</strong> ${h.trainer || "N/A"}</div>
             <div><strong>Peso:</strong> ${h.weight_kg || 57} kg · <strong>Edad:</strong> ${h.age || 5} años</div>
-            <div><strong>Rating Oficial (OR):</strong> ${h.official_rating || 80}</div>
+            <div><strong>Rating Oficial (OR):</strong> <span id="sim-or-val-text-${i}">${h.official_rating || 80}</span></div>
           </div>
 
           <div style="border-top:1px solid var(--border-color); padding-top:8px; margin-top:auto;">
@@ -575,12 +577,28 @@ const RacePulseApp = (function() {
     }).join("");
   }
 
+  function updateParticipantsProbBadges() {
+    if (!currentPrediction || !editableHorses) return;
+    editableHorses.forEach((h, i) => {
+      const badge = document.getElementById(`sim-prob-badge-${i}`);
+      if (badge && currentPrediction.probabilities[i] !== undefined) {
+        badge.textContent = `${currentPrediction.probabilities[i].toFixed(1)}% prob.`;
+      }
+      const orValEl = document.getElementById(`sim-or-val-text-${i}`);
+      if (orValEl) {
+        orValEl.textContent = Math.round(h.official_rating || 80);
+      }
+    });
+  }
+
   function onSimulateOR(horseIndex, newOR) {
     const lbl = document.getElementById(`sim-or-lbl-${horseIndex}`);
     if (lbl) lbl.textContent = newOR;
 
     if (editableHorses[horseIndex]) {
       editableHorses[horseIndex].official_rating = Number(newOR);
+      editableHorses[horseIndex].isSimulated = true;
+      delete editableHorses[horseIndex].prob_gbdt;
       analyzeCurrentRace();
     }
   }
