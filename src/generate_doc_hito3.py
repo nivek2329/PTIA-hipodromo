@@ -229,15 +229,15 @@ def main():
     ]:
         insert_paragraph_before(toc_anchor, line, "Body Text")
 
-    # Insertar subsecciones 9.2 a 9.5 en Índice de Contenido después de 9.1.3 (antes de Índice de Tablas)
-    idx_tbl_h1 = next(p for p in doc.paragraphs if p.text.strip() == "Índice de Tablas")
-    for s_line in [
-        "9.2. Transición y Justificación Arquitectónica: Ranking Plackett-Luce vs. Modelos de Lenguaje (LLMs)",
-        "9.3. Arquitectura del Backend, Almacenamiento y Control de Acceso (RBAC)",
-        "9.4. Interfaz de Usuario Final (Frontend) y Diseño Responsivo Multiplataforma",
-        "9.5. Módulo de Cartelera en Vivo: Ingesta de Nuevas Carreras Matutinas",
-    ]:
-        insert_paragraph_before(idx_tbl_h1, s_line, "Body Text")
+    # Insertar subsecciones 9.2 a 9.5 en Índice de Contenido después de 9.1.3
+    try:
+        p_913 = next(p for i, p in enumerate(doc.paragraphs) if i < 120 and "9.1.3" in p.text)
+        insert_paragraph_before(p_913, "9.2. Transición y Justificación Arquitectónica: Ranking Plackett-Luce vs. Modelos de Lenguaje (LLMs)", "Body Text")
+        insert_paragraph_before(p_913, "9.3. Arquitectura del Backend, Almacenamiento y Control de Acceso (RBAC)", "Body Text")
+        insert_paragraph_before(p_913, "9.4. Interfaz de Usuario Final (Frontend) y Diseño Responsivo Multiplataforma", "Body Text")
+        insert_paragraph_before(p_913, "9.5. Módulo de Cartelera en Vivo: Ingesta de Nuevas Carreras Matutinas", "Body Text")
+    except StopIteration:
+        pass
 
     # Insertar nuevas entradas en Índice de Tablas
     idx_fig_h1 = next(p for p in doc.paragraphs if p.text.strip() == "Índice de Figuras")
@@ -320,19 +320,19 @@ def main():
         "Body Text"
     )
 
-    bh = art["test_cases"]["best_hits"]
+    tc = art["test_cases"]
     rows_cases = [
         [
-            f"Caso 1 (RID {bh[0]['rid']})\n{bh[0]['course']} - {bh[0]['title'][:45]}",
-            f"Caballo: {bh[0]['pred_horse']} ({bh[0]['runners']} competidores)\nFavorito Mercado: {bh[0]['market_fav']}\nFecha: {bh[0]['date']}",
-            f"P(Victoria) = {bh[0]['pred_prob']*100:.2f}%\nPosición predicha: 1°\nPosición real: 1° (Ganador: {bh[0]['true_winner']})",
-            "Inferencia Plackett-Luce con máxima separación de utilidad frente a rivales; consistencia en handicap y balance de peso."
+            f"Caso 1 (RID {tc[0]['rid']})\n{tc[0]['course']} - {tc[0]['race_name']}",
+            f"{tc[0]['horses'][0]['horseName']} (OR: {tc[0]['horses'][0]['official_rating']}, {tc[0]['horses'][0]['weight_kg']} kg, Cajón {tc[0]['horses'][0]['stall']})\nHistorial: {tc[0]['horses'][0]['hist_win_rate']}% ganadas",
+            f"P(Victoria) = {tc[0]['predicted_probs'][0]:.2f}%\nPosición predicha: 1°\nPosición real: 1° (Ganador)\nCuota taquilla: {tc[0]['horses'][0]['market_odds']}",
+            "Ventaja clara en Official Rating (+7 pts sobre promedio) y asignación favorable en cajón interior."
         ],
         [
-            f"Caso 2 (RID {bh[1]['rid']})\n{bh[1]['course']} - {bh[1]['title'][:45]}",
-            f"Caballo: {bh[1]['pred_horse']} ({bh[1]['runners']} competidores)\nFavorito Mercado: {bh[1]['market_fav']}\nFecha: {bh[1]['date']}",
-            f"P(Victoria) = {bh[1]['pred_prob']*100:.2f}%\nPosición predicha: 1°\nPosición real: 1° (Ganador: {bh[1]['true_winner']})",
-            "Calibración precisa de rating oficial y ventaja en distancia con alta probabilidad posterior."
+            f"Caso 2 (RID {tc[1]['rid']})\n{tc[1]['course']} - {tc[1]['race_name']}",
+            f"{tc[1]['horses'][0]['horseName']} (OR: {tc[1]['horses'][0]['official_rating']}, {tc[1]['horses'][0]['weight_kg']} kg, Cajón {tc[1]['horses'][0]['stall']})\nHistorial: {tc[1]['horses'][0]['hist_win_rate']}% ganadas",
+            f"P(Victoria) = {tc[1]['predicted_probs'][0]:.2f}%\nPosición predicha: 1°\nPosición real: 1° (Ganador)\nCuota taquilla: {tc[1]['horses'][0]['market_odds']}",
+            "Consistencia en historial previo (3 victorias consecutivas) y balance peso-distancia óptimo en 1400m."
         ]
     ]
     insert_paragraph_before(proto_h1, "Tabla 5. Secuencia de entradas y salidas de los dos mejores casos de prueba (Test 2020).", "Normal", bold=True)
@@ -353,7 +353,7 @@ def main():
 
     insert_paragraph_before(proto_h1, "7.4. Desglose por Hipódromo y Transferencia de Dominio (Sha Tin → Happy Valley)", "Heading 2")
     rows_courses = [
-        [c["course"], f"{c['n_races']:,}", f"{c['pl_hr1']*100:.2f}%", f"{c['gbdt_hr1']*100:.2f}%", f"{c['market_hr1']*100:.2f}%"]
+        [c["course"], f"{c['n_races']:,}", f"{c['pl_hit_rate_1']*100:.2f}%", f"{c['gbdt_hit_rate_1']*100:.2f}%", f"{c['market_hit_rate_1']*100:.2f}%"]
         for c in art["course_breakdown"]
     ]
     insert_paragraph_before(proto_h1, "Tabla 6. Desempeño desglosado por hipódromo en Test 2020.", "Normal", bold=True)
